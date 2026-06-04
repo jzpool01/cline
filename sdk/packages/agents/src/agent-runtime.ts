@@ -383,6 +383,60 @@ export class AgentRuntime {
 	};
 	private initialization?: Promise<void>;
 	private abortController?: AbortController;
+	private _keepaliveTimer?: ReturnType<typeof setTimeout>;
+	private _keepaliveAbort?: AbortController;
+
+	private readonly CACHE_KEEPALIVE_DELAY_MS = 180_000; // 3 min
+
+	private _scheduleCacheKeepalive(): void {
+		this._cancelCacheKeepalive();
+		this._keepaliveTimer = setTimeout(async () => {
+			try {
+				await this._sendCacheKeepalive();
+			} catch {
+				// keepalive failures are non-fatal
+			}
+		}, this.CACHE_KEEPALIVE_DELAY_MS);
+	}
+
+	private _cancelCacheKeepalive(): void {
+		if (this._keepaliveTimer !== undefined) {
+			clearTimeout(this._keepaliveTimer);
+			this._keepaliveTimer = undefined;
+		}
+		this._keepaliveAbort?.abort();
+		this._keepaliveAbort = undefined;
+	}
+
+	/**
+	 * Send a minimal LLM request purely to keep the prefix cache warm.
+	 * Uses only the system prompt + a short "continue" message so the
+	 * cached prefix (system prompt + early conversation) is read by the
+	 * provider and stays hot for subsequent real requests.
+	 */
+	private async _sendCacheKeepalive(): Promise<void> {
+		if (!this.config.systemPrompt || !this.config.model) {
+			return;
+		}
+		this._keepaliveAbort = new AbortController();
+		const pingMessage = createMessage("user", [
+			{ type: "text", text: "continue" },
+		]);
+		const request: AgentModelRequest = {
+			systemPrompt: this.config.systemPrompt,
+			messages: [pingMessage],
+			tools: [],
+			signal: this._keepaliveAbort.signal,
+			options: { maxTokens: 1 },
+		};
+		const stream = await this.config.model.stream(request);
+		// Read a few events then abort — we only need the provider to
+		// process the cached prefix, not generate a full response.
+		let count = 0;
+		for await (const _event of stream) {
+			if (++count > 3) break;
+		}
+	}
 
 	constructor(config: AgentRuntimeConfig) {
 		const resolved = resolveRuntimeConfig(config);
@@ -557,6 +611,9 @@ export class AgentRuntime {
 			await this.callBeforeRunHooks();
 			await this.emit({ type: "run-started", snapshot: this.snapshot() });
 
+			// Cancel any pending keepalive — we're about to make a real request
+			this._cancelCacheKeepalive();
+
 			for (const message of input ? normalizeInput(input) : []) {
 				this.state.messages.push(message);
 				await this.emit({
@@ -717,6 +774,8 @@ export class AgentRuntime {
 			return result;
 		} finally {
 			this.abortController = undefined;
+			// Schedule cache keepalive when runtime goes idle
+			this._scheduleCacheKeepalive();
 		}
 	}
 

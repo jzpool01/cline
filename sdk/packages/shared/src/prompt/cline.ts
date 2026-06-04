@@ -104,7 +104,8 @@ export function buildClineSystemPrompt(
 	return basePrompt
 		.replace("{{PLATFORM_NAME}}", platform)
 		.replace("{{CWD}}", workspaceRoot)
-		.replace("{{CURRENT_DATE}}", new Date().toLocaleDateString())
+		// Freeze date to a fixed string so it never breaks the prefix cache
+		.replace("{{CURRENT_DATE}}", "Today")
 		.replace("{{IDE_NAME}}", ide)
 		.replace(
 			"{{CLINE_METADATA}}",
