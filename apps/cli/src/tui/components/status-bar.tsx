@@ -46,13 +46,23 @@ function formatCost(cost: number): string {
 	return `$${cost.toFixed(2)}`;
 }
 
+function formatTokenCount(count: number): string {
+	if (count >= 1_000_000) {
+		return `${(count / 1_000_000).toFixed(1)}M`;
+	}
+	if (count >= 1_000) {
+		return `${(count / 1_000).toFixed(1)}K`;
+	}
+	return count.toLocaleString();
+}
+
 export function formatStatusBarUsageText(input: {
 	totalTokens: number;
 	totalCost: number;
 	cacheHitTokens?: number;
 	showCost: boolean;
 }): string {
-	let tokens = `(${input.totalTokens.toLocaleString()}`;
+	let tokens = `(${formatTokenCount(input.totalTokens)}`;
 	if (typeof input.cacheHitTokens === "number" && input.cacheHitTokens > 0 && input.totalTokens > 0) {
 		const hitRate = (input.cacheHitTokens / input.totalTokens) * 100;
 		const hitRateStr =
@@ -61,7 +71,7 @@ export function formatStatusBarUsageText(input: {
 				: hitRate < 0.05
 					? "0"
 					: hitRate.toFixed(1);
-		tokens += ` hit ${input.cacheHitTokens.toLocaleString()} (${hitRateStr}%)`;
+		tokens += ` hit ${formatTokenCount(input.cacheHitTokens)} (${hitRateStr}%)`;
 	}
 	tokens += ")";
 	if (!input.showCost) return tokens;
