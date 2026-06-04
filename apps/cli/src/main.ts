@@ -384,6 +384,20 @@ export async function runCli(): Promise<void> {
 			await doctorCmd.parseAsync(cmd.args, { from: "user" });
 		});
 
+	program
+		.command("setup")
+		.description("Install and configure built-in plugins (MCP servers, Playwright browser)")
+		.allowUnknownOption()
+		.allowExcessArguments()
+		.passThroughOptions()
+		.action(async (_opts: unknown, cmd: Command) => {
+			const { createSetupCommand } = await import("./commands/setup");
+			const setupCmd = createSetupCommand(io.writeln, io.writeErr, (code) => {
+				ctx.exitCode = code;
+			});
+			await setupCmd.parseAsync(cmd.args, { from: "user" });
+		});
+
 	const historyCmd = program
 		.command("history")
 		.alias("h")
