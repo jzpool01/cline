@@ -24,7 +24,8 @@ export type LocalSlashCommandName =
 	| "clear"
 	| "history"
 	| "quit"
-	| "help";
+	| "help"
+	| "status";
 
 export interface SlashCommandRegistryEntry {
 	name: string;
@@ -104,6 +105,10 @@ const TUI_LOCAL_COMMANDS: Array<{
 		description: "Show help",
 	},
 	{
+		name: "status",
+		description: "Show token usage and session info",
+	},
+	{
 		name: "quit",
 		description: "Exit Cline",
 	},
@@ -122,6 +127,7 @@ const SYSTEM_COMMAND_ORDER = [
 	"clear",
 	"team",
 	"history",
+	"status",
 	"help",
 	"quit",
 ] satisfies ReadonlyArray<LocalSlashCommandName | "team">;

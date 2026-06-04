@@ -15,6 +15,7 @@ export interface LocalSlashCommandActionInput {
 	clearConversation: () => Promise<void>;
 	openHelp: () => void;
 	openHistory: () => void;
+	showStatus: () => void;
 	exitCline: () => void;
 }
 
@@ -65,6 +66,10 @@ export function runLocalSlashCommandAction(
 	}
 	if (normalized === "history") {
 		input.openHistory();
+		return true;
+	}
+	if (normalized === "status") {
+		input.showStatus();
 		return true;
 	}
 	if (normalized === "quit") {

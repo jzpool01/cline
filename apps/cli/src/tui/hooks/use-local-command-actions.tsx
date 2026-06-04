@@ -114,6 +114,32 @@ export function useLocalCommandActions(input: {
 		refocusTextarea();
 	}, [dialog, refocusTextarea, termHeight]);
 
+	const showStatus = useCallback(() => {
+		const {
+			lastTotalTokens,
+			lastTotalCost,
+			lastCacheReadTokens,
+		} = session;
+		const cacheHit = lastCacheReadTokens ?? 0;
+		const cacheMiss = Math.max(0, lastTotalTokens - cacheHit);
+		const hitRate = lastTotalTokens > 0
+			? ((cacheHit / lastTotalTokens) * 100).toFixed(1)
+			: "N/A";
+		const lines: string[] = [
+			"Session Status",
+			`  Input Tokens:    ${lastTotalTokens.toLocaleString()}`,
+			`  Cache Hit:       ${cacheHit.toLocaleString()}`,
+			`  Cache Miss:      ${cacheMiss.toLocaleString()}`,
+			`  Cache Hit Rate:  ${hitRate}%`,
+			`  Cost:            $${(lastTotalCost ?? 0).toFixed(4)}`,
+		];
+		session.appendEntry({
+			kind: "status",
+			text: lines.join("\n"),
+		});
+		refocusTextarea();
+	}, [session, refocusTextarea]);
+
 	const runCompact = useCallback(async () => {
 		session.appendEntry({
 			kind: "status",
@@ -192,6 +218,7 @@ export function useLocalCommandActions(input: {
 				clearConversation: onClearConversation,
 				openHelp,
 				openHistory,
+				showStatus,
 				exitCline: onExit,
 			});
 		},
@@ -208,6 +235,7 @@ export function useLocalCommandActions(input: {
 			openSkills,
 			runCompact,
 			runFork,
+			showStatus,
 			slashCommandRegistry,
 		],
 	);

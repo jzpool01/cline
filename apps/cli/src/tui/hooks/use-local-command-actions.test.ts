@@ -20,6 +20,7 @@ function makeActions(
 		clearConversation: vi.fn(async () => {}),
 		openHelp: vi.fn(),
 		openHistory: vi.fn(),
+		showStatus: vi.fn(),
 		exitCline: vi.fn(),
 		...overrides,
 	};
