@@ -188,6 +188,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 						inputTokens: event.inputTokens,
 						outputTokens: event.outputTokens,
 						cost: event.cost,
+						cacheReadTokens: event.cacheReadTokens,
 					});
 					break;
 			}

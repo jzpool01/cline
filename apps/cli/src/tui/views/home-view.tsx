@@ -145,6 +145,7 @@ export function HomeView(props: {
 								modelId={modelDisplayName}
 								totalTokens={session.lastTotalTokens}
 								totalCost={session.lastTotalCost}
+								cacheReadTokens={session.lastCacheReadTokens}
 								maxInputTokens={maxInputTokens}
 								uiMode={session.uiMode}
 								autoApproveAll={session.autoApproveAll}

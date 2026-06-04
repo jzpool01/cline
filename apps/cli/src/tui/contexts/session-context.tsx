@@ -23,6 +23,7 @@ interface SessionContextValue {
 	compactionMode: CliCompactionMode;
 	lastTotalTokens: number;
 	lastTotalCost: number;
+	lastCacheReadTokens: number | undefined;
 	isExitRequested: boolean;
 
 	appendEntry: (entry: ChatEntry) => void;
@@ -37,6 +38,7 @@ interface SessionContextValue {
 	setHasSubmitted: (v: boolean) => void;
 	setLastTotalTokens: (v: number) => void;
 	setLastTotalCost: (v: number) => void;
+	setLastCacheReadTokens: (v: number | undefined) => void;
 	addUsageDelta: (usage: UsageDelta) => void;
 	setUiMode: (mode: AgentMode) => void;
 	toggleMode: () => void;
@@ -51,6 +53,7 @@ type UsageDelta = {
 	inputTokens?: number;
 	outputTokens?: number;
 	cost?: number;
+	cacheReadTokens?: number;
 };
 
 const SessionContext = createContext<SessionContextValue | null>(null);
@@ -118,6 +121,7 @@ export function SessionProvider(props: {
 	const [lastTotalCost, setLastTotalCost] = useState(
 		() => initialUsage?.totalCost ?? 0,
 	);
+	const [lastCacheReadTokens, setLastCacheReadTokens] = useState<number | undefined>(undefined);
 	const [isExitRequested, setIsExitRequested] = useState(false);
 
 	const activeInlineStreamRef = useRef<InlineStream>(undefined);
@@ -231,6 +235,11 @@ export function SessionProvider(props: {
 		) {
 			setLastTotalCost((prev) => prev + costDelta);
 		}
+		if (typeof usage.cacheReadTokens === "number") {
+			setLastCacheReadTokens(
+				usage.cacheReadTokens > 0 ? usage.cacheReadTokens : undefined,
+			);
+		}
 	}, []);
 
 	const replaceEntries = useCallback((nextEntries: ChatEntry[]) => {
@@ -252,6 +261,7 @@ export function SessionProvider(props: {
 		compactionMode,
 		lastTotalTokens,
 		lastTotalCost,
+		lastCacheReadTokens,
 		isExitRequested,
 		appendEntry,
 		updateLastEntry,
@@ -264,6 +274,7 @@ export function SessionProvider(props: {
 		setHasSubmitted,
 		setLastTotalTokens,
 		setLastTotalCost,
+		setLastCacheReadTokens,
 		addUsageDelta,
 		setUiMode,
 		toggleMode,

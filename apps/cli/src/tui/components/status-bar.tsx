@@ -49,9 +49,21 @@ function formatCost(cost: number): string {
 export function formatStatusBarUsageText(input: {
 	totalTokens: number;
 	totalCost: number;
+	cacheHitTokens?: number;
 	showCost: boolean;
 }): string {
-	const tokens = `(${input.totalTokens.toLocaleString()})`;
+	let tokens = `(${input.totalTokens.toLocaleString()}`;
+	if (typeof input.cacheHitTokens === "number" && input.cacheHitTokens > 0 && input.totalTokens > 0) {
+		const hitRate = (input.cacheHitTokens / input.totalTokens) * 100;
+		const hitRateStr =
+			hitRate >= 99.95
+				? "100"
+				: hitRate < 0.05
+					? "0"
+					: hitRate.toFixed(1);
+		tokens += ` hit ${input.cacheHitTokens.toLocaleString()} (${hitRateStr}%)`;
+	}
+	tokens += ")";
 	if (!input.showCost) return tokens;
 	return `${tokens} ${formatCost(input.totalCost)}`;
 }
@@ -109,6 +121,7 @@ export interface StatusBarProps {
 	modelId: string;
 	totalTokens: number;
 	totalCost: number;
+	cacheReadTokens?: number;
 	maxInputTokens?: number;
 	uiMode: AgentMode;
 	autoApproveAll: boolean;
@@ -169,6 +182,7 @@ export function StatusBar(props: StatusBarProps) {
 	const usageText = formatStatusBarUsageText({
 		totalTokens,
 		totalCost,
+		cacheHitTokens: props.cacheReadTokens,
 		showCost: showUsageCost,
 	});
 	const contextText = bar
