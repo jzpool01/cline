@@ -117,6 +117,7 @@ export function useLocalCommandActions(input: {
 	const showStatus = useCallback(() => {
 		const {
 			lastTotalTokens,
+			lastOutputTokens,
 			lastTotalCost,
 			lastCacheReadTokens,
 		} = session;
@@ -128,6 +129,7 @@ export function useLocalCommandActions(input: {
 		const lines: string[] = [
 			"Session Status",
 			`  Input Tokens:    ${lastTotalTokens.toLocaleString()}`,
+			`  Output Tokens:   ${lastOutputTokens.toLocaleString()}`,
 			`  Cache Hit:       ${cacheHit.toLocaleString()}`,
 			`  Cache Miss:      ${cacheMiss.toLocaleString()}`,
 			`  Cache Hit Rate:  ${hitRate}%`,
