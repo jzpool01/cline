@@ -398,6 +398,19 @@ export async function runCli(): Promise<void> {
 			await setupCmd.parseAsync(cmd.args, { from: "user" });
 		});
 
+	program
+		.command("status")
+		.description("Show detailed status and token usage summary")
+		.option("--json", "Output as JSON")
+		.option("--sessions <count>", "Number of recent sessions to aggregate", "50")
+		.action(async (_opts: unknown, cmd: Command) => {
+			const { createStatusCommand } = await import("./commands/status");
+			const statusCmd = createStatusCommand(io.writeln, (code) => {
+				ctx.exitCode = code;
+			});
+			await statusCmd.parseAsync(cmd.args, { from: "user" });
+		});
+
 	const historyCmd = program
 		.command("history")
 		.alias("h")

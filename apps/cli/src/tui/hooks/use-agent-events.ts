@@ -24,6 +24,7 @@ interface AgentEventDeps {
 		inputTokens?: number;
 		outputTokens?: number;
 		cost?: number;
+		cacheReadTokens?: number;
 	}) => void;
 	onTurnErrorReported: TuiProps["onTurnErrorReported"];
 	verbose: boolean;

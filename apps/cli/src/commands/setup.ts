@@ -8,11 +8,11 @@ import { Command } from "commander";
 const DEFAULT_MCP_SERVERS: Record<string, unknown> = {
 	"browser-use": {
 		command: "npx",
-		args: ["@anthropic/browser-use-mcp"],
+		args: ["-y", "@anthropic/browser-use-mcp"],
 	},
 	playwright: {
 		command: "npx",
-		args: ["@playwright/mcp"],
+		args: ["-y", "@playwright/mcp"],
 	},
 };
 
