@@ -57,10 +57,10 @@ const dashboardMocks = vi.hoisted(() => ({
 	runDashboardCommand: vi.fn(),
 }));
 const migrationNoticeMocks = vi.hoisted(() => ({
-	getClineCliMigrationNotice: vi.fn<() => CliMigrationNotice | undefined>(
+	getTcodeCliMigrationNotice: vi.fn<() => CliMigrationNotice | undefined>(
 		() => undefined,
 	),
-	markClineCliMigrationNoticeShown: vi.fn(),
+	markTcodeCliMigrationNoticeShown: vi.fn(),
 }));
 const updateMocks = vi.hoisted(() => ({
 	autoUpdateOnStartup: vi.fn(),
@@ -237,9 +237,9 @@ describe("runCli lightweight command dispatch", () => {
 		kanbanMocks.launchKanban.mockResolvedValue(0);
 		dashboardMocks.runDashboardCommand.mockReset();
 		dashboardMocks.runDashboardCommand.mockResolvedValue(0);
-		migrationNoticeMocks.getClineCliMigrationNotice.mockReset();
-		migrationNoticeMocks.getClineCliMigrationNotice.mockReturnValue(undefined);
-		migrationNoticeMocks.markClineCliMigrationNoticeShown.mockReset();
+		migrationNoticeMocks.getTcodeCliMigrationNotice.mockReset();
+		migrationNoticeMocks.getTcodeCliMigrationNotice.mockReturnValue(undefined);
+		migrationNoticeMocks.markTcodeCliMigrationNoticeShown.mockReset();
 		updateMocks.autoUpdateOnStartup.mockReset();
 		updateMocks.checkForUpdates.mockReset();
 		updateMocks.checkForUpdates.mockResolvedValue(0);
@@ -529,7 +529,7 @@ describe("runCli lightweight command dispatch", () => {
 			id: "cline-cli-tui-default",
 			title: "Welcome to the new Cline CLI",
 		};
-		migrationNoticeMocks.getClineCliMigrationNotice.mockReturnValue(notice);
+		migrationNoticeMocks.getTcodeCliMigrationNotice.mockReturnValue(notice);
 		Object.defineProperty(process.stdout, "isTTY", {
 			value: true,
 			configurable: true,
@@ -549,12 +549,12 @@ describe("runCli lightweight command dispatch", () => {
 			}),
 		);
 		expect(
-			migrationNoticeMocks.markClineCliMigrationNoticeShown,
+			migrationNoticeMocks.markTcodeCliMigrationNoticeShown,
 		).not.toHaveBeenCalled();
 		const options = runtimeMocks.runInteractive.mock.calls[0]?.[3];
 		await options?.onInitialNoticeShown?.(notice);
 		expect(
-			migrationNoticeMocks.markClineCliMigrationNoticeShown,
+			migrationNoticeMocks.markTcodeCliMigrationNoticeShown,
 		).toHaveBeenCalledTimes(1);
 	});
 

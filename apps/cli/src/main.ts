@@ -1093,7 +1093,7 @@ export async function runCli(): Promise<void> {
 				  ) => void)
 				| undefined;
 			if (!launchConfigView && process.stdin.isTTY && process.stdout.isTTY) {
-				const { getClineCliMigrationNotice: getTcodeCliMigrationNotice, markClineCliMigrationNoticeShown: markTcodeCliMigrationNoticeShown } =
+				const { getTcodeCliMigrationNotice, markTcodeCliMigrationNoticeShown } =
 					await import("./kanban-migration/notice");
 				initialNotice = getTcodeCliMigrationNotice();
 				if (initialNotice) {
