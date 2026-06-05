@@ -4,7 +4,7 @@ import type {
 	HubUINotifyPayload,
 	HubUIShowWindowPayload,
 	SessionRecord,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import { NodeHubClient } from "../client";
 
 export interface HubUIClientOptions {

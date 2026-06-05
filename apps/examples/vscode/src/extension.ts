@@ -19,13 +19,13 @@ import {
 	rememberRecoverableLocalHubUrl,
 	resolveSharedHubOwnerContext,
 	type ToolPolicy,
-} from "@cline/core";
+} from "@tarogo/core";
 import {
 	type AgentTool,
 	buildClineSystemPrompt,
 	createClineTelemetryServiceConfig,
 	createClineTelemetryServiceMetadata,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import * as vscode from "vscode";
 import { displayName, version } from "../package.json";
 import { createVsCodeRuntimeCapabilities } from "./runtime-capabilities";
@@ -156,7 +156,7 @@ type StartConfig = {
 	apiKey: string;
 	autoApproveTools?: boolean;
 	logger: BasicLogger;
-	extensionContext?: import("@cline/shared").ExtensionContext;
+	extensionContext?: import("@tarogo/shared").ExtensionContext;
 	extraTools?: AgentTool[];
 };
 
@@ -1269,7 +1269,7 @@ class CoreChatWebviewController implements vscode.Disposable {
 				interactive: true,
 				config: forkStartConfig,
 				toolPolicies: createToolPolicies(forkStartConfig),
-				initialMessages: rawMessages as import("@cline/llms").Message[],
+				initialMessages: rawMessages as import("@tarogo/llms").Message[],
 				sessionMetadata: forkMetadata,
 			});
 			const newSessionId = response.sessionId.trim();

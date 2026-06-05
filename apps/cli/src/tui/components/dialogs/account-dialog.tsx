@@ -1,13 +1,13 @@
 // @jsxImportSource @opentui/react
-import type { ClineAccountOrganization } from "@cline/core";
+import type { ClineAccountOrganization } from "@tarogo/core";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import { useDialogKeyboard } from "@opentui-ui/dialog/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
-	type ClineAccountSnapshot,
-	formatClineCredits,
-	isClineAccountAuthErrorMessage,
-} from "../../cline-account";
+	type TcodeAccountSnapshot,
+	formatTcodeCredits,
+	isTcodeAccountAuthErrorMessage,
+} from "../../tcode-account";
 import { palette } from "../../palette";
 
 export type AccountDialogAction =
@@ -20,7 +20,7 @@ type AccountView = "overview" | "organizations";
 
 type AccountState =
 	| { status: "loading"; message: string }
-	| { status: "loaded"; snapshot: ClineAccountSnapshot }
+	| { status: "loaded"; snapshot: TcodeAccountSnapshot }
 	| { status: "unauthenticated"; message: string }
 	| { status: "error"; message: string };
 
@@ -99,7 +99,7 @@ function formatDate(dateStr: string): string {
 	});
 }
 
-function userInitial(snapshot: ClineAccountSnapshot): string {
+function userInitial(snapshot: TcodeAccountSnapshot): string {
 	const candidate =
 		snapshot.user.displayName?.trim() || snapshot.user.email?.trim() || "?";
 	return candidate.charAt(0).toUpperCase();
@@ -200,7 +200,7 @@ function OrganizationRow(props: {
 	);
 }
 
-function accountActions(snapshot: ClineAccountSnapshot): AccountAction[] {
+function accountActions(snapshot: TcodeAccountSnapshot): AccountAction[] {
 	return LOADED_ACTIONS.map((action) => {
 		if (action.id !== "change-account") {
 			return action;
@@ -221,7 +221,7 @@ function organizationDescription(org: ClineAccountOrganization): string {
 
 export function AccountDialogContent(
 	props: ChoiceContext<AccountDialogAction> & {
-		loadAccount: () => Promise<ClineAccountSnapshot>;
+		loadAccount: () => Promise<TcodeAccountSnapshot>;
 		switchAccount: (organizationId?: string | null) => Promise<void>;
 		onAccountChange?: () => Promise<void>;
 	},
@@ -257,7 +257,7 @@ export function AccountDialogContent(
 			const message = error instanceof Error ? error.message : String(error);
 			if (generation.current === currentGeneration) {
 				setState({
-					status: isClineAccountAuthErrorMessage(message)
+					status: isTcodeAccountAuthErrorMessage(message)
 						? "unauthenticated"
 						: "error",
 					message,
@@ -531,12 +531,12 @@ export function AccountDialogContent(
 				<AccountField label="Active account" value={activeAccount} />
 				<AccountField
 					label="Credits"
-					value={formatClineCredits(loaded.displayedBalance)}
+					value={formatTcodeCredits(loaded.displayedBalance)}
 				/>
 				{loaded.activeOrganization && (
 					<AccountField
 						label="Personal"
-						value={formatClineCredits(loaded.balance.balance)}
+						value={formatTcodeCredits(loaded.balance.balance)}
 					/>
 				)}
 				<AccountField

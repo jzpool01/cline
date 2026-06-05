@@ -58,7 +58,7 @@ test.describe("per-turn metrics in messages.json — multi-iteration @live", () 
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
 			CLINE_VCR_CASSETTE: "./fixtures/per-turn-metrics.json",
-			CLINE_SESSION_DATA_DIR: sessionDataDir,
+			TCODE_SESSION_DATA_DIR: sessionDataDir,
 		}),
 	});
 

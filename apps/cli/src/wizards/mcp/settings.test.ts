@@ -11,11 +11,11 @@ import {
 } from "./settings";
 
 describe("MCP wizard settings", () => {
-	const originalSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+	const originalSettingsPath = process.env.TCODE_MCP_SETTINGS_PATH;
 	const tempDirs: string[] = [];
 
 	afterEach(async () => {
-		process.env.CLINE_MCP_SETTINGS_PATH = originalSettingsPath;
+		process.env.TCODE_MCP_SETTINGS_PATH = originalSettingsPath;
 		await Promise.all(
 			tempDirs.map((dir) => rm(dir, { recursive: true, force: true })),
 		);
@@ -25,8 +25,8 @@ describe("MCP wizard settings", () => {
 	async function useTempSettingsPath(): Promise<string> {
 		const dir = await mkdtemp(join(tmpdir(), "cline-mcp-settings-"));
 		tempDirs.push(dir);
-		const settingsPath = join(dir, "cline_mcp_settings.json");
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		const settingsPath = join(dir, "tcode_mcp_settings.json");
+		process.env.TCODE_MCP_SETTINGS_PATH = settingsPath;
 		return settingsPath;
 	}
 

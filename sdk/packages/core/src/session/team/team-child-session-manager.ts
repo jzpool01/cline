@@ -1,9 +1,9 @@
 import { appendFileSync } from "node:fs";
 import { join } from "node:path";
-import type * as LlmsProviders from "@cline/llms";
-import type { AgentResult } from "@cline/shared";
-import { resolveRootSessionId } from "@cline/shared";
-import { ensureHookLogDir } from "@cline/shared/storage";
+import type * as LlmsProviders from "@tarogo/llms";
+import type { AgentResult } from "@tarogo/shared";
+import { resolveRootSessionId } from "@tarogo/shared";
+import { ensureHookLogDir } from "@tarogo/shared/storage";
 import { z } from "zod";
 import type {
 	SubAgentEndContext,
@@ -404,7 +404,7 @@ export class TeamChildSessionManager {
 	}
 
 	appendSubagentHookAudit(event: HookEventPayload): void {
-		const envPath = process.env.CLINE_HOOKS_LOG_PATH?.trim() || undefined;
+		const envPath = process.env.TCODE_HOOKS_LOG_PATH?.trim() || undefined;
 		const logPath = envPath ?? join(ensureHookLogDir(), "hooks.jsonl");
 		appendFileSync(
 			logPath,

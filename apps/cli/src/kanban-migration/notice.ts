@@ -1,10 +1,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { resolveClineDataDir } from "@cline/shared/storage";
+import { resolveTcodeDataDir } from "@tarogo/shared/storage";
 
-const NOTICE_ID = "cline-cli-tui-default";
-const FORCE_NOTICE_ENV = "CLINE_FORCE_MIGRATION_NOTICE";
-const DISABLE_NOTICE_ENV = "CLINE_DISABLE_MIGRATION_NOTICE";
+const NOTICE_ID = "tcode-cli-tui-default";
+const FORCE_NOTICE_ENV = "TCODE_FORCE_MIGRATION_NOTICE";
+const DISABLE_NOTICE_ENV = "TCODE_DISABLE_MIGRATION_NOTICE";
 
 export interface CliMigrationNotice {
 	id: string;
@@ -50,13 +50,13 @@ function readNoticeState(filePath: string): CliNoticeState {
 }
 
 export function resolveCliNoticeStatePath(
-	dataDir = resolveClineDataDir(),
+	dataDir = resolveTcodeDataDir(),
 ): string {
 	return join(dataDir, "settings", "cli-notices.json");
 }
 
-export function getClineCliMigrationNotice(
-	dataDir = resolveClineDataDir(),
+export function getTcodeCliMigrationNotice(
+	dataDir = resolveTcodeDataDir(),
 	env: NodeJS.ProcessEnv = process.env,
 ): CliMigrationNotice | undefined {
 	const noticePath = resolveCliNoticeStatePath(dataDir);
@@ -71,12 +71,12 @@ export function getClineCliMigrationNotice(
 	}
 	return {
 		id: NOTICE_ID,
-		title: "Welcome to the new Cline CLI",
+		title: "Welcome to the new Tarogo CLI",
 	};
 }
 
-export function markClineCliMigrationNoticeShown(
-	dataDir = resolveClineDataDir(),
+export function markTcodeCliMigrationNoticeShown(
+	dataDir = resolveTcodeDataDir(),
 ): void {
 	const noticePath = resolveCliNoticeStatePath(dataDir);
 	const noticeState = readNoticeState(noticePath);

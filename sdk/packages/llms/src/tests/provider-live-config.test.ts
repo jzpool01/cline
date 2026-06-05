@@ -57,7 +57,7 @@ describe("toLiveProviderConfig", () => {
 	it("loads OpenAI Codex OAuth credentials from saved provider settings", () => {
 		const dir = mkdtempSync(path.join(tmpdir(), "llms-live-provider-"));
 		const providersPath = path.join(dir, "providers.json");
-		vi.stubEnv("CLINE_PROVIDER_SETTINGS_PATH", providersPath);
+		vi.stubEnv("TCODE_PROVIDER_SETTINGS_PATH", providersPath);
 		writeFileSync(
 			providersPath,
 			JSON.stringify({

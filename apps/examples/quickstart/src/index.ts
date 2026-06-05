@@ -1,4 +1,4 @@
-import { Agent } from "@cline/sdk";
+import { Agent } from "@tarogo/sdk";
 
 const agent = new Agent({
 	providerId: "cline",

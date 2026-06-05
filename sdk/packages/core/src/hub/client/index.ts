@@ -6,7 +6,7 @@ import {
 	type HubReplyEnvelope,
 	type HubTransportFrame,
 	resolveHubCommandTimeoutMs,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import {
 	SESSION_NOT_FOUND_ERROR_CODE,
 	SessionNotFoundError,

@@ -1,5 +1,5 @@
-import { AgentRuntimeAbortError } from "@cline/agents";
-import { initVcr } from "@cline/shared";
+import { AgentRuntimeAbortError } from "@tarogo/agents";
+import { initVcr } from "@tarogo/shared";
 import { createLocalHubScheduleRuntimeHandlers } from "../daemon/runtime-handlers";
 import { resolveHubEndpointOptions } from "../discovery/defaults";
 import { resolveSharedHubOwnerContext } from "../discovery/workspace";

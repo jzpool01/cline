@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
-import { resolveSessionDataDir } from "@cline/shared/storage";
+import { resolveSessionDataDir } from "@tarogo/shared/storage";
 import type { JsonRecord } from "./types";
 
 // ---------------------------------------------------------------------------
@@ -36,7 +36,7 @@ export function resolveWorkspaceRoot(launchCwd: string): string {
 // ---------------------------------------------------------------------------
 
 export function sharedSessionDataDir(): string {
-	return process.env.CLINE_SESSION_DATA_DIR?.trim() || resolveSessionDataDir();
+	return process.env.TCODE_SESSION_DATA_DIR?.trim() || resolveSessionDataDir();
 }
 
 export function sharedSessionArtifactPath(
@@ -71,8 +71,8 @@ export function toolApprovalDir(): string {
 
 export function resolveMcpSettingsPath(): string {
 	return (
-		process.env.CLINE_MCP_SETTINGS_PATH?.trim() ||
-		join(homedir(), ".cline", "data", "settings", "cline_mcp_settings.json")
+		process.env.TCODE_MCP_SETTINGS_PATH?.trim() ||
+		join(homedir(), ".tcode", "data", "settings", "tcode_mcp_settings.json")
 	);
 }
 
@@ -83,7 +83,7 @@ export function resolveMcpSettingsPath(): string {
 function kanbanDataRoot(): string {
 	return (
 		process.env.CLINE_KANBAN_DATA_DIR?.trim() ||
-		join(homedir(), ".cline", "apps", "kanban")
+		join(homedir(), ".tcode", "apps", "kanban")
 	);
 }
 

@@ -3,13 +3,13 @@ import {
 	type ProviderSettings,
 	ProviderSettingsManager,
 	type UserInstructionConfigService,
-} from "@cline/core";
+} from "@tarogo/core";
 import type { CliMigrationNotice } from "../kanban-migration/notice";
 import { logCliError } from "../logging/errors";
 import {
-	loadClineAccountSnapshot,
-	switchClineAccount,
-} from "../tui/cline-account";
+	loadTcodeAccountSnapshot,
+	switchTcodeAccount,
+} from "../tui/tcode-account";
 import type {
 	InteractiveConfigItem,
 	LoadInteractiveConfigDataOptions,
@@ -17,7 +17,7 @@ import type {
 import {
 	type InteractiveSlashCommand,
 	listInteractiveSlashCommands,
-	resolveClineWelcomeLine,
+	resolveTcodeWelcomeLine,
 } from "../tui/interactive-welcome";
 import { disableOpenTuiGraphicsProbe } from "../tui/opentui-env";
 import type { QueuedPromptItem } from "../tui/types";
@@ -56,8 +56,8 @@ export async function runInteractive(
 	userInstructionService?: UserInstructionConfigService,
 	resumeSessionId?: string,
 	options?: {
-		clineApiBaseUrl?: string;
-		clineProviderSettings?: ProviderSettings;
+		tcodeApiBaseUrl?: string;
+		tcodeProviderSettings?: ProviderSettings;
 		initialView?: "chat" | "config";
 		initialPrompt?: string;
 		initialNotice?: CliMigrationNotice;
@@ -391,21 +391,21 @@ export async function runInteractive(
 		workflowSlashCommands,
 		loadAdditionalSlashCommands,
 		loadWelcomeLine: async () =>
-			await resolveClineWelcomeLine({
+			await resolveTcodeWelcomeLine({
 				config,
-				clineApiBaseUrl: options?.clineApiBaseUrl,
-				clineProviderSettings: options?.clineProviderSettings,
+				tcodeApiBaseUrl: options?.tcodeApiBaseUrl,
+				tcodeProviderSettings: options?.tcodeProviderSettings,
 			}),
-		loadClineAccount: async () =>
-			await loadClineAccountSnapshot({
+		loadTcodeAccount: async () =>
+			await loadTcodeAccountSnapshot({
 				config,
-				clineApiBaseUrl: options?.clineApiBaseUrl,
+				tcodeApiBaseUrl: options?.tcodeApiBaseUrl,
 			}),
-		switchClineAccount: async (organizationId) =>
-			await switchClineAccount({
+		switchTcodeAccount: async (organizationId) =>
+			await switchTcodeAccount({
 				config,
 				organizationId,
-				clineApiBaseUrl: options?.clineApiBaseUrl,
+				tcodeApiBaseUrl: options?.tcodeApiBaseUrl,
 			}),
 		loadConfigData: configDataLoader.loadConfigData,
 		onToggleConfigItem,

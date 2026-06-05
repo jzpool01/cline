@@ -9,9 +9,9 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type * as LlmsProviders from "@cline/llms";
-import type { AgentResult } from "@cline/shared";
-import { setClineDir, setHomeDir } from "@cline/shared/storage";
+import type * as LlmsProviders from "@tarogo/llms";
+import type { AgentResult } from "@tarogo/shared";
+import { setTcodeDir, setHomeDir } from "@tarogo/shared/storage";
 import { nanoid } from "nanoid";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SessionManifest } from "../../session/models/session-manifest";
@@ -218,7 +218,7 @@ class LocalFileSessionService {
 describe("LocalRuntimeHost e2e", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_DIR: process.env.CLINE_DIR,
+		TCODE_DIR: process.env.TCODE_DIR,
 	};
 	const tempDirs: string[] = [];
 	let isolatedHomeDir = "";
@@ -226,16 +226,16 @@ describe("LocalRuntimeHost e2e", () => {
 	beforeEach(() => {
 		isolatedHomeDir = mkdtempSync(join(tmpdir(), "core-session-home-"));
 		process.env.HOME = isolatedHomeDir;
-		process.env.CLINE_DIR = join(isolatedHomeDir, ".cline");
+		process.env.TCODE_DIR = join(isolatedHomeDir, ".tcode");
 		setHomeDir(isolatedHomeDir);
-		setClineDir(process.env.CLINE_DIR);
+		setTcodeDir(process.env.TCODE_DIR);
 	});
 
 	afterEach(() => {
 		process.env.HOME = envSnapshot.HOME;
-		process.env.CLINE_DIR = envSnapshot.CLINE_DIR;
+		process.env.TCODE_DIR = envSnapshot.TCODE_DIR;
 		setHomeDir(envSnapshot.HOME ?? "~");
-		setClineDir(envSnapshot.CLINE_DIR ?? join("~", ".cline"));
+		setTcodeDir(envSnapshot.TCODE_DIR ?? join("~", ".tcode"));
 		for (const dir of tempDirs.splice(0)) {
 			rmSync(dir, { recursive: true, force: true });
 		}

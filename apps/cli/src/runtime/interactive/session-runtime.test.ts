@@ -4,9 +4,9 @@ import type {
 	TeamEvent,
 	ToolApprovalRequest,
 	ToolApprovalResult,
-} from "@cline/core";
-import { SessionNotFoundError } from "@cline/core";
-import type { AgentTool, Message } from "@cline/shared";
+} from "@tarogo/core";
+import { SessionNotFoundError } from "@tarogo/core";
+import type { AgentTool, Message } from "@tarogo/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { ChatCommandState } from "../../utils/chat-commands";
 import type { Config } from "../../utils/types";

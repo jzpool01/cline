@@ -1,7 +1,7 @@
 import type {
 	ClineAccountActionRequest,
 	ProviderActionRequest,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import type {
 	ClineAccountBalance,
 	ClineAccountOrganization,

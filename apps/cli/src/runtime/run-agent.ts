@@ -5,12 +5,12 @@ import {
 	prewarmFileIndex,
 	SessionSource,
 	type UserInstructionConfigService,
-} from "@cline/core";
-import type { ConsecutiveMistakeLimitContext } from "@cline/shared";
-import { createSessionId } from "@cline/shared";
+} from "@tarogo/core";
+import type { ConsecutiveMistakeLimitContext } from "@tarogo/shared";
+import { createSessionId } from "@tarogo/shared";
 import { logCliError } from "../logging/errors";
 import { createCliCore } from "../session/session";
-import { resolveClineWelcomeLine } from "../tui/interactive-welcome";
+import { resolveTcodeWelcomeLine } from "../tui/interactive-welcome";
 import {
 	askQuestionInTerminal,
 	requestToolApproval,
@@ -130,8 +130,8 @@ export async function runAgent(
 	config: Config,
 	userInstructionService?: UserInstructionConfigService,
 	options?: {
-		clineApiBaseUrl?: string;
-		clineProviderSettings?: ProviderSettings;
+		tcodeApiBaseUrl?: string;
+		tcodeProviderSettings?: ProviderSettings;
 	},
 ): Promise<void> {
 	// A clean one-shot run should not inherit a stale nonzero process exit code
@@ -139,13 +139,13 @@ export async function runAgent(
 	process.exitCode = 0;
 
 	if (config.verbose) {
-		const clineWelcomeLine = await resolveClineWelcomeLine({
+		const tcodeWelcomeLine = await resolveTcodeWelcomeLine({
 			config,
-			clineApiBaseUrl: options?.clineApiBaseUrl,
-			clineProviderSettings: options?.clineProviderSettings,
+			tcodeApiBaseUrl: options?.tcodeApiBaseUrl,
+			tcodeProviderSettings: options?.tcodeProviderSettings,
 		});
-		if (clineWelcomeLine && config.outputMode !== "json") {
-			writeln(clineWelcomeLine);
+		if (tcodeWelcomeLine && config.outputMode !== "json") {
+			writeln(tcodeWelcomeLine);
 		}
 	}
 

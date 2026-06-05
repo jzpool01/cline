@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { MessageWithMetadata } from "@cline/llms";
+import type { MessageWithMetadata } from "@tarogo/llms";
 import type {
 	AgentConfig,
 	AgentEvent,
@@ -10,8 +10,8 @@ import type {
 	AgentResult,
 	AgentRuntimeEvent,
 	BasicLogger,
-} from "@cline/shared";
-import { setClineDir, setHomeDir } from "@cline/shared/storage";
+} from "@tarogo/shared";
+import { setTcodeDir, setHomeDir } from "@tarogo/shared/storage";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { TelemetryService } from "../../services/telemetry/TelemetryService";
 import type { SessionManifest } from "../../session/models/session-manifest";
@@ -173,23 +173,23 @@ function _createGitRepo(cwd: string): void {
 describe("LocalRuntimeHost", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_DIR: process.env.CLINE_DIR,
+		TCODE_DIR: process.env.TCODE_DIR,
 	};
 	let isolatedHomeDir = "";
 
 	beforeEach(() => {
 		isolatedHomeDir = mkdtempSync(join(tmpdir(), "core-session-home-"));
 		process.env.HOME = isolatedHomeDir;
-		process.env.CLINE_DIR = join(isolatedHomeDir, ".cline");
+		process.env.TCODE_DIR = join(isolatedHomeDir, ".tcode");
 		setHomeDir(isolatedHomeDir);
-		setClineDir(process.env.CLINE_DIR);
+		setTcodeDir(process.env.TCODE_DIR);
 	});
 
 	afterEach(() => {
 		process.env.HOME = envSnapshot.HOME;
-		process.env.CLINE_DIR = envSnapshot.CLINE_DIR;
+		process.env.TCODE_DIR = envSnapshot.TCODE_DIR;
 		setHomeDir(envSnapshot.HOME ?? "~");
-		setClineDir(envSnapshot.CLINE_DIR ?? join("~", ".cline"));
+		setTcodeDir(envSnapshot.TCODE_DIR ?? join("~", ".tcode"));
 		rmSync(isolatedHomeDir, { recursive: true, force: true });
 	});
 

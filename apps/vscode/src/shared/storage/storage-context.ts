@@ -40,7 +40,7 @@ export interface StorageContext {
 
 export interface StorageContextOptions {
 	/**
-	 * Override the Cline home directory. Defaults to CLINE_DIR env var or ~/.cline.
+	 * Override the Cline home directory. Defaults to TCODE_DIR env var or ~/.cline.
 	 */
 	clineDir?: string
 
@@ -92,7 +92,7 @@ function hashString(str: string): string {
  * @returns A StorageContext ready for use by StateManager
  */
 export function createStorageContext(opts: StorageContextOptions = {}): StorageContext {
-	const clineDir = opts.clineDir || process.env.CLINE_DIR || path.join(os.homedir(), ".cline")
+	const clineDir = opts.clineDir || process.env.TCODE_DIR || path.join(os.homedir(), ".cline")
 	const dataDir = path.join(clineDir, SETTINGS_SUBFOLDER)
 
 	// Resolve workspace storage directory

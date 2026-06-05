@@ -9,8 +9,8 @@ import {
 	ProviderSettingsManager,
 	stopLocalHubServerGracefully,
 	toHubHealthUrl,
-} from "@cline/core";
-import type { HubUINotifyPayload, SessionRecord } from "@cline/shared";
+} from "@tarogo/core";
+import type { HubUINotifyPayload, SessionRecord } from "@tarogo/shared";
 
 interface TrackedClient {
 	clientId: string;
@@ -934,7 +934,7 @@ async function main(): Promise<void> {
 }
 
 if (isBundledDaemonEntryInvocation()) {
-	await import("@cline/core/hub/daemon-entry");
+	await import("@tarogo/core/hub/daemon-entry");
 } else {
 	main().catch((err) => {
 		const msg = err instanceof Error ? err.message : String(err);

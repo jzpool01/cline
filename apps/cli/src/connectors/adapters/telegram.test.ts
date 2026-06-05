@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { ConnectTelegramOptions } from "@cline/shared";
+import type { ConnectTelegramOptions } from "@tarogo/shared";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { __test__, telegramConnector } from "./telegram";
 
@@ -12,22 +12,22 @@ const parseTelegramArgs = (rawArgs: string[]): ConnectTelegramOptions =>
 		}
 	).parseArgs(rawArgs);
 
-const originalClineDataDir = process.env.CLINE_DATA_DIR;
+const originalTcodeDataDir = process.env.TCODE_DATA_DIR;
 const tempDataDirs: string[] = [];
 
 function useTempClineDataDir(): string {
 	const dataDir = mkdtempSync(join(tmpdir(), "cline-telegram-test-"));
 	tempDataDirs.push(dataDir);
-	process.env.CLINE_DATA_DIR = dataDir;
+	process.env.TCODE_DATA_DIR = dataDir;
 	return dataDir;
 }
 
 afterEach(() => {
 	vi.unstubAllGlobals();
-	if (originalClineDataDir === undefined) {
-		delete process.env.CLINE_DATA_DIR;
+	if (originalTcodeDataDir === undefined) {
+		delete process.env.TCODE_DATA_DIR;
 	} else {
-		process.env.CLINE_DATA_DIR = originalClineDataDir;
+		process.env.TCODE_DATA_DIR = originalTcodeDataDir;
 	}
 	for (const dir of tempDataDirs.splice(0)) {
 		rmSync(dir, { recursive: true, force: true });

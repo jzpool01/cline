@@ -27,7 +27,7 @@ const outputMocks = vi.hoisted(() => ({
 	c: { dim: "", reset: "" },
 }));
 
-vi.mock("@cline/core", () => ({
+vi.mock("@tarogo/core", () => ({
 	prewarmFileIndex: vi.fn(async () => undefined),
 	SessionSource: {
 		CLI: "cli",
@@ -65,7 +65,7 @@ vi.mock("./format", () => ({
 }));
 
 vi.mock("./interactive-welcome", () => ({
-	resolveClineWelcomeLine: vi.fn(async () => undefined),
+	resolveTcodeWelcomeLine: vi.fn(async () => undefined),
 }));
 
 vi.mock("./prompt", () => ({

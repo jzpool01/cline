@@ -12,9 +12,9 @@ import { join } from "node:path";
 import {
 	discoverPluginModulePaths,
 	resolvePluginConfigSearchPaths,
-	setClineDir,
+	setTcodeDir,
 	setHomeDir,
-} from "@cline/shared/storage";
+} from "@tarogo/shared/storage";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	installPlugin,
@@ -33,21 +33,21 @@ describe("plugin install command", () => {
 	let home = "";
 	let workspace = "";
 	let originalHome: string | undefined;
-	let originalClineDir: string | undefined;
-	let originalClineDataDir: string | undefined;
+	let originalTcodeDir: string | undefined;
+	let originalTcodeDataDir: string | undefined;
 
 	beforeEach(() => {
 		root = mkdtempSync(join(tmpdir(), "cli-plugin-install-"));
 		home = join(root, "home");
 		workspace = join(root, "workspace");
 		originalHome = process.env.HOME;
-		originalClineDir = process.env.CLINE_DIR;
-		originalClineDataDir = process.env.CLINE_DATA_DIR;
+		originalTcodeDir = process.env.TCODE_DIR;
+		originalTcodeDataDir = process.env.TCODE_DATA_DIR;
 		process.env.HOME = home;
-		process.env.CLINE_DIR = join(home, ".cline");
-		process.env.CLINE_DATA_DIR = join(home, ".cline", "data");
+		process.env.TCODE_DIR = join(home, ".tcode");
+		process.env.TCODE_DATA_DIR = join(home, ".tcode", "data");
 		setHomeDir(home);
-		setClineDir(process.env.CLINE_DIR);
+		setTcodeDir(process.env.TCODE_DIR);
 	});
 
 	function runGitCommand(cwd: string, args: string[]): void {
@@ -81,15 +81,15 @@ describe("plugin install command", () => {
 		} else {
 			process.env.HOME = originalHome;
 		}
-		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR;
+		if (originalTcodeDir === undefined) {
+			delete process.env.TCODE_DIR;
 		} else {
-			process.env.CLINE_DIR = originalClineDir;
+			process.env.TCODE_DIR = originalTcodeDir;
 		}
-		if (originalClineDataDir === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+		if (originalTcodeDataDir === undefined) {
+			delete process.env.TCODE_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = originalClineDataDir;
+			process.env.TCODE_DATA_DIR = originalTcodeDataDir;
 		}
 		rmSync(root, { recursive: true, force: true });
 	});
@@ -176,11 +176,11 @@ describe("plugin install command", () => {
 
 		const result = await installPlugin({ source });
 
-		expect(result.installPath).toContain(join(home, ".cline", "plugins"));
+		expect(result.installPath).toContain(join(home, ".tcode", "plugins"));
 		expect(result.entryPaths).toHaveLength(1);
 		expect(existsSync(result.entryPaths[0] ?? "")).toBe(true);
 		const discovered = discoverPluginModulePaths(
-			join(home, ".cline", "plugins"),
+			join(home, ".tcode", "plugins"),
 		);
 		expect(discovered).toEqual(result.entryPaths);
 	});
@@ -202,7 +202,7 @@ describe("plugin install command", () => {
 
 		expect(fetchMock).toHaveBeenCalledTimes(1);
 		expect(result.installPath).toContain(
-			join(workspace, ".cline", "plugins", "_installed", "remote"),
+			join(workspace, ".tcode", "plugins", "_installed", "remote"),
 		);
 		expect(result.entryPaths).toHaveLength(1);
 		expect(existsSync(result.entryPaths[0] ?? "")).toBe(true);
@@ -210,7 +210,7 @@ describe("plugin install command", () => {
 			"remote-weather",
 		);
 		expect(
-			discoverPluginModulePaths(join(workspace, ".cline", "plugins")),
+			discoverPluginModulePaths(join(workspace, ".tcode", "plugins")),
 		).toEqual(result.entryPaths);
 	});
 
@@ -233,7 +233,7 @@ describe("plugin install command", () => {
 		});
 
 		expect(result.installPath).toContain(
-			join(workspace, ".cline", "plugins", "_installed", "official"),
+			join(workspace, ".tcode", "plugins", "_installed", "official"),
 		);
 		expect(result.entryPaths).toHaveLength(1);
 		expect(readFileSync(result.entryPaths[0] ?? "", "utf8")).toContain(
@@ -244,7 +244,7 @@ describe("plugin install command", () => {
 			existsSync(join(result.installPath, "package", "other-plugin")),
 		).toBe(false);
 		expect(
-			discoverPluginModulePaths(join(workspace, ".cline", "plugins")),
+			discoverPluginModulePaths(join(workspace, ".tcode", "plugins")),
 		).toEqual(result.entryPaths);
 	});
 
@@ -326,7 +326,7 @@ describe("plugin install command", () => {
 		});
 
 		expect(result.installPath).toContain(
-			join(workspace, ".cline", "plugins", "_installed", "local"),
+			join(workspace, ".tcode", "plugins", "_installed", "local"),
 		);
 		expect(readFileSync(result.entryPaths[0] ?? "", "utf8")).toContain(
 			"local-web-search",
@@ -417,15 +417,15 @@ describe("plugin install command", () => {
 						plugins: [{ paths: ["./index.ts"], capabilities: ["tools"] }],
 					},
 					dependencies: {
-						"@cline/core": "latest",
+						"@tarogo/core": "latest",
 						yaml: "^2.8.1",
 					},
 					peerDependencies: {
-						"@cline/shared": "*",
+						"@tarogo/shared": "*",
 						bun: ">=1.0.0",
 					},
 					peerDependenciesMeta: {
-						"@cline/shared": {
+						"@tarogo/shared": {
 							optional: true,
 						},
 					},
@@ -481,7 +481,7 @@ describe("plugin install command", () => {
 			existsSync(join(result.installPath, "package", "node_modules")),
 		).toBe(false);
 		const discovered = discoverPluginModulePaths(
-			join(workspace, ".cline", "plugins"),
+			join(workspace, ".tcode", "plugins"),
 		);
 		expect(discovered).toEqual(result.entryPaths);
 		expect(discovered.some((path) => path.includes("noise.ts"))).toBe(false);
@@ -504,10 +504,10 @@ describe("plugin install command", () => {
 				"  shift",
 				"done",
 				'mkdir -p "$prefix/node_modules/published-plugin"',
-				'mkdir -p "$prefix/node_modules/@cline/core"',
+				'mkdir -p "$prefix/node_modules/@tarogo/core"',
 				'printf \'%s\\n\' \'{"name":"published-plugin","type":"module","cline":{"plugins":["index.ts"]}}\' > "$prefix/node_modules/published-plugin/package.json"',
 				"printf '%s\\n' \"export default { name: 'published-plugin', manifest: { capabilities: ['tools'] } };\" > \"$prefix/node_modules/published-plugin/index.ts\"",
-				'printf \'%s\\n\' \'{"name":"@cline/core"}\' > "$prefix/node_modules/@cline/core/package.json"',
+				'printf \'%s\\n\' \'{"name":"@tarogo/core"}\' > "$prefix/node_modules/@tarogo/core/package.json"',
 				"exit 0",
 			].join("\n"),
 			{ encoding: "utf8", mode: 0o755 },
@@ -666,7 +666,7 @@ describe("plugin install command", () => {
 			});
 			expect(code).toBe(0);
 			const parsed = JSON.parse(stdout.join("")) as { installPath: string };
-			expect(parsed.installPath).toContain(join(home, ".cline", "plugins"));
+			expect(parsed.installPath).toContain(join(home, ".tcode", "plugins"));
 		} finally {
 			process.stdout.write = originalWrite;
 		}
@@ -699,7 +699,7 @@ describe("plugin install command", () => {
 			expect(code).toBe(0);
 			const parsed = JSON.parse(stdout.join("")) as { installPath: string };
 			expect(parsed.installPath).toContain(
-				join(workspace, ".cline", "plugins", "_installed", "official"),
+				join(workspace, ".tcode", "plugins", "_installed", "official"),
 			);
 		} finally {
 			process.stdout.write = originalWrite;
@@ -720,10 +720,10 @@ describe("plugin install command", () => {
 		});
 
 		expect(resolvePluginConfigSearchPaths(workspace)[0]).toBe(
-			join(workspace, ".cline", "plugins"),
+			join(workspace, ".tcode", "plugins"),
 		);
 		expect(
-			discoverPluginModulePaths(join(workspace, ".cline", "plugins")),
+			discoverPluginModulePaths(join(workspace, ".tcode", "plugins")),
 		).toHaveLength(1);
 	});
 });

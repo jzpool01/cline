@@ -1,11 +1,11 @@
-import type { ChatStartSessionRequest, RuntimeLoggerConfig } from "@cline/core";
+import type { ChatStartSessionRequest, RuntimeLoggerConfig } from "@tarogo/core";
 import {
 	CoreSessionService,
 	HubSessionClient,
 	Llms,
 	ProviderSettingsManager,
 	SqliteSessionStore,
-} from "@cline/core";
+} from "@tarogo/core";
 import type { Thread } from "chat";
 import {
 	ensureOAuthProviderApiKey,

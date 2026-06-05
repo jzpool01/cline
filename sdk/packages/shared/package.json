@@ -1,10 +1,10 @@
 {
-	"name": "@cline/shared",
+	"name": "@tarogo/shared",
 	"version": "0.0.42",
-	"description": "Shared utilities, types, and schemas for Cline packages",
+	"description": "Tarogo 包共享的工具函数、类型和模式定义",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/cline/cline",
+		"url": "https://github.com/tarogo/tcode",
 		"directory": "sdk/packages/shared"
 	},
 	"type": "module",

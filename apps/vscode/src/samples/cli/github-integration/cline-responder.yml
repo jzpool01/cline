@@ -45,7 +45,7 @@ jobs:
         if: steps.detect.outputs.hit == 'true'
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          CLINE_DIR: ${{ runner.temp }}/cline
+          TCODE_DIR: ${{ runner.temp }}/cline
         run: |
           # Create instance and capture output
           INSTANCE_OUTPUT=$(cline instance new 2>&1)

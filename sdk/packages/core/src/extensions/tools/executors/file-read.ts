@@ -6,8 +6,8 @@
 
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
-import type { AgentToolContext } from "@cline/shared";
-import { resolveExistingFilePath } from "@cline/shared/storage";
+import type { AgentToolContext } from "@tarogo/shared";
+import { resolveExistingFilePath } from "@tarogo/shared/storage";
 import type { ReadFileRequest } from "../schemas";
 import type { FileReadExecutor } from "../types";
 

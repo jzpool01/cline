@@ -1,10 +1,10 @@
 /**
- * @cline/core
+ * @tarogo/core
  *
  * Core contracts, shared state utilities, and Node runtime services.
  */
 
-export * as Llms from "@cline/llms";
+export * as Llms from "@tarogo/llms";
 // Shared contracts and path helpers re-exported for app consumers.
 export type {
 	AddProviderActionRequest,
@@ -71,7 +71,7 @@ export type {
 	WorkspaceInfoSchema,
 	WorkspaceManifest,
 	WorkspaceManifestSchema,
-} from "@cline/shared";
+} from "@tarogo/shared";
 export {
 	buildClineSystemPrompt as getClineDefaultSystemPrompt,
 	buildSdkErrorProperties,
@@ -89,8 +89,8 @@ export {
 	parseUserCommandEnvelope,
 	registerDisposable,
 	SDK_ERROR_TELEMETRY_EVENT,
-} from "@cline/shared";
-export * from "@cline/shared/storage";
+} from "@tarogo/shared";
+export * from "@tarogo/shared/storage";
 export {
 	type ClineAccountBalance,
 	type ClineAccountOperations,
@@ -629,7 +629,7 @@ export { CORE_BUILD_VERSION } from "./version";
 export async function loadOpenTelemetryAdapter() {
 	return import("./services/telemetry/index.js");
 }
-export { Agent, createAgentRuntime } from "@cline/agents";
+export { Agent, createAgentRuntime } from "@tarogo/agents";
 export { createContextCompactionPrepareTurn } from "./extensions/context/compaction";
 export {
 	ALL_DEFAULT_TOOL_NAMES,

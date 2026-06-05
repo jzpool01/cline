@@ -131,7 +131,7 @@ async function main(): Promise<void> {
 			HOST_BRIDGE_ADDRESS: `localhost:${HOSTBRIDGE_PORT}`,
 			E2E_TEST,
 			CLINE_ENVIRONMENT,
-			CLINE_DIR: userDataDir,
+			TCODE_DIR: userDataDir,
 			INSTALL_DIR: extensionsDir,
 		},
 		stdio: "inherit",

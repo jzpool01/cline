@@ -7,9 +7,9 @@ import {
 	type SessionPendingPrompt,
 	SessionSource,
 	splitCoreSessionConfig,
-} from "@cline/core";
-import type { Message } from "@cline/llms";
-import { buildClineSystemPrompt } from "@cline/shared";
+} from "@tarogo/core";
+import type { Message } from "@tarogo/llms";
+import { buildClineSystemPrompt } from "@tarogo/shared";
 import { emitChunk, nowMs, sendEvent } from "./context";
 import { readSessionManifest, sharedSessionDataDir } from "./paths";
 import type {

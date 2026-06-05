@@ -31,8 +31,8 @@ export interface RunDashboardCommandOptions {
 	waitForShutdown?: (server: DashboardServerHandle) => Promise<void>;
 }
 
-const DASHBOARD_PORT_ENV = "CLINE_HUB_DASHBOARD_PORT";
-const WEBVIEW_DIST_ENV = "CLINE_HUB_WEBVIEW_DIST_DIR";
+const DASHBOARD_PORT_ENV = "TCODE_HUB_DASHBOARD_PORT";
+const WEBVIEW_DIST_ENV = "TCODE_HUB_WEBVIEW_DIST_DIR";
 
 function setEnvValue(name: string, value: string | undefined): () => void {
 	const previous = process.env[name];
@@ -82,11 +82,11 @@ function resolveDefaultWebviewDistDir(): string | undefined {
 	const candidates = [
 		...resolveInstalledPlatformPackageWebviewCandidates(),
 		// Source checkout: apps/cli/src/commands/dashboard.ts
-		join(moduleDir, "../../../cline-hub/dist/webview"),
+		join(moduleDir, "../../../tcode-hub/dist/webview"),
 		// Node bundle: apps/cli/dist/index.js
-		join(moduleDir, "cline-hub/webview"),
-		// Compiled platform package: apps/cli/dist/<platform>/bin/cline
-		join(dirname(process.execPath), "../cline-hub/webview"),
+		join(moduleDir, "tcode-hub/webview"),
+		// Compiled platform package: apps/cli/dist/<platform>/bin/tcode
+		join(dirname(process.execPath), "../tcode-hub/webview"),
 	];
 
 	return candidates.find((candidate) => existsSync(candidate));
@@ -95,7 +95,7 @@ function resolveDefaultWebviewDistDir(): string | undefined {
 function resolveInstalledPlatformPackageWebviewCandidates(): string[] {
 	const packageName = resolvePlatformPackageName();
 	const starts = [
-		process.env.CLINE_WRAPPER_PATH
+		process.env.TCODE_WRAPPER_PATH
 			? dirname(process.env.CLINE_WRAPPER_PATH)
 			: undefined,
 		dirname(process.execPath),
@@ -105,7 +105,7 @@ function resolveInstalledPlatformPackageWebviewCandidates(): string[] {
 		let current = start;
 		for (;;) {
 			candidates.push(
-				join(current, "node_modules", packageName, "cline-hub/webview"),
+				join(current, "node_modules", packageName, "tcode-hub/webview"),
 			);
 			const parent = dirname(current);
 			if (parent === current) break;
@@ -117,11 +117,11 @@ function resolveInstalledPlatformPackageWebviewCandidates(): string[] {
 
 function resolvePlatformPackageName(): string {
 	const platformName = platform() === "win32" ? "windows" : platform();
-	return `@cline/cli-${platformName}-${arch()}`;
+	return `@tarogo/cli-${platformName}-${arch()}`;
 }
 
 async function startDefaultDashboardServer(): Promise<DashboardServerHandle> {
-	const { startClineHubDashboardServer } = await import("@cline/cline-hub");
+	const { startClineHubDashboardServer } = await import("@tarogo/hub");
 	return await startClineHubDashboardServer();
 }
 
@@ -171,7 +171,7 @@ export async function runDashboardCommand(
 		const dashboardUrl =
 			server.inviteUrl || server.publicUrl || server.listenUrl;
 		options.io.writeln(
-			`${c.green}Cline dashboard listening at${c.reset} ${dashboardUrl}`,
+			`${c.green}tcode dashboard listening at${c.reset} ${dashboardUrl}`,
 		);
 		if (server.hubUrl) {
 			options.io.writeln(`${c.dim}Hub endpoint: ${server.hubUrl}${c.reset}`);

@@ -4,7 +4,7 @@ import { join } from "node:path";
 import {
 	resolveGlobalAgentsRulesPath,
 	setHomeDir,
-} from "@cline/shared/storage";
+} from "@tarogo/shared/storage";
 import { afterEach, describe, expect, it } from "vitest";
 import {
 	createRulesConfigDefinition,
@@ -54,7 +54,7 @@ describe("user instruction config loader", () => {
 		expect(resolveSkillsConfigSearchPaths(workspacePath)).toEqual(
 			expect.arrayContaining([
 				join(workspacePath, ".clinerules", "skills"),
-				join(workspacePath, ".cline", "skills"),
+				join(workspacePath, ".tcode", "skills"),
 				join(workspacePath, ".agents", "skills"),
 			]),
 		);
@@ -62,7 +62,7 @@ describe("user instruction config loader", () => {
 			expect.arrayContaining([
 				join(workspacePath, "AGENTS.md"),
 				join(workspacePath, ".clinerules"),
-				join(workspacePath, ".cline", "rules"),
+				join(workspacePath, ".tcode", "rules"),
 			]),
 		);
 		expect(
@@ -72,7 +72,7 @@ describe("user instruction config loader", () => {
 		).toBe(true);
 		const paths = resolveWorkflowsConfigSearchPaths(workspacePath);
 		expect(paths).toContain(join(workspacePath, ".clinerules", "workflows"));
-		expect(paths).toContain(join(workspacePath, ".cline", "workflows"));
+		expect(paths).toContain(join(workspacePath, ".tcode", "workflows"));
 		expect(
 			paths.some(
 				(p) =>
@@ -82,7 +82,7 @@ describe("user instruction config loader", () => {
 			),
 		).toBe(true);
 		expect(paths).not.toContain(
-			join(process.env.HOME ?? "~", ".cline", "data", "workflows"),
+			join(process.env.HOME ?? "~", ".tcode", "data", "workflows"),
 		);
 	});
 
@@ -90,13 +90,13 @@ describe("user instruction config loader", () => {
 		const workspacePath = "/repo/demo";
 		expect(
 			createSkillsConfigDefinition({ workspacePath }).directories,
-		).toContain(join(workspacePath, ".cline"));
+		).toContain(join(workspacePath, ".tcode"));
 		expect(
 			createRulesConfigDefinition({ workspacePath }).directories,
-		).toContain(join(workspacePath, ".cline"));
+		).toContain(join(workspacePath, ".tcode"));
 		expect(
 			createWorkflowsConfigDefinition({ workspacePath }).directories,
-		).toContain(join(workspacePath, ".cline"));
+		).toContain(join(workspacePath, ".tcode"));
 	});
 
 	it("parses markdown frontmatter for skill, rule, and workflow configs", () => {
@@ -250,7 +250,7 @@ Escalation runbook`,
 				join(tmpdir(), "core-user-instructions-symlink-skill-"),
 			);
 			tempRoots.push(tempRoot);
-			const skillsDir = join(tempRoot, ".cline", "skills");
+			const skillsDir = join(tempRoot, ".tcode", "skills");
 			const externalSkillsDir = join(tempRoot, "external-skills");
 			const targetSkillDir = join(externalSkillsDir, "data-agent-skill");
 			const linkedSkillDir = join(skillsDir, "data-agent-skill");
@@ -290,7 +290,7 @@ Use the data agent skill.`,
 				join(tmpdir(), "core-user-instructions-circular-symlink-skill-"),
 			);
 			tempRoots.push(tempRoot);
-			const skillsDir = join(tempRoot, ".cline", "skills");
+			const skillsDir = join(tempRoot, ".tcode", "skills");
 			const skillDir = join(skillsDir, "commit");
 			const circularLink = join(skillsDir, "loop");
 			await mkdir(skillDir, { recursive: true });
@@ -324,7 +324,7 @@ Use conventional commits.`,
 		);
 		tempRoots.push(tempRoot);
 
-		const pluginRoot = join(tempRoot, ".cline", "enterprise");
+		const pluginRoot = join(tempRoot, ".tcode", "enterprise");
 		await mkdir(join(pluginRoot, "workflows"), { recursive: true });
 		await mkdir(join(pluginRoot, "skills", "security-review"), {
 			recursive: true,
@@ -392,7 +392,7 @@ Use the security review checklist.`,
 		await mkdir(join(tempRoot, ".clinerules", "workflows"), {
 			recursive: true,
 		});
-		await mkdir(join(tempRoot, ".cline", "workflows"), { recursive: true });
+		await mkdir(join(tempRoot, ".tcode", "workflows"), { recursive: true });
 		await writeFile(
 			join(tempRoot, ".clinerules", "workflows", "release.md"),
 			`---
@@ -401,7 +401,7 @@ name: release
 Legacy release workflow.`,
 		);
 		await writeFile(
-			join(tempRoot, ".cline", "workflows", "release.md"),
+			join(tempRoot, ".tcode", "workflows", "release.md"),
 			`---
 name: release
 ---
@@ -418,7 +418,7 @@ New release workflow.`,
 
 		expect(release?.item.instructions).toBe("New release workflow.");
 		expect(release?.filePath).toBe(
-			join(tempRoot, ".cline", "workflows", "release.md"),
+			join(tempRoot, ".tcode", "workflows", "release.md"),
 		);
 	});
 });

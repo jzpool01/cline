@@ -1,7 +1,7 @@
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { setHomeDir } from "@cline/shared/storage";
+import { setHomeDir } from "@tarogo/shared/storage";
 import { afterEach, describe, expect, it } from "vitest";
 import {
 	discoverPluginModulePaths,
@@ -15,13 +15,13 @@ import {
 describe("plugin-config-loader", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_GLOBAL_SETTINGS_PATH: process.env.CLINE_GLOBAL_SETTINGS_PATH,
+		TCODE_GLOBAL_SETTINGS_PATH: process.env.TCODE_GLOBAL_SETTINGS_PATH,
 	};
 
 	afterEach(() => {
 		process.env.HOME = envSnapshot.HOME;
-		process.env.CLINE_GLOBAL_SETTINGS_PATH =
-			envSnapshot.CLINE_GLOBAL_SETTINGS_PATH;
+		process.env.TCODE_GLOBAL_SETTINGS_PATH =
+			envSnapshot.TCODE_GLOBAL_SETTINGS_PATH;
 		setHomeDir(envSnapshot.HOME ?? "~");
 	});
 
@@ -278,7 +278,7 @@ describe("plugin-config-loader", () => {
 			setHomeDir(home);
 			const installRoot = join(
 				workspace,
-				".cline",
+				".tcode",
 				"plugins",
 				"_installed",
 				"local",
@@ -331,8 +331,8 @@ describe("plugin-config-loader", () => {
 		try {
 			process.env.HOME = home;
 			setHomeDir(home);
-			const workspacePlugins = join(workspace, ".cline", "plugins");
-			const userPlugins = join(home, ".cline", "plugins");
+			const workspacePlugins = join(workspace, ".tcode", "plugins");
+			const userPlugins = join(home, ".tcode", "plugins");
 			const documentsPlugins = join(home, "Documents", "Cline", "Plugins");
 			await mkdir(workspacePlugins, { recursive: true });
 			await mkdir(userPlugins, { recursive: true });
@@ -368,7 +368,7 @@ describe("plugin-config-loader", () => {
 			const enabledPlugin = join(root, "enabled.js");
 			const disabledPlugin = join(root, "disabled.js");
 			const settingsPath = join(root, "global-settings.json");
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+			process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 			await writeFile(enabledPlugin, "export default {}", "utf8");
 			await writeFile(disabledPlugin, "export default {}", "utf8");
 			await writeFile(

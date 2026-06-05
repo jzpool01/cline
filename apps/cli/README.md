@@ -309,10 +309,10 @@ Desktop-integrated approval mode is also supported via env wiring (`CLINE_TOOL_A
 - `OPENROUTER_API_KEY` - API key for OpenRouter (when using `-P openrouter`)
 - `AI_GATEWAY_API_KEY` - API key for Vercel AI Gateway (when using `-P vercel-ai-gateway`)
 - `V0_API_KEY` - API key for v0 (when using `-P v0`)
-- `CLINE_DATA_DIR` - Base data directory for sessions/settings/teams/hooks
+- `TCODE_DATA_DIR` - Base data directory for sessions/settings/teams/hooks
 - `CLINE_SANDBOX` - Set to `1` to force sandbox mode
 - `CLINE_SANDBOX_DATA_DIR` - Override sandbox state directory
-- `CLINE_TEAM_DATA_DIR` - Override team persistence directory
+- `TCODE_TEAM_DATA_DIR` - Override team persistence directory
 - `CLINE_BUILD_ENV` - Runtime build mode for SDK-owned subprocess launches
 - `CLINE_DEBUG_HOST` - Host for development inspector listeners (default `127.0.0.1`)
 - `CLINE_DEBUG_PORT_BASE` - Base inspector port for development child processes
@@ -320,7 +320,7 @@ Desktop-integrated approval mode is also supported via env wiring (`CLINE_TOOL_A
 - `CLINE_TOOL_APPROVAL_DIR` - Directory for desktop approval request/decision files
 - `CLINE_LOG_ENABLED` - Set to `0`/`false` to disable runtime file logging
 - `CLINE_LOG_LEVEL` - Runtime log level (`trace|debug|info|warn|error|fatal|silent`, default `info`)
-- `CLINE_LOG_PATH` - Runtime log file path (default `<CLINE_DATA_DIR>/logs/cline.log`)
+- `CLINE_LOG_PATH` - Runtime log file path (default `<TCODE_DATA_DIR>/logs/cline.log`)
 - `CLINE_LOG_NAME` - Logger name embedded in runtime log records
 
 `--key` takes precedence over environment variables.

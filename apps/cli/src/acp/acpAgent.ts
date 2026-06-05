@@ -27,8 +27,8 @@ import {
 	Llms,
 	ProviderSettingsManager,
 	SessionSource,
-} from "@cline/core";
-import type { Message } from "@cline/shared";
+} from "@tarogo/core";
+import type { Message } from "@tarogo/shared";
 import { getPersistedProviderApiKey } from "../commands/auth";
 import { resolveSystemPrompt } from "../runtime/prompt";
 import { subscribeToAgentEvents } from "../runtime/session-events";

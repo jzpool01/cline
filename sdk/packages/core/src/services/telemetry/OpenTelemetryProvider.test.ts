@@ -1,7 +1,7 @@
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { BasicLogger } from "@cline/shared";
+import type { BasicLogger } from "@tarogo/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { writeGlobalSettings } from "../global-settings";
 import {
@@ -12,19 +12,19 @@ import {
 import { TelemetryService } from "./TelemetryService";
 
 describe("createOpenTelemetryTelemetryService", () => {
-	const previousGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+	const previousGlobalSettingsPath = process.env.TCODE_GLOBAL_SETTINGS_PATH;
 	let tempRoot: string | undefined;
 
 	beforeEach(() => {
 		tempRoot = mkdtempSync(join(tmpdir(), "core-telemetry-settings-"));
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = join(
 			tempRoot,
 			"global-settings.json",
 		);
 	});
 
 	afterEach(() => {
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
 		if (tempRoot) {
 			rmSync(tempRoot, { recursive: true, force: true });
 			tempRoot = undefined;

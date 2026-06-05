@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
-import type { AgentExtension, PluginSetupContext } from "@cline/shared";
-import { normalizePluginManifest } from "@cline/shared";
+import type { AgentExtension, PluginSetupContext } from "@tarogo/shared";
+import { normalizePluginManifest } from "@tarogo/shared";
 import type {
 	PluginInitializationFailure,
 	PluginInitializationWarning,

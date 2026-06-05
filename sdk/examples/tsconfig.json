@@ -28,28 +28,28 @@
 		"noUnusedParameters": false,
 		"noPropertyAccessFromIndexSignature": false,
 		"paths": {
-			"@cline/agents": ["../packages/agents/src/index.ts"],
-			"@cline/agents/*": [
+			"@tarogo/agents": ["../packages/agents/src/index.ts"],
+			"@tarogo/agents/*": [
 				"../packages/agents/src/*",
 				"../packages/agents/src/*/index.ts"
 			],
-			"@cline/cline-hub": ["./cline-hub/src/server.ts"],
-			"@cline/core": ["../packages/core/src/index.ts"],
-			"@cline/core/hub/daemon-entry": [
+			"@tarogo/hub": ["./cline-hub/src/server.ts"],
+			"@tarogo/core": ["../packages/core/src/index.ts"],
+			"@tarogo/core/hub/daemon-entry": [
 				"../packages/core/src/hub/daemon/entry.ts"
 			],
-			"@cline/core/*": [
+			"@tarogo/core/*": [
 				"../packages/core/src/*",
 				"../packages/core/src/*/index.ts"
 			],
-			"@cline/core/telemetry": [
+			"@tarogo/core/telemetry": [
 				"../packages/core/src/services/telemetry/index.ts"
 			],
-			"@cline/llms": ["../packages/llms/src/index.ts"],
-			"@cline/shared": ["../packages/shared/src/index.ts"],
-			"@cline/shared/storage": ["../packages/shared/src/storage/index.ts"],
-			"@cline/shared/db": ["../packages/shared/src/db/index.ts"],
-			"@cline/shared/*": [
+			"@tarogo/llms": ["../packages/llms/src/index.ts"],
+			"@tarogo/shared": ["../packages/shared/src/index.ts"],
+			"@tarogo/shared/storage": ["../packages/shared/src/storage/index.ts"],
+			"@tarogo/shared/db": ["../packages/shared/src/db/index.ts"],
+			"@tarogo/shared/*": [
 				"../packages/shared/src/*",
 				"../packages/shared/src/*/index.ts"
 			]

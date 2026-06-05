@@ -6,21 +6,21 @@ import type {
 	CronTriggerKind,
 	HubScheduleCreateInput,
 	HubScheduleUpdateInput,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import {
 	asOptionalString,
 	asString,
 	loadSqliteDb,
 	nowIso,
 	type SqliteDb,
-} from "@cline/shared/db";
-import { resolveCronDbPath } from "@cline/shared/storage";
+} from "@tarogo/shared/db";
+import { resolveCronDbPath } from "@tarogo/shared/storage";
 import { getNextCronTime } from "../schedule/scheduler";
 import { ensureCronSchema } from "./cron-schema";
 
 /**
  * Generalized cron/automation store backed by `cron.db`. Sessions stay in
- * their own database (see @cline/shared `ensureSessionSchema`). cron_runs
+ * their own database (see @tarogo/shared `ensureSessionSchema`). cron_runs
  * here absorb one-off, recurring, and event-driven work under one queue.
  */
 

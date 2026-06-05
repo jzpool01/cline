@@ -1,13 +1,13 @@
 /**
  * Model Schema Definitions
  *
- * Re-exports model info types from @cline/shared (canonical source)
- * and defines provider-level schemas local to @cline/llms.
+ * Re-exports model info types from @tarogo/shared (canonical source)
+ * and defines provider-level schemas local to @tarogo/llms.
  */
 
 import { z } from "zod";
 
-// ModelInfo and dependencies have their canonical home in @cline/shared
+// ModelInfo and dependencies have their canonical home in @tarogo/shared
 export {
 	ApiFormat,
 	ApiFormatSchema,
@@ -23,10 +23,10 @@ export {
 	ModelStatusSchema,
 	type ThinkingConfig,
 	ThinkingConfigSchema,
-} from "@cline/shared";
+} from "@tarogo/shared";
 
 // Re-import for use in local schemas
-import { ModelInfoSchema, ProviderCapabilitySchema } from "@cline/shared";
+import { ModelInfoSchema, ProviderCapabilitySchema } from "@tarogo/shared";
 
 export const ModelEntrySchema = z.object({
 	id: z.string(),

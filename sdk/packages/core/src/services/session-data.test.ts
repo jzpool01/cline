@@ -1,5 +1,5 @@
-import type { MessageWithMetadata } from "@cline/llms";
-import type { AgentResult } from "@cline/shared";
+import type { MessageWithMetadata } from "@tarogo/llms";
+import type { AgentResult } from "@tarogo/shared";
 import { describe, expect, it } from "vitest";
 import { withLatestAssistantTurnMetadata } from "./session-data";
 import { summarizeUsageFromMessages } from "./usage";

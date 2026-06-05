@@ -3,9 +3,9 @@ import {
 	getCoreBuiltinToolCatalog,
 	resolveDisabledToolNames,
 	type ToolCatalogEntry,
-} from "@cline/core";
+} from "@tarogo/core";
 
-export type { ToolCatalogEntry } from "@cline/core";
+export type { ToolCatalogEntry } from "@tarogo/core";
 
 export function getToolCatalog(
 	availabilityContext?: BuiltinToolAvailabilityContext,

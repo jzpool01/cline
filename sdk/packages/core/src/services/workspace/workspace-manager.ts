@@ -3,7 +3,7 @@ import {
 	type WorkspaceInfo,
 	type WorkspaceManifest,
 	WorkspaceManifestSchema,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import {
 	generateWorkspaceInfo,
 	normalizeWorkspacePath,

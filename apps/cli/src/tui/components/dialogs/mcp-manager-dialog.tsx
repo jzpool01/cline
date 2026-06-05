@@ -1,7 +1,7 @@
 import {
 	resolveDefaultMcpSettingsPath,
 	setMcpServerDisabled,
-} from "@cline/core";
+} from "@tarogo/core";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import { useDialogKeyboard } from "@opentui-ui/dialog/react";
 import { useState } from "react";
@@ -121,7 +121,7 @@ export function McpManagerContent(
 			<text selectable>{settingsPath}</text>
 
 			<text fg="gray" marginTop={1}>
-				Run cline mcp to add, edit, or remove servers.
+				Run tcode mcp to add, edit, or remove servers.
 			</text>
 
 			{servers.length > 0 && (

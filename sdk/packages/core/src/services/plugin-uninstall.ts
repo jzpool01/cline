@@ -19,7 +19,7 @@ import {
 import {
 	discoverPluginModulePaths,
 	resolvePluginConfigSearchPaths,
-} from "@cline/shared/storage";
+} from "@tarogo/shared/storage";
 import { readGlobalSettings, writeGlobalSettings } from "./global-settings";
 
 export interface PluginUninstallOptions {

@@ -9,7 +9,7 @@ import {
 	resolveWorkflowsConfigSearchPaths as resolveWorkflowsConfigSearchPathsFromShared,
 	SKILLS_CONFIG_DIRECTORY_NAME,
 	WORKFLOWS_CONFIG_DIRECTORY_NAME,
-} from "@cline/shared/storage";
+} from "@tarogo/shared/storage";
 import YAML from "yaml";
 import { resolveAgentPluginSkillDirectories } from "../plugin/plugin-config-loader";
 import {
@@ -379,7 +379,7 @@ export function resolveWorkflowsConfigSearchPaths(
 async function discoverSkillFiles(
 	directoryPath: string,
 ): Promise<ReadonlyArray<UnifiedConfigFileCandidate>> {
-	if (basename(directoryPath) === ".cline") {
+	if (basename(directoryPath) === ".tcode") {
 		const pluginRoots = await discoverManagedPluginRoots(directoryPath);
 		const nestedCandidates = await Promise.all(
 			pluginRoots.map((pluginRoot) =>
@@ -433,7 +433,7 @@ async function discoverSkillFiles(
 async function discoverRulesLikeFiles(
 	directoryPath: string,
 ): Promise<ReadonlyArray<UnifiedConfigFileCandidate>> {
-	if (basename(directoryPath) === ".cline") {
+	if (basename(directoryPath) === ".tcode") {
 		const pluginRoots = await discoverManagedPluginRoots(directoryPath);
 		const nestedCandidates = await Promise.all(
 			pluginRoots.map((pluginRoot) =>
@@ -503,7 +503,7 @@ async function discoverRulesLikeFiles(
 async function discoverManagedWorkflowFiles(
 	directoryPath: string,
 ): Promise<ReadonlyArray<UnifiedConfigFileCandidate>> {
-	if (basename(directoryPath) === ".cline") {
+	if (basename(directoryPath) === ".tcode") {
 		const pluginRoots = await discoverManagedPluginRoots(directoryPath);
 		const nestedCandidates = await Promise.all(
 			pluginRoots.map((pluginRoot) =>
@@ -522,7 +522,7 @@ export function createSkillsConfigDefinition(
 ): UnifiedConfigDefinition<"skill", SkillConfig> {
 	const directories = resolveSkillDirectories(options);
 	const managedRoot = options?.workspacePath
-		? join(options.workspacePath, ".cline")
+		? join(options.workspacePath, ".tcode")
 		: undefined;
 
 	return {
@@ -548,7 +548,7 @@ export function createRulesConfigDefinition(
 		options?.directories ??
 		resolveRulesConfigSearchPaths(options?.workspacePath);
 	const managedRoot = options?.workspacePath
-		? join(options.workspacePath, ".cline")
+		? join(options.workspacePath, ".tcode")
 		: undefined;
 
 	return {
@@ -575,7 +575,7 @@ export function createWorkflowsConfigDefinition(
 		options?.directories ??
 		resolveWorkflowsConfigSearchPaths(options?.workspacePath);
 	const managedRoot = options?.workspacePath
-		? join(options.workspacePath, ".cline")
+		? join(options.workspacePath, ".tcode")
 		: undefined;
 
 	return {

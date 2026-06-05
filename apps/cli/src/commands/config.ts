@@ -14,7 +14,7 @@ import {
 	resolvePluginConfigSearchPaths,
 	type SkillConfig,
 	type WorkflowConfig,
-} from "@cline/core";
+} from "@tarogo/core";
 import { Command } from "commander";
 import { getToolCatalog } from "../runtime/tools";
 import { loadInteractiveConfigData } from "../tui/interactive-config";
@@ -26,8 +26,8 @@ type ConfigIo = {
 };
 
 function resolveCliAgentConfigSearchPaths(cwd: string): string[] {
-	const clineDir = process.env.CLINE_DIR?.trim() || join(homedir(), ".cline");
-	return [join(cwd, ".cline", "agents"), join(clineDir, "agents")];
+	const clineDir = process.env.TCODE_DIR?.trim() || join(homedir(), ".tcode");
+	return [join(cwd, ".tcode", "agents"), join(clineDir, "agents")];
 }
 
 function createConfigUserInstructionService(cwd: string) {

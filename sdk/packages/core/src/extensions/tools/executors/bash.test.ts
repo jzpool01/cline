@@ -1,4 +1,4 @@
-import type { AgentToolContext } from "@cline/shared";
+import type { AgentToolContext } from "@tarogo/shared";
 import { describe, expect, it } from "vitest";
 import { createBashExecutor } from "./bash";
 

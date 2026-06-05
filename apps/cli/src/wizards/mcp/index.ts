@@ -1,5 +1,5 @@
 import * as p from "@clack/prompts";
-import { authorizeMcpServerOAuth } from "@cline/core";
+import { authorizeMcpServerOAuth } from "@tarogo/core";
 import open from "open";
 import {
 	addServer,

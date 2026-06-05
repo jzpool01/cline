@@ -8,7 +8,7 @@ import {
 	normalizeOAuthProvider,
 	saveLocalProviderOAuthCredentials,
 	saveLocalProviderSettings,
-} from "@cline/core";
+} from "@tarogo/core";
 import type {
 	WebviewInboundMessage,
 	WebviewProviderModel,

@@ -8,14 +8,14 @@ import { CoreSettingsService } from "./settings-service";
 describe("CoreSettingsService", () => {
 	const tempRoots: string[] = [];
 	const envSnapshot = {
-		CLINE_GLOBAL_SETTINGS_PATH: process.env.CLINE_GLOBAL_SETTINGS_PATH,
-		CLINE_MCP_SETTINGS_PATH: process.env.CLINE_MCP_SETTINGS_PATH,
+		TCODE_GLOBAL_SETTINGS_PATH: process.env.TCODE_GLOBAL_SETTINGS_PATH,
+		TCODE_MCP_SETTINGS_PATH: process.env.TCODE_MCP_SETTINGS_PATH,
 	};
 
 	afterEach(async () => {
-		process.env.CLINE_GLOBAL_SETTINGS_PATH =
-			envSnapshot.CLINE_GLOBAL_SETTINGS_PATH;
-		process.env.CLINE_MCP_SETTINGS_PATH = envSnapshot.CLINE_MCP_SETTINGS_PATH;
+		process.env.TCODE_GLOBAL_SETTINGS_PATH =
+			envSnapshot.TCODE_GLOBAL_SETTINGS_PATH;
+		process.env.TCODE_MCP_SETTINGS_PATH = envSnapshot.TCODE_MCP_SETTINGS_PATH;
 		await Promise.all(
 			tempRoots.map((dir) => rm(dir, { recursive: true, force: true })),
 		);
@@ -87,7 +87,7 @@ Use this skill.`,
 	it("uses cwd as the workspace root when listing instruction settings", async () => {
 		const tempRoot = await mkdtemp(join(tmpdir(), "core-settings-"));
 		tempRoots.push(tempRoot);
-		const skillDir = join(tempRoot, ".cline", "skills", "skill-one");
+		const skillDir = join(tempRoot, ".tcode", "skills", "skill-one");
 		await mkdir(skillDir, { recursive: true });
 		await writeFile(join(skillDir, "SKILL.md"), "Use this skill.");
 
@@ -108,8 +108,8 @@ Use this skill.`,
 	it("lists and toggles MCP server disabled state", async () => {
 		const tempRoot = await mkdtemp(join(tmpdir(), "core-settings-"));
 		tempRoots.push(tempRoot);
-		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		const settingsPath = join(tempRoot, "tcode_mcp_settings.json");
+		process.env.TCODE_MCP_SETTINGS_PATH = settingsPath;
 		await writeFile(
 			settingsPath,
 			`${JSON.stringify(
@@ -265,7 +265,7 @@ Use this skill.`,
 	it("honors explicit enabled values for plugin tool settings", async () => {
 		const tempRoot = await mkdtemp(join(tmpdir(), "core-settings-"));
 		tempRoots.push(tempRoot);
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = join(
 			tempRoot,
 			"global-settings.json",
 		);
@@ -284,7 +284,7 @@ Use this skill.`,
 
 		expect(
 			JSON.parse(
-				await readFile(process.env.CLINE_GLOBAL_SETTINGS_PATH, "utf8"),
+				await readFile(process.env.TCODE_GLOBAL_SETTINGS_PATH, "utf8"),
 			),
 		).toEqual({
 			disabledTools: ["plugin-tool"],
@@ -295,7 +295,7 @@ Use this skill.`,
 
 		expect(
 			JSON.parse(
-				await readFile(process.env.CLINE_GLOBAL_SETTINGS_PATH, "utf8"),
+				await readFile(process.env.TCODE_GLOBAL_SETTINGS_PATH, "utf8"),
 			),
 		).toEqual({ telemetryOptOut: false });
 	});

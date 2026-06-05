@@ -2,7 +2,7 @@ import type {
 	RuntimeCapabilities,
 	ToolApprovalRequest,
 	ToolApprovalResult,
-} from "@cline/core";
+} from "@tarogo/core";
 
 type QuickPickOptions = {
 	placeHolder?: string;

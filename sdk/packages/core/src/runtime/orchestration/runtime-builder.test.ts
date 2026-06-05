@@ -6,8 +6,8 @@ import {
 	type AgentTool,
 	createContributionRegistry,
 	type Message,
-} from "@cline/shared";
-import { setHomeDir } from "@cline/shared/storage";
+} from "@tarogo/shared";
+import { setHomeDir } from "@tarogo/shared/storage";
 import { afterEach, describe, expect, it } from "vitest";
 import { createUserInstructionConfigService } from "../../extensions/config";
 import { TelemetryService } from "../../services/telemetry/TelemetryService";
@@ -55,12 +55,12 @@ async function collectExtensionTools(
 
 describe("DefaultRuntimeBuilder", () => {
 	const previousHome = process.env.HOME;
-	const previousGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+	const previousGlobalSettingsPath = process.env.TCODE_GLOBAL_SETTINGS_PATH;
 
 	afterEach(() => {
 		process.env.HOME = previousHome;
 		setHomeDir(previousHome ?? "~");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
 	});
 
 	it("includes builtin tools when enabled", async () => {
@@ -269,7 +269,7 @@ describe("DefaultRuntimeBuilder", () => {
 	it("omits tools disabled by global settings from the advertised runtime tool list", async () => {
 		const tempRoot = mkdtempSync(join(tmpdir(), "runtime-builder-global-"));
 		const settingsPath = join(tempRoot, "global-settings.json");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 		writeFileSync(
 			settingsPath,
 			JSON.stringify({ disabledTools: ["search_codebase"] }, null, 2),
@@ -310,8 +310,8 @@ describe("DefaultRuntimeBuilder", () => {
 	it("includes MCP tools from configured servers", async () => {
 		const tempRoot = mkdtempSync(join(tmpdir(), "runtime-builder-mcp-"));
 		const serverPath = join(tempRoot, "mock-mcp-server.js");
-		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const settingsPath = join(tempRoot, "tcode_mcp_settings.json");
+		const previousSettingsPath = process.env.TCODE_MCP_SETTINGS_PATH;
 
 		writeFileSync(
 			serverPath,
@@ -364,7 +364,7 @@ process.stdin.on("data", (chunk) => {
 			"utf8",
 		);
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.TCODE_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig(),
@@ -372,7 +372,7 @@ process.stdin.on("data", (chunk) => {
 			expect(runtime.tools.map((tool) => tool.name)).toContain("mock__echo");
 			await runtime.shutdown("test");
 		} finally {
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.TCODE_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
@@ -381,8 +381,8 @@ process.stdin.on("data", (chunk) => {
 			join(tmpdir(), "runtime-builder-mcp-disabled-"),
 		);
 		const serverPath = join(tempRoot, "mock-mcp-server.js");
-		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const settingsPath = join(tempRoot, "tcode_mcp_settings.json");
+		const previousSettingsPath = process.env.TCODE_MCP_SETTINGS_PATH;
 
 		writeFileSync(
 			serverPath,
@@ -442,7 +442,7 @@ process.stdin.on("data", (chunk) => {
 			"utf8",
 		);
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.TCODE_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig({
@@ -454,15 +454,15 @@ process.stdin.on("data", (chunk) => {
 			);
 			await runtime.shutdown("test");
 		} finally {
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.TCODE_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
 	it("skips broken MCP servers without crashing", async () => {
 		const tempRoot = mkdtempSync(join(tmpdir(), "runtime-builder-mcp-bad-"));
 		const serverPath = join(tempRoot, "malformed-mcp-server.js");
-		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const settingsPath = join(tempRoot, "tcode_mcp_settings.json");
+		const previousSettingsPath = process.env.TCODE_MCP_SETTINGS_PATH;
 
 		writeFileSync(
 			serverPath,
@@ -488,7 +488,7 @@ process.stdin.on("data", (chunk) => {
 			"utf8",
 		);
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.TCODE_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig(),
@@ -499,7 +499,7 @@ process.stdin.on("data", (chunk) => {
 			expect(mcpTools).toEqual([]);
 			await runtime.shutdown("test");
 		} finally {
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.TCODE_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
@@ -507,12 +507,12 @@ process.stdin.on("data", (chunk) => {
 		const tempRoot = mkdtempSync(
 			join(tmpdir(), "runtime-builder-mcp-invalid-"),
 		);
-		const settingsPath = join(tempRoot, "cline_mcp_settings.json");
-		const previousSettingsPath = process.env.CLINE_MCP_SETTINGS_PATH;
+		const settingsPath = join(tempRoot, "tcode_mcp_settings.json");
+		const previousSettingsPath = process.env.TCODE_MCP_SETTINGS_PATH;
 
 		writeFileSync(settingsPath, "{ not valid json !!!", "utf8");
 
-		process.env.CLINE_MCP_SETTINGS_PATH = settingsPath;
+		process.env.TCODE_MCP_SETTINGS_PATH = settingsPath;
 		try {
 			const runtime = await new DefaultRuntimeBuilder().build({
 				config: makeBaseConfig(),
@@ -521,13 +521,13 @@ process.stdin.on("data", (chunk) => {
 			expect(mcpTools).toEqual([]);
 			await runtime.shutdown("test");
 		} finally {
-			process.env.CLINE_MCP_SETTINGS_PATH = previousSettingsPath;
+			process.env.TCODE_MCP_SETTINGS_PATH = previousSettingsPath;
 		}
 	});
 
 	it("includes skills tool when workspace skills are available", async () => {
 		const cwd = mkdtempSync(join(tmpdir(), "runtime-builder-skills-"));
-		const skillDir = join(cwd, ".cline", "skills", "commit");
+		const skillDir = join(cwd, ".tcode", "skills", "commit");
 		mkdirSync(skillDir, { recursive: true });
 		writeFileSync(
 			join(skillDir, "SKILL.md"),
@@ -553,7 +553,7 @@ Use conventional commits.`,
 		const cwd = mkdtempSync(join(tmpdir(), "runtime-builder-plugin-skills-"));
 		process.env.HOME = cwd;
 		setHomeDir(cwd);
-		const pluginDir = join(cwd, ".cline", "plugins", "review-plugin");
+		const pluginDir = join(cwd, ".tcode", "plugins", "review-plugin");
 		const skillDir = join(pluginDir, "skills", "review");
 		mkdirSync(skillDir, { recursive: true });
 		writeFileSync(
@@ -612,7 +612,7 @@ Use the review plugin guidance.`,
 		);
 		process.env.HOME = cwd;
 		setHomeDir(cwd);
-		const pluginDir = join(cwd, ".cline", "plugins", "review-plugin");
+		const pluginDir = join(cwd, ".tcode", "plugins", "review-plugin");
 		const skillRoot = join(pluginDir, "skills");
 		const skillDir = join(skillRoot, "review");
 		mkdirSync(skillDir, { recursive: true });
@@ -670,7 +670,7 @@ Use the review plugin guidance.`,
 		);
 		process.env.HOME = cwd;
 		setHomeDir(cwd);
-		const pluginDir = join(cwd, ".cline", "plugins", "review-plugin");
+		const pluginDir = join(cwd, ".tcode", "plugins", "review-plugin");
 		const skillDir = join(pluginDir, "skills", "review");
 		mkdirSync(skillDir, { recursive: true });
 		writeFileSync(
@@ -709,7 +709,7 @@ Use the review plugin guidance.`,
 		const cwd = mkdtempSync(
 			join(tmpdir(), "runtime-builder-skills-routing-disabled-"),
 		);
-		const skillDir = join(cwd, ".cline", "skills", "commit");
+		const skillDir = join(cwd, ".tcode", "skills", "commit");
 		mkdirSync(skillDir, { recursive: true });
 		writeFileSync(
 			join(skillDir, "SKILL.md"),
@@ -748,8 +748,8 @@ Use conventional commits.`,
 
 	it("marks configured but disabled skills in executor metadata", async () => {
 		const cwd = mkdtempSync(join(tmpdir(), "runtime-builder-skills-disabled-"));
-		const enabledDir = join(cwd, ".cline", "skills", "commit");
-		const disabledDir = join(cwd, ".cline", "skills", "review");
+		const enabledDir = join(cwd, ".tcode", "skills", "commit");
+		const disabledDir = join(cwd, ".tcode", "skills", "review");
 		mkdirSync(enabledDir, { recursive: true });
 		mkdirSync(disabledDir, { recursive: true });
 		writeFileSync(
@@ -796,8 +796,8 @@ Disabled skill.`,
 
 	it("scopes skills tool to session-configured skills", async () => {
 		const cwd = mkdtempSync(join(tmpdir(), "runtime-builder-skills-scoped-"));
-		const commitDir = join(cwd, ".cline", "skills", "commit");
-		const reviewDir = join(cwd, ".cline", "skills", "review");
+		const commitDir = join(cwd, ".tcode", "skills", "commit");
+		const reviewDir = join(cwd, ".tcode", "skills", "review");
 		mkdirSync(commitDir, { recursive: true });
 		mkdirSync(reviewDir, { recursive: true });
 		writeFileSync(
@@ -857,7 +857,7 @@ Review skill.`,
 
 	it("does not register the skills tool when all configured skills are disabled", async () => {
 		const cwd = mkdtempSync(join(tmpdir(), "runtime-disabled-skills-"));
-		const skillDir = join(cwd, ".cline", "skills", "review");
+		const skillDir = join(cwd, ".tcode", "skills", "review");
 		mkdirSync(skillDir, { recursive: true });
 		writeFileSync(
 			join(skillDir, "SKILL.md"),
@@ -869,7 +869,7 @@ Review skill.`,
 			"utf8",
 		);
 		const userInstructionService = createUserInstructionConfigService({
-			skills: { directories: [join(cwd, ".cline", "skills")] },
+			skills: { directories: [join(cwd, ".tcode", "skills")] },
 			rules: { directories: [] },
 			workflows: { directories: [] },
 		});

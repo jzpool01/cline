@@ -93,17 +93,17 @@ function runInteractiveCli(
 		env: {
 			...process.env,
 			HOME: homeDir,
-			CLINE_DATA_DIR: dataDir,
-			CLINE_DB_DATA_DIR: path.join(dataDir, "db"),
-			CLINE_SESSION_DATA_DIR: sessionDir,
-			CLINE_TEAM_DATA_DIR: teamDir,
+			TCODE_DATA_DIR: dataDir,
+			TCODE_DB_DATA_DIR: path.join(dataDir, "db"),
+			TCODE_SESSION_DATA_DIR: sessionDir,
+			TCODE_TEAM_DATA_DIR: teamDir,
 			CLINE_SESSION_BACKEND_MODE: "local",
-			CLINE_PROVIDER_SETTINGS_PATH: path.join(
+			TCODE_PROVIDER_SETTINGS_PATH: path.join(
 				dataDir,
 				"settings",
 				"providers.json",
 			),
-			CLINE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
+			TCODE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
 		},
 		timeout: INTERACTIVE_TEST_TIMEOUT_MS,
 		maxBuffer: 10 * 1024 * 1024,

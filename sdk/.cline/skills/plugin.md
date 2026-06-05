@@ -717,7 +717,7 @@ const MODULE_DIR = dirname(fileURLToPath(import.meta.url));
 const BUNDLED_DIR = join(MODULE_DIR, "presets");
 
 function resolveDataDir(): string {
-  return process.env.CLINE_DATA_DIR ??
+  return process.env.TCODE_DATA_DIR ??
     join(process.env.HOME ?? "~", ".cline", "data");
 }
 

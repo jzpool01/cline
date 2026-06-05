@@ -5,8 +5,8 @@ import {
 	buildWorkspaceMetadata,
 	mergeRulesForSystemPrompt,
 	type UserInstructionConfigService,
-} from "@cline/core";
-import { type AgentMode, buildClineSystemPrompt } from "@cline/shared";
+} from "@tarogo/core";
+import { type AgentMode, buildClineSystemPrompt } from "@tarogo/shared";
 import { isImagePath, loadImageAsDataUrl } from "../utils/image-attachments";
 
 const PLAN_MODE_INSTRUCTIONS = `# Plan Mode

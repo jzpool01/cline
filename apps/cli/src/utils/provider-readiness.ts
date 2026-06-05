@@ -2,7 +2,7 @@ import {
 	getProviderConfigFields,
 	type ProviderConfig,
 	type ProviderSettings,
-} from "@cline/core";
+} from "@tarogo/core";
 import {
 	getPersistedProviderApiKey,
 	isOAuthProvider,

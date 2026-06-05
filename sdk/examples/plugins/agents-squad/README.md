@@ -115,7 +115,7 @@ All optional. Environment variables override defaults:
 | `CLINE_SUBAGENT_DEFAULT_PRESET` | `phantom` |
 | `CLINE_SUBAGENTS_BACKEND_MODE` | `auto` (`auto` \| `hub` \| `local`) |
 | `CLINE_SUBAGENT_CWD` | `process.cwd()` |
-| `CLINE_DATA_DIR` | `~/.cline/data` |
+| `TCODE_DATA_DIR` | `~/.cline/data` |
 
 ## How it works
 

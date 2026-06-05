@@ -2,8 +2,8 @@ import type {
 	HubClientRegistration,
 	HubCommandEnvelope,
 	HubReplyEnvelope,
-} from "@cline/shared";
-import { createSessionId } from "@cline/shared";
+} from "@tarogo/shared";
+import { createSessionId } from "@tarogo/shared";
 import {
 	asPlainRecord,
 	errorReply,

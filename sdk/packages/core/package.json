@@ -1,10 +1,10 @@
 {
-	"name": "@cline/core",
-	"description": "Cline Core SDK for Node Runtime",
+	"name": "@tarogo/core",
+	"description": "Tarogo Core SDK - Node 运行时核心模块",
 	"version": "0.0.42",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/cline/cline",
+		"url": "https://github.com/tarogo/tcode",
 		"directory": "sdk/packages/core"
 	},
 	"type": "module",
@@ -44,9 +44,9 @@
 		"test:watch": "vitest --config vitest.config.ts"
 	},
 	"dependencies": {
-		"@cline/agents": "workspace:*",
-		"@cline/shared": "workspace:*",
-		"@cline/llms": "workspace:*",
+		"@tarogo/agents": "workspace:*",
+		"@tarogo/shared": "workspace:*",
+		"@tarogo/llms": "workspace:*",
 		"@modelcontextprotocol/sdk": "^1.29.0",
 		"@opentelemetry/api": "^1.9.0",
 		"@opentelemetry/api-logs": "^0.214.0",

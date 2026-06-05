@@ -27,8 +27,8 @@ process.chdir(cliDir);
 // so the CLI ships with the production telemetry configuration without
 // requiring the end user to set any env vars.
 const BUILD_TIME_INLINED_ENV_VARS = [
-	"TELEMETRY_SERVICE_API_KEY",
-	"ERROR_SERVICE_API_KEY",
+	// Telemetry API keys removed — no telemetry data is sent to external servers.
+	// OTEL env vars remain for user/org-configured collectors via environment variables.
 	"OTEL_TELEMETRY_ENABLED",
 	"OTEL_LOGS_EXPORTER",
 	"OTEL_METRICS_EXPORTER",
@@ -49,7 +49,7 @@ const pkg = JSON.parse(readFileSync(join(cliDir, "package.json"), "utf-8"));
 const version: string = pkg.version;
 const repository: unknown = pkg.repository;
 
-console.log(`Building @cline/cli v${version}`);
+console.log(`Building @tarogo/tcode v${version}`);
 
 const buildOptions = parseBuildOptions(process.argv.slice(2));
 
@@ -100,11 +100,11 @@ if (!buildOptions.skipSdkBuild) {
 	await $`bun run build:sdk`.cwd(rootDir);
 
 	console.log("Building CLI bundle...");
-	await $`bun -F @cline/cli build`.cwd(rootDir);
+	await $`bun -F @tarogo/tcode build`.cwd(rootDir);
 }
 
-const hubWebviewSource = join(cliDir, "../cline-hub/src/webview");
-const hubWebviewDist = join(cliDir, "../cline-hub/dist/webview");
+const hubWebviewSource = join(cliDir, "../hub/src/webview");
+const hubWebviewDist = join(cliDir, "../hub/dist/webview");
 const hubWebviewIndex = join(hubWebviewDist, "index.html");
 
 function newestFileMtimeMs(dir: string): number {
@@ -141,8 +141,8 @@ function shouldBuildHubWebview(): boolean {
 }
 
 if (shouldBuildHubWebview()) {
-	console.log("Building Cline Hub webview...");
-	await $`bun -F @cline/cline-hub build:webview`.cwd(rootDir);
+	console.log("Building Hub webview...");
+	await $`bun -F @tarogo/hub build:webview`.cwd(rootDir);
 }
 
 const binaries: Record<string, string> = {};
@@ -183,10 +183,10 @@ async function buildCompiledBinary(input: {
 	// Build to /tmp first so Bun's temp-file rename stays on one filesystem
 	// layer in containerized environments (virtiofs, overlayfs).
 	const entrypoint = join(cliDir, "src/index.ts");
-	const tmpDir = join("/tmp", `cline-build-${input.dirName}`);
+	const tmpDir = join("/tmp", `tcode-build-${input.dirName}`);
 	const tmpOutfile = join(
 		tmpDir,
-		input.outfile.endsWith(".exe") ? "cline.exe" : "cline",
+		input.outfile.endsWith(".exe") ? "tcode.exe" : "tcode",
 	);
 	mkdirSync(tmpDir, { recursive: true });
 
@@ -225,9 +225,9 @@ async function buildCompiledBinary(input: {
 for (const item of targets) {
 	// npm treats "win32" specially in os field, but for package naming use "windows"
 	const displayOs = item.os === "win32" ? "windows" : item.os;
-	const name = `@cline/cli-${displayOs}-${item.arch}`;
-	const dirName = `cli-${displayOs}-${item.arch}`;
-	const binaryName = item.os === "win32" ? "cline.exe" : "cline";
+	const name = `@tarogo/tcode-${displayOs}-${item.arch}`;
+	const dirName = `tcode-${displayOs}-${item.arch}`;
+	const binaryName = item.os === "win32" ? "tcode.exe" : "tcode";
 	const bunTarget = getBunTarget(item);
 
 	console.log(`\nBuilding ${name} (target: ${bunTarget})...`);
@@ -269,8 +269,8 @@ for (const item of targets) {
 	}
 
 	if (existsSync(hubWebviewDist)) {
-		const hubWebviewDest = join(cliDir, `dist/${dirName}/cline-hub/webview`);
-		mkdirSync(join(cliDir, `dist/${dirName}/cline-hub`), {
+		const hubWebviewDest = join(cliDir, `dist/${dirName}/hub/webview`);
+		mkdirSync(join(cliDir, `dist/${dirName}/hub`), {
 			recursive: true,
 		});
 		cpSync(hubWebviewDist, hubWebviewDest, { recursive: true });
@@ -283,12 +283,12 @@ for (const item of targets) {
 			{
 				name,
 				version,
-				description: `Cline CLI binary for ${displayOs} ${item.arch}`,
+				description: `tcode binary for ${displayOs} ${item.arch}`,
 				os: [item.os],
 				cpu: [item.arch],
 				...(repository ? { repository } : {}),
 				bin: {
-					cline: `bin/${binaryName}`,
+					tcode: `bin/${binaryName}`,
 				},
 			},
 			null,

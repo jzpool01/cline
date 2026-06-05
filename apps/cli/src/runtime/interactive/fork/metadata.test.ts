@@ -1,5 +1,5 @@
-import { SessionSource } from "@cline/core";
-import type { Message } from "@cline/shared";
+import { SessionSource } from "@tarogo/core";
+import type { Message } from "@tarogo/shared";
 import { describe, expect, it } from "vitest";
 import { buildForkSessionMetadata } from "./metadata";
 

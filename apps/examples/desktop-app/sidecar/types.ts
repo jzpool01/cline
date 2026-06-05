@@ -3,7 +3,7 @@ import type {
 	ClineCore,
 	NodeHubClient,
 	ToolApprovalResult,
-} from "@cline/core";
+} from "@tarogo/core";
 
 export type JsonRecord = Record<string, unknown>;
 

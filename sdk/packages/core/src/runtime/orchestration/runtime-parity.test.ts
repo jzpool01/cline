@@ -1,8 +1,8 @@
 import { mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { AgentTool } from "@cline/shared";
-import { setClineDir, setHomeDir } from "@cline/shared/storage";
+import type { AgentTool } from "@tarogo/shared";
+import { setTcodeDir, setHomeDir } from "@tarogo/shared/storage";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { createBuiltinTools } from "../../extensions/tools";
 import { DefaultRuntimeBuilder } from "./runtime-builder";
@@ -72,23 +72,23 @@ function makeSpawnTool(): AgentTool {
 describe("runtime tool parity", () => {
 	const envSnapshot = {
 		HOME: process.env.HOME,
-		CLINE_DIR: process.env.CLINE_DIR,
+		TCODE_DIR: process.env.TCODE_DIR,
 	};
 	let isolatedHomeDir = "";
 
 	beforeEach(() => {
 		isolatedHomeDir = mkdtempSync(join(tmpdir(), "runtime-parity-home-"));
 		process.env.HOME = isolatedHomeDir;
-		process.env.CLINE_DIR = join(isolatedHomeDir, ".cline");
+		process.env.TCODE_DIR = join(isolatedHomeDir, ".tcode");
 		setHomeDir(isolatedHomeDir);
-		setClineDir(process.env.CLINE_DIR);
+		setTcodeDir(process.env.TCODE_DIR);
 	});
 
 	afterEach(() => {
 		process.env.HOME = envSnapshot.HOME;
-		process.env.CLINE_DIR = envSnapshot.CLINE_DIR;
+		process.env.TCODE_DIR = envSnapshot.TCODE_DIR;
 		setHomeDir(envSnapshot.HOME ?? "~");
-		setClineDir(envSnapshot.CLINE_DIR ?? join("~", ".cline"));
+		setTcodeDir(envSnapshot.TCODE_DIR ?? join("~", ".tcode"));
 	});
 
 	it("matches legacy tool list when tools+spawn are enabled", async () => {

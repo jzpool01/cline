@@ -1,5 +1,5 @@
-import type { ToolResultContent } from "@cline/llms";
-import { estimateTokens, type MessageWithMetadata } from "@cline/shared";
+import type { ToolResultContent } from "@tarogo/llms";
+import { estimateTokens, type MessageWithMetadata } from "@tarogo/shared";
 
 export { estimateTokens };
 

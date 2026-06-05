@@ -2,7 +2,7 @@ import type { ChoiceContext } from "@opentui-ui/dialog";
 import type { DialogActions } from "@opentui-ui/dialog/react";
 import open from "open";
 import { useCallback } from "react";
-import type { ClineAccountSnapshot } from "../cline-account";
+import type { TcodeAccountSnapshot } from "../tcode-account";
 import {
 	type AccountDialogAction,
 	AccountDialogContent,
@@ -13,7 +13,7 @@ import type { OpenModelSelectorOptions } from "./use-model-selector";
 export function useAccountDialog(opts: {
 	dialog: DialogActions;
 	termHeight: number;
-	loadAccount: () => Promise<ClineAccountSnapshot>;
+	loadAccount: () => Promise<TcodeAccountSnapshot>;
 	switchAccount: (organizationId?: string | null) => Promise<void>;
 	onAccountChange?: () => Promise<void>;
 	openModelSelector: (options?: OpenModelSelectorOptions) => Promise<void>;
@@ -64,7 +64,7 @@ export function useAccountDialog(opts: {
 				style: { maxHeight: termHeight - 2 },
 				closeOnEscape: false,
 				content: (ctx: ChoiceContext<boolean>) => (
-					<OAuthLoginContent {...ctx} providerId="cline" providerName="Cline" />
+					<OAuthLoginContent {...ctx} providerId="tarogo" providerName="Tarogo" />
 				),
 			});
 			if (saved) {

@@ -3,7 +3,7 @@ import { resolveHubUrl } from "./connect";
 
 const envSnapshot = {
 	CLINE_HUB_DISCOVERY_PATH: process.env.CLINE_HUB_DISCOVERY_PATH,
-	CLINE_DATA_DIR: process.env.CLINE_DATA_DIR,
+	TCODE_DATA_DIR: process.env.TCODE_DATA_DIR,
 	CLINE_BUILD_ENV: process.env.CLINE_BUILD_ENV,
 };
 
@@ -15,7 +15,7 @@ beforeEach(() => {
 
 afterEach(() => {
 	process.env.CLINE_HUB_DISCOVERY_PATH = envSnapshot.CLINE_HUB_DISCOVERY_PATH;
-	process.env.CLINE_DATA_DIR = envSnapshot.CLINE_DATA_DIR;
+	process.env.TCODE_DATA_DIR = envSnapshot.TCODE_DATA_DIR;
 	if (envSnapshot.CLINE_BUILD_ENV === undefined) {
 		delete process.env.CLINE_BUILD_ENV;
 	} else {

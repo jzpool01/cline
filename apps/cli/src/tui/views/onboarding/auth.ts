@@ -5,8 +5,8 @@ import {
 	type ProviderSettingsManager,
 	saveLocalProviderOAuthCredentials,
 	startClineDeviceAuth,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@tarogo/core";
+import { getClineEnvironmentConfig } from "@tarogo/shared";
 import open from "open";
 
 export type OnboardingOAuthProviderId = "cline" | "oca" | "openai-codex";

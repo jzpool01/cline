@@ -19,14 +19,14 @@ interface TestMcpSettings {
 	mcpServers?: Record<string, { disabled?: boolean }>;
 }
 
-vi.mock("@cline/core", () => ({
+vi.mock("@tarogo/core", () => ({
 	resolveDefaultMcpSettingsPath: () =>
-		process.env.CLINE_MCP_SETTINGS_PATH ?? "cline_mcp_settings.json",
+		process.env.TCODE_MCP_SETTINGS_PATH ?? "tcode_mcp_settings.json",
 	setMcpServerDisabled: (options: SetMcpServerDisabledOptions) => {
 		const filePath =
 			options.filePath ??
-			process.env.CLINE_MCP_SETTINGS_PATH ??
-			"cline_mcp_settings.json";
+			process.env.TCODE_MCP_SETTINGS_PATH ??
+			"tcode_mcp_settings.json";
 		const settings = JSON.parse(readFileSync(filePath, "utf8")) as {
 			mcpServers?: Record<string, { disabled?: boolean }>;
 		};
@@ -54,11 +54,11 @@ async function readSettings(filePath: string): Promise<TestMcpSettings> {
 describe("mcp manager dialog helpers", () => {
 	const tempRoots: string[] = [];
 	const envSnapshot = {
-		CLINE_MCP_SETTINGS_PATH: process.env.CLINE_MCP_SETTINGS_PATH,
+		TCODE_MCP_SETTINGS_PATH: process.env.TCODE_MCP_SETTINGS_PATH,
 	};
 
 	afterEach(async () => {
-		process.env.CLINE_MCP_SETTINGS_PATH = envSnapshot.CLINE_MCP_SETTINGS_PATH;
+		process.env.TCODE_MCP_SETTINGS_PATH = envSnapshot.TCODE_MCP_SETTINGS_PATH;
 		await Promise.all(
 			tempRoots.map((directory) =>
 				rm(directory, { recursive: true, force: true }),
@@ -72,7 +72,7 @@ describe("mcp manager dialog helpers", () => {
 		tempRoots.push(tempRoot);
 		const loadedPath = join(tempRoot, "loaded.json");
 		const currentDefaultPath = join(tempRoot, "current-default.json");
-		process.env.CLINE_MCP_SETTINGS_PATH = currentDefaultPath;
+		process.env.TCODE_MCP_SETTINGS_PATH = currentDefaultPath;
 		const settings = {
 			mcpServers: {
 				docs: {

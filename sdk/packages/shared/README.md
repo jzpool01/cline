@@ -10,7 +10,7 @@ Package-level docs are centralized:
 Node-only filesystem path resolvers live under the storage subpath export:
 
 - `@cline/shared/storage`
-- examples: `resolveClineDataDir`, `resolveDbDataDir`, `resolveSessionDataDir`, `resolveTeamDataDir`
+- examples: `resolveTcodeDataDir`, `resolveDbDataDir`, `resolveSessionDataDir`, `resolveTeamDataDir`
 
 It also exports cross-client logging contracts, including `BasicLogger`, so
 runtime, SDK, and host applications can share a single logger type.

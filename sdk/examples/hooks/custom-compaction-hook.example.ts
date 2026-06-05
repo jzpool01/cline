@@ -17,8 +17,8 @@
  * to the current request and snapshot.
  */
 
-import type { AgentPlugin } from "@cline/core";
-import { estimateTokens as estimateTokensFromChars } from "@cline/shared";
+import type { AgentPlugin } from "@tarogo/core";
+import { estimateTokens as estimateTokensFromChars } from "@tarogo/shared";
 
 type PluginHooks = NonNullable<AgentPlugin["hooks"]>;
 type BeforeModelHook = NonNullable<PluginHooks["beforeModel"]>;

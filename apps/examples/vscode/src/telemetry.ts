@@ -2,11 +2,11 @@ import * as os from "node:os";
 import {
 	type ConfiguredTelemetryHandle,
 	createConfiguredTelemetryHandle,
-} from "@cline/core";
+} from "@tarogo/core";
 import {
 	createClineTelemetryServiceConfig,
 	createClineTelemetryServiceMetadata,
-} from "@cline/shared";
+} from "@tarogo/shared";
 
 export interface VscodeTelemetryOptions {
 	extensionVersion: string;

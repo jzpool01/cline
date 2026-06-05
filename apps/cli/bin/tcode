@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-// Binary resolver for Cline CLI.
+// Binary resolver for tcode CLI.
 //
 // This script runs with Node.js (available everywhere npm is) and finds the
 // correct platform-specific compiled binary to execute. The compiled binary
 // has Bun embedded, so users don't need Bun installed.
 //
 // Resolution order:
-// 1. CLINE_BIN_PATH env var override
-// 2. Cached binary at bin/.cline (created by postinstall)
+// 1. TCODE_BIN_PATH env var override
+// 2. Cached binary at bin/.tcode (created by postinstall)
 // 3. Walk up node_modules to find the platform-specific package
 
 const childProcess = require("child_process");
@@ -20,7 +20,7 @@ const scriptPath = fs.realpathSync(__filename);
 const scriptDir = path.dirname(scriptPath);
 const childEnv = {
 	...process.env,
-	CLINE_WRAPPER_PATH: scriptPath,
+	TCODE_WRAPPER_PATH: scriptPath,
 };
 
 function run(target) {
@@ -43,13 +43,13 @@ function run(target) {
 }
 
 // 1. Check env var override
-const envPath = process.env.CLINE_BIN_PATH;
+const envPath = process.env.TCODE_BIN_PATH;
 if (envPath) {
 	run(envPath);
 }
 
 // 2. Check cached binary
-const cached = path.join(scriptDir, ".cline");
+const cached = path.join(scriptDir, ".tcode");
 if (fs.existsSync(cached)) {
 	run(cached);
 }
@@ -74,8 +74,8 @@ if (!arch) {
 	arch = os.arch();
 }
 
-const base = "@cline/cli-" + platform + "-" + arch;
-const binary = platform === "windows" ? "cline.exe" : "cline";
+const base = "@tarogo/tcode-" + platform + "-" + arch;
+const binary = platform === "windows" ? "tcode.exe" : "tcode";
 
 // Build fallback chain of package names to try
 const names = [base];
@@ -86,8 +86,8 @@ function findBinary(startDir) {
 		const modules = path.join(current, "node_modules");
 		if (fs.existsSync(modules)) {
 			for (const name of names) {
-				// Scoped package: @cline/cli-darwin-arm64 lives at
-				// node_modules/@cline/cli-darwin-arm64
+				// Scoped package: @tarogo/tcode-darwin-arm64 lives at
+				// node_modules/@tarogo/tcode-darwin-arm64
 				const candidate = path.join(modules, name, "bin", binary);
 				if (fs.existsSync(candidate)) return candidate;
 			}
@@ -103,7 +103,7 @@ function findBinary(startDir) {
 const resolved = findBinary(scriptDir);
 if (!resolved) {
 	console.error(
-		"Could not find the Cline CLI binary for your platform.\n" +
+		"Could not find the tcode binary for your platform.\n" +
 			"Your platform: " +
 			os.platform() +
 			" " +
@@ -114,7 +114,7 @@ if (!resolved) {
 				return '"' + n + '"';
 			}).join(" or ") +
 			"\n\n" +
-			"Try reinstalling: npm install -g cline",
+			"Try reinstalling: npm install -g tcode",
 	);
 	process.exit(1);
 }

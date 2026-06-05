@@ -14,7 +14,7 @@ const coreMocks = vi.hoisted(() => {
 	};
 });
 
-vi.mock("@cline/core", () => {
+vi.mock("@tarogo/core", () => {
 	return {
 		ClineAccountService: class {
 			constructor(options: {
@@ -38,7 +38,7 @@ vi.mock("@cline/core", () => {
 
 function makeConfig(overrides: Partial<Config> = {}): Config {
 	return {
-		providerId: "cline",
+		providerId: "tarogo",
 		modelId: "anthropic/claude-sonnet-4.6",
 		apiKey: "",
 		verbose: false,
@@ -59,7 +59,7 @@ function makeConfig(overrides: Partial<Config> = {}): Config {
 	} as unknown as Config;
 }
 
-describe("createClineAccountService", () => {
+describe("createTcodeAccountService", () => {
 	beforeEach(() => {
 		coreMocks.getProviderSettings.mockReset();
 		coreMocks.saveProviderSettings.mockReset();
@@ -67,9 +67,9 @@ describe("createClineAccountService", () => {
 		coreMocks.serviceOptions.length = 0;
 	});
 
-	it("refreshes persisted Cline OAuth credentials before creating the account service", async () => {
+	it("refreshes persisted Tarogo OAuth credentials before creating the account service", async () => {
 		coreMocks.getProviderSettings.mockReturnValue({
-			provider: "cline",
+			provider: "tarogo",
 			auth: {
 				accessToken: "workos:old-access",
 				refreshToken: "refresh-token",
@@ -84,8 +84,8 @@ describe("createClineAccountService", () => {
 			accountId: "acct-new",
 		});
 
-		const { createClineAccountService } = await import("./cline-account");
-		const service = await createClineAccountService({ config: makeConfig() });
+		const { createTcodeAccountService } = await import("./tcode-account");
+		const service = await createTcodeAccountService({ config: makeConfig() });
 
 		expect(service).toBeDefined();
 		expect(coreMocks.getValidClineCredentials).toHaveBeenCalledWith(
@@ -99,7 +99,7 @@ describe("createClineAccountService", () => {
 		);
 		expect(coreMocks.saveProviderSettings).toHaveBeenCalledWith(
 			expect.objectContaining({
-				provider: "cline",
+				provider: "tarogo",
 				auth: expect.objectContaining({
 					accessToken: "workos:new-access",
 					refreshToken: "new-refresh",
@@ -114,9 +114,9 @@ describe("createClineAccountService", () => {
 		);
 	});
 
-	it("asks the user to re-authenticate when Cline OAuth credentials cannot refresh", async () => {
+	it("asks the user to re-authenticate when Tarogo OAuth credentials cannot refresh", async () => {
 		coreMocks.getProviderSettings.mockReturnValue({
-			provider: "cline",
+			provider: "tarogo",
 			auth: {
 				accessToken: "workos:old-access",
 				refreshToken: "refresh-token",
@@ -125,12 +125,12 @@ describe("createClineAccountService", () => {
 		});
 		coreMocks.getValidClineCredentials.mockResolvedValue(null);
 
-		const { createClineAccountService } = await import("./cline-account");
+		const { createTcodeAccountService } = await import("./tcode-account");
 
 		await expect(
-			createClineAccountService({ config: makeConfig() }),
+			createTcodeAccountService({ config: makeConfig() }),
 		).rejects.toThrow(
-			"Cline account requires re-authentication. Run cline auth cline.",
+			"Tarogo account requires re-authentication. Run tcode auth tarogo.",
 		);
 	});
 });

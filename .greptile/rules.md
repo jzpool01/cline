@@ -76,7 +76,7 @@ Each session is guaranteed at most one `task.completed` emission. The `source` f
 
 ## CLI Directory-Ordering Rule
 
-The CLI accepts `--config <dir>`. The CLI **must** apply `setClineDir(...)` and
+The CLI accepts `--config <dir>`. The CLI **must** apply `setTcodeDir(...)` and
 `setHomeDir(...)` from `@cline/shared/storage` **before** calling
 `captureCliExtensionActivated()`. Otherwise the telemetry singleton's persisted distinct-id
 and any other on-disk telemetry state lands under `~/.cline` instead of the user's chosen
@@ -85,7 +85,7 @@ config dir.
 The canonical pattern is in `apps/cli/src/main.ts` (PR #357):
 
 ```ts
-if (configDir) setClineDir(configDir);
+if (configDir) setTcodeDir(configDir);
 setHomeDir(homedir());
 captureCliExtensionActivated();   // <-- after dir overrides
 ```

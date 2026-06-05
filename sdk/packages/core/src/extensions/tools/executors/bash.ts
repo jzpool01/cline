@@ -9,7 +9,7 @@ import {
 	type AgentToolContext,
 	getDefaultShell,
 	getShellArgs,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import { TimeoutError } from "../helpers";
 import type { BashExecutor } from "../types";
 

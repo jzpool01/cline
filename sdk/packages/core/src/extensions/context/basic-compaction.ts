@@ -1,4 +1,4 @@
-import type { BasicLogger, MessageWithMetadata } from "@cline/shared";
+import type { BasicLogger, MessageWithMetadata } from "@tarogo/shared";
 import type {
 	CoreCompactionContext,
 	CoreCompactionResult,

@@ -1,4 +1,4 @@
-import type { AgentResult } from "@cline/shared";
+import type { AgentResult } from "@tarogo/shared";
 import {
 	type AgentTool,
 	createTool,
@@ -70,7 +70,7 @@ import {
 	type TeamTeammateSpec,
 	validateWithZod,
 	zodToJsonSchema,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import {
 	buildDelegatedAgentConfig,
 	type DelegatedAgentConfigProvider,

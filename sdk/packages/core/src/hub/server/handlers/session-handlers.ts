@@ -3,8 +3,8 @@ import type {
 	HubReplyEnvelope,
 	JsonValue,
 	ToolApprovalRequest,
-} from "@cline/shared";
-import { createSessionId, parseRuntimeConfigExtensions } from "@cline/shared";
+} from "@tarogo/shared";
+import { createSessionId, parseRuntimeConfigExtensions } from "@tarogo/shared";
 import type { RuntimeSessionConfig } from "../../../runtime/host/runtime-host";
 import {
 	SessionVersioningError,

@@ -7,17 +7,17 @@ import {
 	getValidClineCredentials,
 	type ProviderSettings,
 	ProviderSettingsManager,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@tarogo/core";
+import { getClineEnvironmentConfig } from "@tarogo/shared";
 import { formatCreditBalance, normalizeCreditBalance } from "../utils/output";
 import { toProviderApiKey } from "../utils/provider-auth";
 import type { Config } from "../utils/types";
 
 const WORKOS_TOKEN_PREFIX = "workos:";
 
-type ClineAccountConfig = Pick<Config, "apiKey" | "providerId">;
+type TcodeAccountConfig = Pick<Config, "apiKey" | "providerId">;
 
-export interface ClineAccountSnapshot {
+export interface TcodeAccountSnapshot {
 	user: ClineAccountUser;
 	balance: ClineAccountBalance;
 	organizationBalance: ClineAccountOrganizationBalance | null;
@@ -26,44 +26,44 @@ export interface ClineAccountSnapshot {
 	displayedBalance: number;
 }
 
-export function formatClineCredits(value: number): string {
+export function formatTcodeCredits(value: number): string {
 	return formatCreditBalance(normalizeCreditBalance(value));
 }
 
-export function isClineAccountAuthErrorMessage(message: string): boolean {
+export function isTcodeAccountAuthErrorMessage(message: string): boolean {
 	const normalized = message.trim().toLowerCase();
 	return (
-		normalized === "no cline account auth token found" ||
+		normalized === "no tcode account auth token found" ||
 		normalized.includes("requires re-authentication")
 	);
 }
 
 function resolveAccountApiBaseUrl(input: {
-	clineApiBaseUrl?: string;
-	clineProviderSettings?: ProviderSettings;
+	tcodeApiBaseUrl?: string;
+	tcodeProviderSettings?: ProviderSettings;
 }): string {
-	const settingsBaseUrl = input.clineProviderSettings?.baseUrl?.trim();
+	const settingsBaseUrl = input.tcodeProviderSettings?.baseUrl?.trim();
 	if (settingsBaseUrl) {
 		return settingsBaseUrl;
 	}
-	const configuredBaseUrl = input.clineApiBaseUrl?.trim();
+	const configuredBaseUrl = input.tcodeApiBaseUrl?.trim();
 	if (configuredBaseUrl) {
 		return configuredBaseUrl;
 	}
 	return getClineEnvironmentConfig().apiBaseUrl;
 }
 
-function resolveClineAccountAuthToken(input: {
-	config: ClineAccountConfig;
-	clineProviderSettings?: ProviderSettings;
+function resolveTcodeAccountAuthToken(input: {
+	config: TcodeAccountConfig;
+	tcodeProviderSettings?: ProviderSettings;
 }): string | undefined {
 	const persistedAccessToken =
-		input.clineProviderSettings?.auth?.accessToken?.trim() || "";
+		input.tcodeProviderSettings?.auth?.accessToken?.trim() || "";
 	const configApiKey =
-		input.config.providerId === "cline" ? input.config.apiKey.trim() : "";
+		input.config.providerId === "tarogo" ? input.config.apiKey.trim() : "";
 	const settingsApiKey =
-		input.clineProviderSettings?.apiKey?.trim() ||
-		input.clineProviderSettings?.auth?.apiKey?.trim() ||
+		input.tcodeProviderSettings?.apiKey?.trim() ||
+		input.tcodeProviderSettings?.auth?.apiKey?.trim() ||
 		"";
 
 	let authToken = persistedAccessToken || configApiKey || settingsApiKey;
@@ -79,13 +79,13 @@ function stripWorkosTokenPrefix(accessToken: string): string {
 		: accessToken;
 }
 
-async function resolveValidClineAccountAuthToken(input: {
-	config: ClineAccountConfig;
-	clineProviderSettings?: ProviderSettings;
+async function resolveValidTcodeAccountAuthToken(input: {
+	config: TcodeAccountConfig;
+	tcodeProviderSettings?: ProviderSettings;
 	manager: ProviderSettingsManager;
 	apiBaseUrl: string;
 }): Promise<string | undefined> {
-	const settings = input.clineProviderSettings;
+	const settings = input.tcodeProviderSettings;
 	const auth = settings?.auth;
 	const accessToken = auth?.accessToken?.trim();
 	const refreshToken = auth?.refreshToken?.trim();
@@ -101,10 +101,10 @@ async function resolveValidClineAccountAuthToken(input: {
 		);
 		if (!credentials) {
 			throw new Error(
-				"Cline account requires re-authentication. Run cline auth cline.",
+				"Tarogo account requires re-authentication. Run tcode auth tarogo.",
 			);
 		}
-		const nextAccessToken = toProviderApiKey("cline", credentials);
+		const nextAccessToken = toProviderApiKey("tarogo", credentials);
 		if (
 			nextAccessToken !== accessToken ||
 			credentials.refresh !== refreshToken ||
@@ -127,27 +127,27 @@ async function resolveValidClineAccountAuthToken(input: {
 		}
 		return nextAccessToken;
 	}
-	return resolveClineAccountAuthToken({
+	return resolveTcodeAccountAuthToken({
 		config: input.config,
-		clineProviderSettings: settings,
+		tcodeProviderSettings: settings,
 	});
 }
 
-export async function createClineAccountService(input: {
-	config: ClineAccountConfig;
-	clineApiBaseUrl?: string;
-	clineProviderSettings?: ProviderSettings;
+export async function createTcodeAccountService(input: {
+	config: TcodeAccountConfig;
+	tcodeApiBaseUrl?: string;
+	tcodeProviderSettings?: ProviderSettings;
 }): Promise<ClineAccountService | undefined> {
 	const manager = new ProviderSettingsManager();
 	const settings =
-		manager.getProviderSettings("cline") ?? input.clineProviderSettings;
+		manager.getProviderSettings("tarogo") ?? input.tcodeProviderSettings;
 	const apiBaseUrl = resolveAccountApiBaseUrl({
-		clineApiBaseUrl: input.clineApiBaseUrl,
-		clineProviderSettings: settings,
+		tcodeApiBaseUrl: input.tcodeApiBaseUrl,
+		tcodeProviderSettings: settings,
 	});
-	const authToken = await resolveValidClineAccountAuthToken({
+	const authToken = await resolveValidTcodeAccountAuthToken({
 		config: input.config,
-		clineProviderSettings: settings,
+		tcodeProviderSettings: settings,
 		manager,
 		apiBaseUrl,
 	});
@@ -160,14 +160,14 @@ export async function createClineAccountService(input: {
 	});
 }
 
-export async function loadClineAccountSnapshot(input: {
-	config: ClineAccountConfig;
-	clineApiBaseUrl?: string;
-	clineProviderSettings?: ProviderSettings;
-}): Promise<ClineAccountSnapshot> {
-	const service = await createClineAccountService(input);
+export async function loadTcodeAccountSnapshot(input: {
+	config: TcodeAccountConfig;
+	tcodeApiBaseUrl?: string;
+	tcodeProviderSettings?: ProviderSettings;
+}): Promise<TcodeAccountSnapshot> {
+	const service = await createTcodeAccountService(input);
 	if (!service) {
-		throw new Error("No Cline account auth token found");
+		throw new Error("No Tarogo account auth token found");
 	}
 
 	const user = await service.fetchMe();
@@ -194,15 +194,15 @@ export async function loadClineAccountSnapshot(input: {
 	};
 }
 
-export async function switchClineAccount(input: {
-	config: ClineAccountConfig;
+export async function switchTcodeAccount(input: {
+	config: TcodeAccountConfig;
 	organizationId?: string | null;
-	clineApiBaseUrl?: string;
-	clineProviderSettings?: ProviderSettings;
+	tcodeApiBaseUrl?: string;
+	tcodeProviderSettings?: ProviderSettings;
 }): Promise<void> {
-	const service = await createClineAccountService(input);
+	const service = await createTcodeAccountService(input);
 	if (!service) {
-		throw new Error("No Cline account auth token found");
+		throw new Error("No Tarogo account auth token found");
 	}
 	await service.switchAccount(input.organizationId);
 }

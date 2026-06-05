@@ -2,7 +2,7 @@ import type {
 	ChatMessage as CoreChatMessage,
 	ProviderListItem,
 	ProviderModel,
-} from "@cline/core";
+} from "@tarogo/core";
 
 export type WebviewUsage = {
 	inputTokens?: number;

@@ -5,12 +5,12 @@ import {
 	createLocalHubScheduleRuntimeHandlers,
 	ensureHubWebSocketServer,
 	resolveSharedHubOwnerContext,
-} from "@cline/core/hub";
+} from "@tarogo/core/hub";
 import {
 	createClineTelemetryServiceConfig,
 	createClineTelemetryServiceMetadata,
 	type TelemetryMetadata,
-} from "@cline/shared";
+} from "@tarogo/shared";
 
 type DetachedHubDaemonConfig = {
 	workspaceRoot: string;

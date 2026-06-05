@@ -13,12 +13,12 @@ import {
 import { cp, mkdir, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { basename, dirname, join, relative, resolve, sep } from "node:path";
-import { type PluginUninstallOptions, uninstallPlugin } from "@cline/core";
+import { type PluginUninstallOptions, uninstallPlugin } from "@tarogo/core";
 import {
 	isPluginModulePath,
-	resolveClineDir,
+	resolveTcodeDir,
 	resolvePluginModuleEntries,
-} from "@cline/shared/storage";
+} from "@tarogo/shared/storage";
 
 export interface PluginInstallOptions {
 	source: string;
@@ -86,7 +86,7 @@ const PACKAGE_DIRECTORY_NAME = "package";
 const OFFICIAL_PLUGINS_REPO = "https://github.com/cline/plugins.git";
 const REMOTE_PLUGIN_FETCH_TIMEOUT_MS = 30_000;
 const REMOTE_PLUGIN_MAX_BYTES = 10 * 1024 * 1024;
-const HOST_PROVIDED_SDK_PREFIX = "@cline/";
+const HOST_PROVIDED_SDK_PREFIX = "@tarogo/";
 const DEPENDENCY_FIELDS = [
 	"dependencies",
 	"devDependencies",
@@ -94,7 +94,7 @@ const DEPENDENCY_FIELDS = [
 	"peerDependencies",
 ] as const;
 const WRAPPER_PACKAGE_JSON = {
-	name: "cline-installed-plugin",
+	name: "tcode-installed-plugin",
 	private: true,
 	cline: {
 		plugins: [] as Array<{ paths: string[] }>,
@@ -399,8 +399,8 @@ export function parsePluginSource(
 
 function getPluginRoot(cwd: string | undefined): string {
 	return cwd
-		? join(cwd, ".cline", "plugins")
-		: join(resolveClineDir(), "plugins");
+		? join(cwd, ".tcode", "plugins")
+		: join(resolveTcodeDir(), "plugins");
 }
 
 function getInstallPath(
@@ -581,12 +581,12 @@ function removeInstalledHostProvidedSdkDependencies(
 	packageRoot: string,
 	preservePackageName?: string,
 ): void {
-	const clineScopeDir = join(packageRoot, "node_modules", "@cline");
+	const clineScopeDir = join(packageRoot, "node_modules", "@tarogo");
 	if (!existsSync(clineScopeDir)) {
 		return;
 	}
 	for (const entry of statSafeReadDir(clineScopeDir)) {
-		const packageName = `@cline/${entry.name}`;
+		const packageName = `@tarogo/${entry.name}`;
 		if (packageName === preservePackageName) {
 			continue;
 		}
@@ -672,7 +672,7 @@ async function writeWrapperManifest(
 		JSON.stringify(
 			{
 				...WRAPPER_PACKAGE_JSON,
-				name: `cline-installed-plugin-${hashSource(wrapperRoot)}`,
+				name: `tcode-installed-plugin-${hashSource(wrapperRoot)}`,
 				cline: {
 					plugins: [{ paths: entryPaths }],
 				},
@@ -994,7 +994,7 @@ export async function installPlugin(
 		`${Date.now()}-${process.pid}-${hashSource(`${source}:${Math.random()}`)}`,
 	);
 	const npmCommand =
-		options.npmCommand ?? (process.env.CLINE_NPM_COMMAND?.trim() || "npm");
+		options.npmCommand ?? (process.env.TCODE_NPM_COMMAND?.trim() || "npm");
 
 	const force = options.force === true;
 	assertCanInstall(installPath, force);

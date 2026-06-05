@@ -18,7 +18,7 @@ import {
 import { logCliProcessError } from "./errors";
 
 const envKeys = [
-	"CLINE_DATA_DIR",
+	"TCODE_DATA_DIR",
 	"CLINE_LOG_PATH",
 	"CLINE_LOG_LEVEL",
 	"CLINE_LOG_NAME",
@@ -30,7 +30,7 @@ function withEnvSnapshot(): Record<
 	string | undefined
 > {
 	return {
-		CLINE_DATA_DIR: process.env.CLINE_DATA_DIR,
+		TCODE_DATA_DIR: process.env.TCODE_DATA_DIR,
 		CLINE_LOG_PATH: process.env.CLINE_LOG_PATH,
 		CLINE_LOG_LEVEL: process.env.CLINE_LOG_LEVEL,
 		CLINE_LOG_NAME: process.env.CLINE_LOG_NAME,
@@ -62,7 +62,7 @@ describe("createCliLoggerAdapter", () => {
 	it("resolves default runtime config from data dir", () => {
 		const snapshot = withEnvSnapshot();
 		const dataDir = mkdtempSync(join(tmpdir(), `${commandName}-log-test-`));
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		delete process.env.CLINE_LOG_PATH;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -101,7 +101,7 @@ describe("createCliLoggerAdapter", () => {
 	it("maps core logger metadata with error payload", () => {
 		const dataDir = mkdtempSync(join(tmpdir(), `${commandName}-log-test-`));
 		const snapshot = withEnvSnapshot();
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		process.env.CLINE_LOG_ENABLED = "0";
 		try {
 			const adapter = createCliLoggerAdapter({ runtime: "cli" });
@@ -119,7 +119,7 @@ describe("createCliLoggerAdapter", () => {
 	it("writes process-level errors to the CLI log", () => {
 		const snapshot = withEnvSnapshot();
 		const dataDir = mkdtempSync(join(tmpdir(), `${commandName}-process-log-`));
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		delete process.env.CLINE_LOG_PATH;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -145,7 +145,7 @@ describe("createCliLoggerAdapter", () => {
 		const snapshot = withEnvSnapshot();
 		const dataDir = mkdtempSync(join(tmpdir(), `${commandName}-log-test-`));
 		const logPath = join(dataDir, "logs", `${commandName}.log`);
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		delete process.env.CLINE_LOG_PATH;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -169,7 +169,7 @@ describe("createCliLoggerAdapter", () => {
 		const unwritablePath = mkdtempSync(
 			join(tmpdir(), `${commandName}-log-dir-as-file-`),
 		);
-		delete process.env.CLINE_DATA_DIR;
+		delete process.env.TCODE_DATA_DIR;
 		process.env.CLINE_LOG_PATH = unwritablePath;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -194,7 +194,7 @@ describe("createCliLoggerAdapter", () => {
 		const unwritablePath = mkdtempSync(
 			join(tmpdir(), `${commandName}-log-dir-as-file-`),
 		);
-		delete process.env.CLINE_DATA_DIR;
+		delete process.env.TCODE_DATA_DIR;
 		process.env.CLINE_LOG_PATH = unwritablePath;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -223,7 +223,7 @@ describe("createCliLoggerAdapter", () => {
 	it("uses sync pino destination for cli runtime", () => {
 		const snapshot = withEnvSnapshot();
 		const dataDir = mkdtempSync(join(tmpdir(), `${commandName}-log-test-`));
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		delete process.env.CLINE_LOG_PATH;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -247,7 +247,7 @@ describe("createCliLoggerAdapter", () => {
 		const dataDir = mkdtempSync(
 			join(tmpdir(), `${commandName}-shutdown-test-`),
 		);
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		delete process.env.CLINE_LOG_PATH;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -273,7 +273,7 @@ describe("createCliLoggerAdapter", () => {
 	it("keeps normal logging behavior with explicit flush", () => {
 		const snapshot = withEnvSnapshot();
 		const dataDir = mkdtempSync(join(tmpdir(), `${commandName}-flush-test-`));
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		delete process.env.CLINE_LOG_PATH;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -297,7 +297,7 @@ describe("createCliLoggerAdapter", () => {
 	it("closes cli loggers cleanly during shutdown", async () => {
 		const snapshot = withEnvSnapshot();
 		const dataDir = mkdtempSync(join(tmpdir(), `${commandName}-close-test-`));
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		delete process.env.CLINE_LOG_PATH;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;
@@ -322,7 +322,7 @@ describe("createCliLoggerAdapter", () => {
 	it("clears log cleanup timers during shutdown", () => {
 		const snapshot = withEnvSnapshot();
 		const dataDir = mkdtempSync(join(tmpdir(), `${commandName}-timer-test-`));
-		process.env.CLINE_DATA_DIR = dataDir;
+		process.env.TCODE_DATA_DIR = dataDir;
 		delete process.env.CLINE_LOG_PATH;
 		delete process.env.CLINE_LOG_LEVEL;
 		delete process.env.CLINE_LOG_NAME;

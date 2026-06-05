@@ -6,8 +6,8 @@ import {
 	listLocalProviders,
 	type ProviderSettings,
 	type ProviderSettingsManager,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@tarogo/core";
+import { getClineEnvironmentConfig } from "@tarogo/shared";
 import { Command } from "commander";
 import open from "open";
 import React from "react";
@@ -104,7 +104,7 @@ let cachedCoreOAuthApi: Promise<CoreOAuthApi> | undefined;
 
 async function getCoreOAuthApi(): Promise<CoreOAuthApi> {
 	if (!cachedCoreOAuthApi) {
-		cachedCoreOAuthApi = import("@cline/core").then((module) => {
+		cachedCoreOAuthApi = import("@tarogo/core").then((module) => {
 			const runtimeApi = module as Partial<CoreOAuthApi>;
 			if (
 				typeof runtimeApi.loginClineOAuth !== "function" ||
@@ -112,7 +112,7 @@ async function getCoreOAuthApi(): Promise<CoreOAuthApi> {
 				typeof runtimeApi.loginOpenAICodex !== "function"
 			) {
 				throw new Error(
-					"Installed @cline/core does not expose OAuth login helpers required by the CLI",
+					"Installed @tarogo/core does not expose OAuth login helpers required by the CLI",
 				);
 			}
 			return runtimeApi as CoreOAuthApi;
@@ -280,7 +280,7 @@ async function loginWithOAuthProvider(
 	const oauthApi = await getCoreOAuthApi();
 	const callbacks = createOAuthCallbacks(io);
 
-	if (providerId === "cline") {
+	if (providerId === "tarogo") {
 		return oauthApi.loginClineOAuth({
 			apiBaseUrl:
 				existing?.baseUrl?.trim() || getClineEnvironmentConfig().apiBaseUrl,
@@ -302,7 +302,7 @@ async function loginWithOAuthProvider(
 	}
 
 	throw new Error(
-		`Provider "${providerId}" does not support CLI OAuth flow (supported: cline, openai-codex, oca)`,
+		`Provider "${providerId}" does not support CLI OAuth flow (supported: tarogo, openai-codex, oca)`,
 	);
 }
 
@@ -510,7 +510,7 @@ export async function runAuthProviderCommand(
 ): Promise<number> {
 	if (!isOAuthProvider(providerId)) {
 		io.writeErr(
-			`provider "${providerId}" does not support OAuth login (supported: cline, openai-codex, oca)`,
+			`provider "${providerId}" does not support OAuth login (supported: tarogo, openai-codex, oca)`,
 		);
 		return 1;
 	}

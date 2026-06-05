@@ -461,16 +461,16 @@ After login, OAuth credentials are persisted with `auth.expiresAt`, and `@cline/
 
 On startup, `cline` also attempts a legacy settings import:
 
-- Source files: `<CLINE_DATA_DIR>/globalState.json` and `<CLINE_DATA_DIR>/secrets.json`
-- Target file: `<CLINE_DATA_DIR>/settings/providers.json` (or `CLINE_PROVIDER_SETTINGS_PATH`)
+- Source files: `<TCODE_DATA_DIR>/globalState.json` and `<TCODE_DATA_DIR>/secrets.json`
+- Target file: `<TCODE_DATA_DIR>/settings/providers.json` (or `TCODE_PROVIDER_SETTINGS_PATH`)
 - Existing providers in `providers.json` are never overwritten
 - Missing providers discovered in legacy files are merged into `providers.json`
 - Migrated provider entries are annotated with `tokenSource: "migration"`
 
 Custom provider registry notes:
 
-- Provider runtime settings continue to persist in `<CLINE_DATA_DIR>/settings/providers.json`.
+- Provider runtime settings continue to persist in `<TCODE_DATA_DIR>/settings/providers.json`.
 - Providers in `providers.json` can opt into the OpenAI Responses API with `"protocol": "openai-responses"`; this routes the runtime through the OpenAI client while keeping the user-defined provider ID, base URL, and model catalog.
-- User-added OpenAI-compatible provider model catalogs are persisted in `<CLINE_DATA_DIR>/settings/models.json` (or alongside `CLINE_PROVIDER_SETTINGS_PATH`).
+- User-added OpenAI-compatible provider model catalogs are persisted in `<TCODE_DATA_DIR>/settings/models.json` (or alongside `TCODE_PROVIDER_SETTINGS_PATH`).
 - `models.json` stores model lists by provider ID and is loaded by the runtime provider actions.
 - Entries with only `models` extend an existing provider; entries with `provider` metadata register or override a custom provider.

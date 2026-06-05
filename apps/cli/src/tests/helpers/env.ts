@@ -51,16 +51,16 @@ export function clineEnv(
 
 	// Determine effective VCR mode: extra overrides > parent env > default "playback"
 	const effectiveVcrMode =
-		extra.CLINE_VCR ?? process.env.CLINE_VCR ?? "playback";
+		extra.TCODE_VCR ?? process.env.TCODE_VCR ?? "playback";
 
 	// During recording, authenticated configs read real OAuth credentials from
-	// ~/.cline/data/settings/providers.json while keeping all other settings
+	// ~/.tcode/data/settings/providers.json while keeping all other settings
 	// (model, provider, global state) from the mock config directory.
 	const isRecording = effectiveVcrMode === "record";
 	const isAuthenticated = configDir !== "unauthenticated";
 	const realProvidersFile =
 		isRecording && isAuthenticated
-			? path.join(os.homedir(), ".cline", "data", "settings", "providers.json")
+			? path.join(os.homedir(), ".tcode", "data", "settings", "providers.json")
 			: undefined;
 
 	// Remove CI so terminal renderers treat the spawned process as interactive.
@@ -70,17 +70,17 @@ export function clineEnv(
 	// recording/playback is silently skipped.
 	const { CI: _ci, VITEST: _vitest, ...cleanEnv } = process.env;
 	if (!isAuthenticated) {
-		delete cleanEnv.CLINE_API_KEY;
+		delete cleanEnv.TCODE_API_KEY;
 	}
 
 	// Only enable VCR when a cassette path is provided (via extra or parent env),
 	// otherwise tests without cassettes would trigger a spurious
 	// "[VCR] No CLINE_VCR_CASSETTE" warning on every run.
 	const hasCassette = !!(
-		extra.CLINE_VCR_CASSETTE ?? process.env.CLINE_VCR_CASSETTE
+		extra.TCODE_VCR_CASSETTE ?? process.env.TCODE_VCR_CASSETTE
 	);
 	const vcrDefaults = hasCassette
-		? { CLINE_VCR: "playback", CLINE_VCR_FILTER: "" }
+		? { TCODE_VCR: "playback", TCODE_VCR_FILTER: "" }
 		: {};
 
 	// the order of these env vars matter; later ones override earlier ones
@@ -88,45 +88,45 @@ export function clineEnv(
 		...vcrDefaults,
 		...cleanEnv,
 		...(realProvidersFile
-			? { CLINE_PROVIDER_SETTINGS_PATH: realProvidersFile }
+			? { TCODE_PROVIDER_SETTINGS_PATH: realProvidersFile }
 			: {}),
-		CLINE_TELEMETRY_DISABLED: "1",
+		TCODE_TELEMETRY_DISABLED: "1",
 		HOME: path.join(isolatedClinePath, "home"),
-		CLINE_DIR: isolatedClinePath,
-		CLINE_DATA_DIR: dataDir,
-		CLINE_DB_DATA_DIR: path.join(dataDir, "db"),
-		CLINE_GLOBAL_SETTINGS_PATH: path.join(
+		TCODE_DIR: isolatedClinePath,
+		TCODE_DATA_DIR: dataDir,
+		TCODE_DB_DATA_DIR: path.join(dataDir, "db"),
+		TCODE_GLOBAL_SETTINGS_PATH: path.join(
 			dataDir,
 			"settings",
 			"global-settings.json",
 		),
-		CLINE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
-		CLINE_HUB_DISCOVERY_PATH: path.join(
+		TCODE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
+		TCODE_HUB_DISCOVERY_PATH: path.join(
 			dataDir,
 			"locks",
 			"hub",
 			"discovery.json",
 		),
-		CLINE_HUB_PORT: nextHubPort(),
-		CLINE_MCP_SETTINGS_PATH: path.join(
+		TCODE_HUB_PORT: nextHubPort(),
+		TCODE_MCP_SETTINGS_PATH: path.join(
 			dataDir,
 			"settings",
-			"cline_mcp_settings.json",
+			"tcode_mcp_settings.json",
 		),
 		...(realProvidersFile
 			? {}
 			: {
-					CLINE_PROVIDER_SETTINGS_PATH: path.join(
+					TCODE_PROVIDER_SETTINGS_PATH: path.join(
 						dataDir,
 						"settings",
 						"providers.json",
 					),
 				}),
-		CLINE_SESSION_DATA_DIR: path.join(dataDir, "sessions"),
-		CLINE_TEAM_DATA_DIR: path.join(dataDir, "teams"),
-		CLINE_DISABLE_MIGRATION_NOTICE: "1",
+		TCODE_SESSION_DATA_DIR: path.join(dataDir, "sessions"),
+		TCODE_TEAM_DATA_DIR: path.join(dataDir, "teams"),
+		TCODE_DISABLE_MIGRATION_NOTICE: "1",
 		NO_UPDATE_NOTIFIER: "1",
-		CLINE_NO_AUTO_UPDATE: "1",
+		TCODE_NO_AUTO_UPDATE: "1",
 		...extra,
 	};
 }

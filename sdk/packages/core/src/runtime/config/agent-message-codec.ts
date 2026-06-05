@@ -12,7 +12,7 @@ import type {
 	ThinkingContent,
 	ToolResultContent,
 	ToolUseContent,
-} from "@cline/shared";
+} from "@tarogo/shared";
 
 export function messageToAgentMessages(
 	message: MessageWithMetadata,

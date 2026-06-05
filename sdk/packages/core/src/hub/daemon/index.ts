@@ -6,7 +6,7 @@ import {
 	CLINE_RUN_AS_HUB_DAEMON_ENV,
 	isHubDaemonProcess,
 	withResolvedClineBuildEnv,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import {
 	rememberRecoverableLocalHubUrl,
 	requestHubShutdown,
@@ -18,7 +18,7 @@ import {
 	type HubServerDiscoveryRecord,
 	probeHubServer,
 	readHubDiscovery,
-	resolveClineDataDir,
+	resolveTcodeDataDir,
 	resolveHubBuildId,
 } from "../discovery";
 import {
@@ -46,7 +46,7 @@ function endpointArgs(endpoint: HubEndpointOverrides): string[] {
 
 function openDetachedHubLogFile(): { fd: number; logPath: string } | undefined {
 	try {
-		const logPath = join(resolveClineDataDir(), "logs", "hub-daemon.log");
+		const logPath = join(resolveTcodeDataDir(), "logs", "hub-daemon.log");
 		mkdirSync(dirname(logPath), { recursive: true });
 		return { fd: openSync(logPath, "a"), logPath };
 	} catch {

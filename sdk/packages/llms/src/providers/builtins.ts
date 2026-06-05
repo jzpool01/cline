@@ -8,7 +8,7 @@ import {
 	type JsonValue,
 	type ProviderCapability,
 	type ProviderConfigField,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import { getGeneratedModelsForProvider } from "../catalog/catalog.generated-access";
 import type {
 	ModelCollection,

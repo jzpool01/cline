@@ -96,10 +96,10 @@ async function main(): Promise<void> {
 					private: true,
 					type: "module",
 					dependencies: {
-						"@cline/core": `file:${tarballs.core}`,
-						"@cline/agents": `file:${tarballs.agents}`,
-						"@cline/llms": `file:${tarballs.llms}`,
-						"@cline/shared": `file:${tarballs.shared}`,
+						"@tarogo/core": `file:${tarballs.core}`,
+						"@tarogo/agents": `file:${tarballs.agents}`,
+						"@tarogo/llms": `file:${tarballs.llms}`,
+						"@tarogo/shared": `file:${tarballs.shared}`,
 					},
 				},
 				null,
@@ -118,8 +118,8 @@ async function main(): Promise<void> {
 		const smokeSource =
 			nodeMajor >= 24
 				? `
-					const { SqliteSessionStore } = await import("@cline/core");
-					const store = new SqliteSessionStore({ sessionsDir: process.env.CLINE_DATA_DIR });
+					const { SqliteSessionStore } = await import("@tarogo/core");
+					const store = new SqliteSessionStore({ sessionsDir: process.env.TCODE_DATA_DIR });
 					try {
 						store.init();
 						console.log("SQLite smoke test passed");
@@ -128,7 +128,7 @@ async function main(): Promise<void> {
 					}
 				`
 				: `
-					const { resolveSessionBackend } = await import("@cline/core");
+					const { resolveSessionBackend } = await import("@tarogo/core");
 					await resolveSessionBackend({ backendMode: "local" });
 					console.log("Node compatibility smoke test passed");
 				`;
@@ -140,7 +140,7 @@ async function main(): Promise<void> {
 			cwd: smokeDir,
 			env: {
 				...npmEnv,
-				CLINE_DATA_DIR: sessionsDir,
+				TCODE_DATA_DIR: sessionsDir,
 			},
 			timeoutMs: 2 * 60_000,
 		});

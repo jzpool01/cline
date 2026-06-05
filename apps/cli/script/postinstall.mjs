@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-// Post-install script for Cline CLI.
+// Post-install script for tcode CLI.
 //
 // Creates a hard link (or copy fallback) from the platform-specific binary
-// to bin/.cline for fast startup on subsequent runs.
+// to bin/.tcode for fast startup on subsequent runs.
 //
 // This script must use only Node.js APIs (no Bun) since it runs via
 // "node script/postinstall.mjs" in the npm lifecycle.
@@ -31,8 +31,8 @@ function main() {
 	};
 	const platform = platformMap[os.platform()] || os.platform();
 	const arch = os.arch();
-	const packageName = `@cline/cli-${platform}-${arch}`;
-	const binaryName = "cline";
+	const packageName = `@tarogo/tcode-${platform}-${arch}`;
+	const binaryName = "tcode";
 
 	let binaryPath;
 	try {
@@ -55,7 +55,7 @@ function main() {
 		path.basename(__dirname) === "script"
 			? path.join(__dirname, "..", "bin")
 			: path.join(__dirname, "bin");
-	const target = path.join(binDir, ".cline");
+	const target = path.join(binDir, ".tcode");
 
 	// Ensure bin directory exists
 	if (!fs.existsSync(binDir)) {
@@ -76,7 +76,7 @@ function main() {
 	}
 
 	fs.chmodSync(target, 0o755);
-	console.log(`Cached cline binary at ${target}`);
+	console.log(`Cached tcode binary at ${target}`);
 }
 
 try {

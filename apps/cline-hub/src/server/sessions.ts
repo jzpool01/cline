@@ -3,8 +3,8 @@ import {
 	type ClineCoreStartInput,
 	type SessionRecord,
 	SessionSource,
-} from "@cline/core";
-import type { Message } from "@cline/llms";
+} from "@tarogo/core";
+import type { Message } from "@tarogo/llms";
 import type { WebviewConfig, WebviewReasonLevel } from "../webview-protocol";
 import { rejectPendingApprovalsForSession } from "./approvals";
 import { providerSettingsManager, workspaceRoot } from "./deps";

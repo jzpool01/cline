@@ -11,8 +11,8 @@ import {
 	setHomeDirIfUnset,
 	type ToolApprovalRequest,
 	type ToolApprovalResult,
-} from "@cline/core";
-import type { AgentEvent } from "@cline/shared";
+} from "@tarogo/core";
+import type { AgentEvent } from "@tarogo/shared";
 import { sessionLogPath } from "./paths";
 import type {
 	LiveSession,

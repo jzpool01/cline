@@ -1,4 +1,3 @@
-import { parseKeyPairsIntoRecord } from "../parse/headers/utils";
 import type { OpenTelemetryClientConfig, TelemetryMetadata } from "./telemetry";
 
 export interface ClineTelemetryServiceConfig extends OpenTelemetryClientConfig {
@@ -6,27 +5,10 @@ export interface ClineTelemetryServiceConfig extends OpenTelemetryClientConfig {
 }
 
 function getTelemetryBuildTimeConfig(): OpenTelemetryClientConfig {
-	if (!process.env) {
-		return {
-			enabled: false,
-		};
-	}
-
+	// Telemetry is disabled by default to prevent sending data to Cline's servers.
+	// The code structure is preserved for compatibility but no telemetry data is collected.
 	return {
-		enabled:
-			process.env.OTEL_TELEMETRY_ENABLED === "1" ||
-			process.env.OTEL_TELEMETRY_ENABLED === "true",
-		metricsExporter: process.env.OTEL_METRICS_EXPORTER || "otlp",
-		logsExporter: process.env.OTEL_LOGS_EXPORTER || "otlp",
-		tracesExporter: process.env.OTEL_TRACES_EXPORTER,
-		otlpProtocol: process.env.OTEL_EXPORTER_OTLP_PROTOCOL || "http/json",
-		otlpEndpoint: process.env.OTEL_EXPORTER_OTLP_ENDPOINT,
-		metricExportInterval: process.env.OTEL_METRIC_EXPORT_INTERVAL
-			? Number.parseInt(process.env.OTEL_METRIC_EXPORT_INTERVAL, 10)
-			: undefined,
-		otlpHeaders: process.env.OTEL_EXPORTER_OTLP_HEADERS
-			? parseKeyPairsIntoRecord(process.env.OTEL_EXPORTER_OTLP_HEADERS)
-			: undefined,
+		enabled: false,
 	};
 }
 

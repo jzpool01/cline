@@ -15,8 +15,8 @@ log(`CLINE_ENVIRONMENT: ${process.env.CLINE_ENVIRONMENT}`)
 const SETTINGS_SUBFOLDER = "data"
 
 export function initializeContext(clineDir?: string) {
-	const CLINE_DIR = clineDir || process.env.CLINE_DIR || `${os.homedir()}/.cline`
-	const DATA_DIR = path.join(CLINE_DIR, SETTINGS_SUBFOLDER)
+	const TCODE_DIR = clineDir || process.env.TCODE_DIR || `${os.homedir()}/.cline`
+	const DATA_DIR = path.join(TCODE_DIR, SETTINGS_SUBFOLDER)
 	const INSTALL_DIR = process.env.INSTALL_DIR || __dirname
 	const WORKSPACE_STORAGE_DIR = process.env.WORKSPACE_STORAGE_DIR || path.join(DATA_DIR, "workspace")
 

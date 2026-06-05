@@ -41,7 +41,7 @@ export function addRootOptions(cmd: Command): Command {
 				"Open the terminal user interface (TUI) for interactive sessions",
 			)
 			.option("--id <session-id>", "Resume an existing session by ID")
-			.option("-P, --provider <id>", "Provider id (default: cline)")
+			.option("-P, --provider <id>", "Provider id (default: tarogo)")
 			.option("-k, --key <api-key>", "API key override for this run")
 			.option(
 				"-m, --model <model-id>",
@@ -66,19 +66,19 @@ export function addRootOptions(cmd: Command): Command {
 			)
 			.option(
 				"--config <path>",
-				"Configuration directory (default: ~/.cline/data/settings)",
+				"Configuration directory (default: ~/.tcode/data/settings)",
 			)
 			.option(
 				"--data-dir <path>",
-				"Use isolated local state at this directory path (default: ~/.cline)",
+				"Use isolated local state at this directory path (default: ~/.tcode)",
 			)
 			.option(
 				"--hooks-dir <path>",
-				"Directory path to additional hooks for runtime hook injection (default: ~/.cline/hooks)",
+				"Directory path to additional hooks for runtime hook injection (default: ~/.tcode/hooks)",
 			)
 			.option(
 				"--worktree",
-				"Auto-create a detached git worktree under ~/.cline/worktrees/ and run the task there",
+				"Auto-create a detached git worktree under ~/.tcode/worktrees/ and run the task there",
 			)
 			.option("--update", "Check for updates and install if available")
 			.option("--kanban", "Run the kanban app")
@@ -108,8 +108,8 @@ export function addRootOptions(cmd: Command): Command {
 }
 
 export function createProgram(): Command {
-	const program = new Command("cline")
-		.description("Cline CLI - AI coding assistant in your terminal")
+	const program = new Command("tcode")
+		.description("tcode - Tarogo Code Agent - AI 编程助手")
 		.version(version, "-V, --version", "Output the version number")
 		.exitOverride() // don't call process.exit
 		.configureOutput({

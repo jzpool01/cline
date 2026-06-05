@@ -49,7 +49,7 @@ test.describe("cline --json persisted messages contract - authenticated @live", 
 		...TERMINAL_WIDE,
 		env: clineEnv("default", {
 			CLINE_VCR_CASSETTE: "./fixtures/headless-json.json",
-			CLINE_SESSION_DATA_DIR: sessionDataDir,
+			TCODE_SESSION_DATA_DIR: sessionDataDir,
 		}),
 	});
 

@@ -19,8 +19,8 @@ import {
 	setDisabledTools,
 	setTelemetryOptOutGlobally,
 	toggleDisabledTool,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@tarogo/core";
+import { getClineEnvironmentConfig } from "@tarogo/shared";
 import {
 	connectorChannelsPayload,
 	startConnectorChannel,

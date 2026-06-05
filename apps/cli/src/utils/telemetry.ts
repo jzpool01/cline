@@ -7,7 +7,7 @@ import {
 	identifyAccount,
 	registerDisposable,
 	TelemetryLoggerSink,
-} from "@cline/core";
+} from "@tarogo/core";
 import { getCliBuildInfo } from "./common";
 import {
 	markActivationCaptured,
@@ -34,7 +34,7 @@ export function getCliTelemetryService(
 		const config = createClineTelemetryServiceConfig({
 			metadata: {
 				extension_version: version,
-				cline_type: "cli",
+				tcode_type: "cli",
 				platform: name,
 				platform_version: process.version,
 				os_type,

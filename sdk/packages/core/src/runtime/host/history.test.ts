@@ -10,7 +10,7 @@ import {
 	listSessionHistoryFromBackend,
 } from "./history";
 
-const originalSessionDataDir = process.env.CLINE_SESSION_DATA_DIR;
+const originalSessionDataDir = process.env.TCODE_SESSION_DATA_DIR;
 
 let tempSessionDataDir = "";
 
@@ -124,9 +124,9 @@ describe("session history", () => {
 			tempSessionDataDir = "";
 		}
 		if (originalSessionDataDir === undefined) {
-			delete process.env.CLINE_SESSION_DATA_DIR;
+			delete process.env.TCODE_SESSION_DATA_DIR;
 		} else {
-			process.env.CLINE_SESSION_DATA_DIR = originalSessionDataDir;
+			process.env.TCODE_SESSION_DATA_DIR = originalSessionDataDir;
 		}
 	});
 
@@ -483,7 +483,7 @@ describe("session history", () => {
 
 	it("merges manifest fallback rows when the backend list is short", async () => {
 		tempSessionDataDir = await mkdtemp(join(tmpdir(), "cline-core-history-"));
-		process.env.CLINE_SESSION_DATA_DIR = tempSessionDataDir;
+		process.env.TCODE_SESSION_DATA_DIR = tempSessionDataDir;
 		const manifestMessagesPath = join(
 			tempSessionDataDir,
 			"manifest.messages.json",

@@ -13,7 +13,7 @@ import {
 	type AgentToolContext,
 	ClineCore,
 	createTool,
-} from "@cline/core";
+} from "@tarogo/core";
 import YAML from "yaml";
 import { z } from "zod";
 
@@ -57,33 +57,33 @@ function resolveDefaultHomeDir(): string {
 	return "~";
 }
 
-function resolveClineDirPath(): string {
-	const explicitDir = process.env.CLINE_DIR?.trim();
+function resolveTcodeDirPath(): string {
+	const explicitDir = process.env.TCODE_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
-	return join(resolveDefaultHomeDir(), ".cline");
+	return join(resolveDefaultHomeDir(), ".tcode");
 }
 
-function resolveClineDataDirPath(): string {
-	const explicitDir = process.env.CLINE_DATA_DIR?.trim();
+function resolveTcodeDataDirPath(): string {
+	const explicitDir = process.env.TCODE_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
-	return join(resolveClineDirPath(), "data");
+	return join(resolveTcodeDirPath(), "data");
 }
 
 function resolveGlobalAgentsDirPath(): string {
-	return join(resolveClineDataDirPath(), "settings", "agents");
+	return join(resolveTcodeDataDirPath(), "settings", "agents");
 }
 
 const HANDOFFS_DIR = join(
-	resolveClineDataDirPath(),
+	resolveTcodeDataDirPath(),
 	"plugins",
 	"subagents",
 	"handoffs",
 );
-const GLOBAL_SKILLS_DIR = join(resolveClineDataDirPath(), "settings", "skills");
+const GLOBAL_SKILLS_DIR = join(resolveTcodeDataDirPath(), "settings", "skills");
 
 // Agent and skill definitions live in the `agents/` and `skills/`
 // directories alongside this file. They are loaded at runtime from disk.
@@ -230,7 +230,7 @@ function readAgentDefinitions(baseCwd: string): AgentDefinition[] {
 	const dirs: Array<{ path: string; source: AgentDefinition["source"] }> = [
 		{ path: BUNDLED_AGENTS_DIR, source: "bundled" },
 		{ path: resolveGlobalAgentsDirPath(), source: "global" },
-		{ path: join(baseCwd, ".cline", "agents"), source: "project" },
+		{ path: join(baseCwd, ".tcode", "agents"), source: "project" },
 	];
 	const defs = new Map<string, AgentDefinition>();
 	for (const { path, source } of dirs) {
@@ -254,7 +254,7 @@ function readSkillDefinitions(baseCwd: string): SkillDefinition[] {
 	const dirs: Array<{ path: string; source: SkillDefinition["source"] }> = [
 		{ path: BUNDLED_SKILLS_DIR, source: "bundled" },
 		{ path: GLOBAL_SKILLS_DIR, source: "global" },
-		{ path: join(baseCwd, ".cline", "skills"), source: "project" },
+		{ path: join(baseCwd, ".tcode", "skills"), source: "project" },
 	];
 	const defs = new Map<string, SkillDefinition>();
 	for (const { path, source } of dirs) {

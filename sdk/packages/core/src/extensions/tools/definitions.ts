@@ -10,7 +10,7 @@ import {
 	createTool,
 	validateWithZod,
 	zodToJsonSchema,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import { captureRunCommandsTimeout } from "../../services/telemetry/core-events";
 import { getToolContextTelemetry } from "../../services/telemetry/tool-context";
 import {
@@ -743,7 +743,7 @@ export function createSubmitAndExitTool(
  *
  * @example
  * ```typescript
- * import { Agent, createDefaultTools } from "@cline/core"
+ * import { Agent, createDefaultTools } from "@tarogo/core"
  * import * as fs from "fs/promises"
  * import { exec } from "child_process"
  *

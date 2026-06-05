@@ -1,9 +1,9 @@
 import { fstatSync } from "node:fs";
 import { homedir } from "node:os";
 import { basename } from "node:path";
-import type { ToolPolicy } from "@cline/core";
+import type { ToolPolicy } from "@tarogo/core";
 
-import { registerDisposable } from "@cline/shared";
+import { registerDisposable } from "@tarogo/shared";
 import type { Command } from "commander";
 import {
 	CommanderError,
@@ -58,13 +58,13 @@ export function stdinHasPipedInput(): boolean {
 }
 
 async function createProviderSettingsManager() {
-	const { ProviderSettingsManager } = await import("@cline/core");
+	const { ProviderSettingsManager } = await import("@tarogo/core");
 	return new ProviderSettingsManager();
 }
 
 async function loadCliRuntimeModules() {
 	const [coreServer, prompt, runAgentModule] = await Promise.all([
-		import("@cline/core"),
+		import("@tarogo/core"),
 		import("./runtime/prompt"),
 		import("./runtime/run-agent"),
 	]);
@@ -82,7 +82,7 @@ async function loadInteractiveRuntimeModule() {
 
 /**
  * Two-pass approach for --config: a quick scan of process.argv extracts the
- * config directory before commander parses, because setClineDir() must run
+ * config directory before commander parses, because setTcodeDir() must run
  * before any code that reads the home/config directory.
  *
  * Recognizes both Commander spellings:
@@ -113,9 +113,9 @@ export async function runCli(): Promise<void> {
 
 	const cliArgs = process.argv.slice(2);
 	const configDir = resolveConfigDirArg(cliArgs);
-	const { setClineDir, setHomeDir } = await import("@cline/shared/storage");
+	const { setTcodeDir, setHomeDir } = await import("@tarogo/shared/storage");
 	if (configDir) {
-		setClineDir(configDir);
+		setTcodeDir(configDir);
 	}
 	setHomeDir(homedir());
 
@@ -156,7 +156,7 @@ export async function runCli(): Promise<void> {
 		.option("-c, --cwd <path>", "Working directory")
 		.option(
 			"--data-dir <dir>",
-			"Use isolated local state at <dir> instead of ~/.cline (enables sandbox mode)",
+			"Use isolated local state at <dir> instead of ~/.tcode (enables sandbox mode)",
 		)
 		.option("-v, --verbose", "Show verbose output")
 		.action(async (positionalProvider: string | undefined) => {
@@ -171,19 +171,19 @@ export async function runCli(): Promise<void> {
 				verbose?: boolean;
 			}>();
 			// Honor --config inside the action as a defense-in-depth measure.
-			// The early pre-pass in runCli() also calls setClineDir(), but only
+			// The early pre-pass in runCli() also calls setTcodeDir(), but only
 			// for argv tokens it can spot before commander runs. Reapplying
 			// here ensures opts.config (parsed by commander, including the
 			// --config=<dir> form) is always respected before any provider
-			// settings manager is constructed against ~/.cline.
+			// settings manager is constructed against ~/.tcode.
 			if (opts.config?.trim()) {
-				const { setClineDir } = await import("@cline/shared/storage");
-				setClineDir(opts.config.trim());
+				const { setTcodeDir } = await import("@tarogo/shared/storage");
+				setTcodeDir(opts.config.trim());
 			}
 			// Honor --data-dir before constructing the provider settings manager
-			// so writes land under the chosen data dir instead of ~/.cline.
+			// so writes land under the chosen data dir instead of ~/.tcode.
 			configureSandboxEnvironment({
-				enabled: !!opts.dataDir || process.env.CLINE_SANDBOX?.trim() === "1",
+				enabled: !!opts.dataDir || process.env.TCODE_SANDBOX?.trim() === "1",
 				cwd: opts.cwd ?? process.cwd(),
 				explicitDir: opts.dataDir,
 			});
@@ -238,7 +238,7 @@ export async function runCli(): Promise<void> {
 
 	const pluginCmd = program
 		.command("plugin")
-		.description("Manage Cline Plugins")
+		.description("Manage Plugins")
 		.action(() => {
 			pluginCmd.help();
 		});
@@ -246,7 +246,7 @@ export async function runCli(): Promise<void> {
 		.command("install")
 		.alias("i")
 		.description(
-			"Install a Cline Plugin from an official keyword, npm, git, URL, or a local path",
+			"Install a plugin from an official keyword, npm, git, URL, or a local path",
 		)
 		.argument(
 			"<source>",
@@ -288,12 +288,12 @@ export async function runCli(): Promise<void> {
 		.command("uninstall")
 		.alias("remove")
 		.alias("rm")
-		.description("Uninstall a Cline Plugin by name or path")
+		.description("Uninstall a plugin by name or path")
 		.argument("<name>", "plugin package name, installed slug, or plugin path")
 		.option("--json", "Output as JSON")
 		.option(
 			"--cwd <path>",
-			"Search <path>/.cline/plugins before global plugins",
+			"Search <path>/.tcode/plugins before global plugins",
 		)
 		.action(async (name: string) => {
 			const opts = pluginUninstallCmd.opts<{
@@ -311,7 +311,7 @@ export async function runCli(): Promise<void> {
 	const connectCmd = program
 		.command("connect")
 		.description("Connect to an external channel")
-		.argument("[channel]", "Channel to connect Cline CLI to")
+		.argument("[channel]", "Channel to connect tcode CLI to")
 		.option("--stop", "Kill all current channel connections")
 		.allowUnknownOption()
 		.passThroughOptions()
@@ -357,7 +357,7 @@ export async function runCli(): Promise<void> {
 				ctx.exitCode = await runMcpWizard();
 			} else {
 				writeln(
-					"MCP wizard requires a TTY. Use cline config mcp to list servers.",
+					"MCP wizard requires a TTY. Use tcode config mcp to list servers.",
 				);
 			}
 		});
@@ -567,7 +567,7 @@ export async function runCli(): Promise<void> {
 
 	const dashboardCmd = program
 		.command("dashboard")
-		.description("Start the Cline Hub dashboard and open it in a browser")
+		.description("Start the Tarogo tcode dashboard and open it in a browser")
 		.option("-c, --cwd <path>", "Workspace root", process.cwd())
 		.option("--host <host>", "Dashboard bind host")
 		.option("--port <port>", "Dashboard HTTP/WebSocket port")
@@ -611,7 +611,7 @@ export async function runCli(): Promise<void> {
 
 	program
 		.command("version")
-		.description("Show Cline CLI version number")
+		.description("Show tcode version number")
 		.action(async () => {
 			const { showVersion } = await import("./commands/help");
 			showVersion();
@@ -702,14 +702,14 @@ export async function runCli(): Promise<void> {
 			return;
 		}
 		resumeSessionId = sessionId;
-		process.env.CLINE_HOOK_AGENT_RESUME = "1";
+		process.env.TCODE_HOOK_AGENT_RESUME = "1";
 		args = {
 			...args,
 			interactive: true,
 			prompt: undefined,
 		};
 	} else {
-		delete process.env.CLINE_HOOK_AGENT_RESUME;
+		delete process.env.TCODE_HOOK_AGENT_RESUME;
 	}
 	if (launchConfigView) {
 		args = {
@@ -753,7 +753,7 @@ export async function runCli(): Promise<void> {
 		);
 	}
 	if (args.hooksDir?.trim()) {
-		process.env.CLINE_HOOKS_DIR = args.hooksDir.trim();
+		process.env.TCODE_HOOKS_DIR = args.hooksDir.trim();
 	}
 	setCurrentOutputMode(args.outputMode);
 	const defaultToolAutoApprove = true;
@@ -819,10 +819,10 @@ export async function runCli(): Promise<void> {
 	const cwd = args.cwd ?? process.cwd();
 	const workspaceRoot = resolveWorkspaceRoot(cwd);
 	// Sandbox mode is enabled implicitly whenever --data-dir is provided, or
-	// when CLINE_SANDBOX=1 is set in the environment (in which case the data
-	// dir falls back to $CLINE_SANDBOX_DATA_DIR or /tmp/cline-sandbox).
+	// when TCODE_SANDBOX=1 is set in the environment (in which case the data
+	// dir falls back to $TCODE_SANDBOX_DATA_DIR or /tmp/cline-sandbox).
 	const sandboxEnabled =
-		!!args.dataDir || process.env.CLINE_SANDBOX?.trim() === "1";
+		!!args.dataDir || process.env.TCODE_SANDBOX?.trim() === "1";
 	const sandboxDataDir = configureSandboxEnvironment({
 		enabled: sandboxEnabled,
 		cwd,
@@ -863,7 +863,7 @@ export async function runCli(): Promise<void> {
 		const lastUsedProviderSettings =
 			providerSettingsManager.getLastUsedProviderSettings();
 		const provider = normalizeProviderId(
-			args.provider?.trim() || lastUsedProviderSettings?.provider || "cline",
+			args.provider?.trim() || lastUsedProviderSettings?.provider || "tarogo",
 		);
 		let selectedProviderSettings =
 			providerSettingsManager.getProviderSettings(provider);
@@ -994,7 +994,7 @@ export async function runCli(): Promise<void> {
 			cwd,
 			workspaceRoot,
 			extensionContext: {
-				client: { name: "cline-cli" },
+				client: { name: "tcode-cli" },
 				workspace: {
 					rootPath: workspaceRoot,
 					cwd,
@@ -1082,8 +1082,8 @@ export async function runCli(): Promise<void> {
 			} else if (resumeSessionId) {
 				initialView = "chat";
 			}
-			const initialClineProviderSettings =
-				provider === "cline" ? selectedProviderSettings : undefined;
+			const initialTarogoProviderSettings =
+				provider === "tarogo" ? selectedProviderSettings : undefined;
 			let initialNotice:
 				| import("./kanban-migration/notice").CliMigrationNotice
 				| undefined;
@@ -1093,19 +1093,19 @@ export async function runCli(): Promise<void> {
 				  ) => void)
 				| undefined;
 			if (!launchConfigView && process.stdin.isTTY && process.stdout.isTTY) {
-				const { getClineCliMigrationNotice, markClineCliMigrationNoticeShown } =
+				const { getClineCliMigrationNotice: getTcodeCliMigrationNotice, markClineCliMigrationNoticeShown: markTcodeCliMigrationNoticeShown } =
 					await import("./kanban-migration/notice");
-				initialNotice = getClineCliMigrationNotice();
+				initialNotice = getTcodeCliMigrationNotice();
 				if (initialNotice) {
 					markInitialNoticeShown = () => {
-						markClineCliMigrationNoticeShown();
+						markTcodeCliMigrationNoticeShown();
 					};
 				}
 			}
 			await runInteractive(config, userInstructionService, resumeSessionId, {
 				initialPrompt: args.prompt,
-				clineApiBaseUrl: initialClineProviderSettings?.baseUrl,
-				clineProviderSettings: initialClineProviderSettings,
+				tarogoApiBaseUrl: initialTarogoProviderSettings?.baseUrl,
+				tarogoProviderSettings: initialTarogoProviderSettings,
 				initialView,
 				initialNotice,
 				onInitialNoticeShown: markInitialNoticeShown,

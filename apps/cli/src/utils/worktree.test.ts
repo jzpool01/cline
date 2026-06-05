@@ -9,7 +9,7 @@ import {
 } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import * as path from "node:path";
-import { setClineDir } from "@cline/shared/storage";
+import { setTcodeDir } from "@tarogo/shared/storage";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { createTaskWorktree, getTaskWorktreesHomePath } from "./worktree";
 
@@ -34,16 +34,16 @@ describe("createTaskWorktree", () => {
 	let clineDir: string;
 	let repoPath: string;
 	let nonRepoPath: string;
-	let originalClineDir: string | undefined;
+	let originalTcodeDir: string | undefined;
 
 	beforeEach(async () => {
 		sandboxRoot = await mkdtemp(path.join(tmpdir(), "cline-sdk-worktree-"));
-		clineDir = path.join(sandboxRoot, ".cline");
+		clineDir = path.join(sandboxRoot, ".tcode");
 		repoPath = path.join(sandboxRoot, "myrepo");
 		nonRepoPath = path.join(sandboxRoot, "not-a-repo");
-		originalClineDir = process.env.CLINE_DIR;
-		process.env.CLINE_DIR = clineDir;
-		setClineDir(clineDir);
+		originalTcodeDir = process.env.TCODE_DIR;
+		process.env.TCODE_DIR = clineDir;
+		setTcodeDir(clineDir);
 
 		await writeFile(path.join(sandboxRoot, ".keep"), "");
 		await rm(repoPath, { recursive: true, force: true });
@@ -67,20 +67,20 @@ describe("createTaskWorktree", () => {
 	});
 
 	afterEach(async () => {
-		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR;
+		if (originalTcodeDir === undefined) {
+			delete process.env.TCODE_DIR;
 		} else {
-			process.env.CLINE_DIR = originalClineDir;
+			process.env.TCODE_DIR = originalTcodeDir;
 		}
-		setClineDir(originalClineDir ?? path.join("~", ".cline"));
+		setTcodeDir(originalTcodeDir ?? path.join("~", ".tcode"));
 		await rm(sandboxRoot, { recursive: true, force: true });
 	});
 
-	it("places worktrees under ~/.cline/worktrees", () => {
+	it("places worktrees under ~/.tcode/worktrees", () => {
 		expect(getTaskWorktreesHomePath()).toBe(path.join(clineDir, "worktrees"));
 	});
 
-	it("creates a detached worktree at ~/.cline/worktrees/<taskId>/<repoName>", async () => {
+	it("creates a detached worktree at ~/.tcode/worktrees/<taskId>/<repoName>", async () => {
 		const result = await createTaskWorktree({
 			cwd: repoPath,
 			taskId: "my-task",

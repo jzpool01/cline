@@ -6,11 +6,11 @@ import {
 	ensureFileExists,
 	probeHubServer,
 	readHubDiscovery,
-	resolveClineDataDir,
+	resolveTcodeDataDir,
 	resolveSharedHubOwnerContext,
 	stopLocalHubServerGracefully,
-} from "@cline/core";
-import { formatUptime } from "@cline/shared";
+} from "@tarogo/core";
+import { formatUptime } from "@tarogo/shared";
 import { Command } from "commander";
 import open from "open";
 import { isProcessRunning } from "../connectors/common";
@@ -109,7 +109,7 @@ function listMatchingProcesses(pattern: string): ProcessRecord[] {
 
 function resolveCliLogPath(): string {
 	const { name } = getCliBuildInfo();
-	return join(resolveClineDataDir(), "logs", `${name}.log`);
+	return join(resolveTcodeDataDir(), "logs", `${name}.log`);
 }
 
 async function defaultOpenPath(target: string): Promise<void> {
@@ -416,7 +416,7 @@ export async function runDoctorCommand(
 			before.staleSidecarPids.length > 0
 		) {
 			io.writeln(
-				"\nRun `cline doctor fix` to kill all stale local processes, including stale sidecars.",
+				"\nRun `tcode doctor fix` to kill all stale local processes, including stale sidecars.",
 			);
 		}
 		return 0;

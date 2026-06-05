@@ -1,7 +1,7 @@
 import type {
 	GatewayProviderContext,
 	GatewayStreamRequest,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import { isAnthropicCompatibleModel, resolveModelFamily } from "../model-facts";
 import {
 	buildAnthropicProviderOptions,

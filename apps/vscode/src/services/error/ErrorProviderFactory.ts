@@ -53,15 +53,9 @@ export class ErrorProviderFactory {
 	 * @returns Default configuration using PostHog, or no-op for self-hosted mode
 	 */
 	public static getDefaultConfig(): ErrorProviderConfig {
-		// Use no-op provider in self-hosted mode to avoid external network calls
-		if (ClineEndpoint.isSelfHosted()) {
-			return {
-				type: "no-op",
-				config: posthogConfig,
-			}
-		}
+		// Use no-op provider to prevent sending error data to external servers
 		return {
-			type: "posthog",
+			type: "no-op",
 			config: posthogConfig,
 		}
 	}

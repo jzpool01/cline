@@ -1,5 +1,5 @@
-import type { SaveProviderSettingsActionRequest } from "@cline/core";
-import type { ToolApprovalResult } from "@cline/shared";
+import type { SaveProviderSettingsActionRequest } from "@tarogo/core";
+import type { ToolApprovalResult } from "@tarogo/shared";
 import type {
 	WebviewInboundMessage,
 	WebviewReasonLevel,

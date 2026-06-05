@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
-import { resolveClineDataDir } from "@cline/core";
+import { resolveTcodeDataDir } from "@tarogo/core";
 import { Command } from "commander";
 
 const DEFAULT_MCP_SERVERS: Record<string, unknown> = {
@@ -17,7 +17,7 @@ const DEFAULT_MCP_SERVERS: Record<string, unknown> = {
 };
 
 function getMcpSettingsPath(): string {
-	return join(resolveClineDataDir(), "mcp.json");
+	return join(resolveTcodeDataDir(), "mcp.json");
 }
 
 function writeMcpConfig(servers: Record<string, unknown>): string {
@@ -50,7 +50,7 @@ function writeMcpConfig(servers: Record<string, unknown>): string {
 async function installPlaywright(io: { log: (msg: string) => void }): Promise<boolean> {
 	io.log("Installing Playwright browsers (Chromium)...");
 	const result = spawnSync("npx", ["playwright", "install", "chromium"], {
-		cwd: join(homedir(), ".cline"),
+		cwd: join(homedir(), ".tcode"),
 		stdio: "inherit",
 		timeout: 300_000,
 	});
@@ -69,7 +69,7 @@ export function createSetupCommand(
 		.action(async function (this: Command) {
 			const opts = this.opts<{ skipBrowser?: boolean; dryRun?: boolean }>();
 
-			writeln("Cline Setup - Installing built-in plugins");
+			writeln("tcode Setup - Installing built-in plugins");
 			writeln("");
 
 			// Step 1: MCP config
@@ -110,7 +110,7 @@ export function createSetupCommand(
 			writeln("");
 			writeln("Setup complete!");
 			if (!opts.skipBrowser) {
-				writeln("Restart cline with --tui to start using browser automation.");
+				writeln("Restart tcode with --tui to start using browser automation.");
 			}
 			setExitCode(0);
 		});

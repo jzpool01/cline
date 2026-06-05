@@ -96,18 +96,18 @@ describe("cli e2e", () => {
 		return {
 			...process.env,
 			HOME: homeDir,
-			CLINE_DIR: path.join(homeDir, ".cline"),
-			CLINE_DATA_DIR: dataDir,
-			CLINE_DB_DATA_DIR: path.join(dataDir, "db"),
-			CLINE_SESSION_DATA_DIR: sessionDir,
-			CLINE_TEAM_DATA_DIR: teamDir,
-			CLINE_SESSION_BACKEND_MODE: "local",
-			CLINE_PROVIDER_SETTINGS_PATH: path.join(
+			TCODE_DIR: path.join(homeDir, ".tcode"),
+			TCODE_DATA_DIR: dataDir,
+			TCODE_DB_DATA_DIR: path.join(dataDir, "db"),
+			TCODE_SESSION_DATA_DIR: sessionDir,
+			TCODE_TEAM_DATA_DIR: teamDir,
+			TCODE_SESSION_BACKEND_MODE: "local",
+			TCODE_PROVIDER_SETTINGS_PATH: path.join(
 				dataDir,
 				"settings",
 				"providers.json",
 			),
-			CLINE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
+			TCODE_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
 			...overrides,
 		};
 	};
@@ -241,7 +241,7 @@ describe("cli e2e", () => {
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DATA_DIR: dataDir,
+				TCODE_DATA_DIR: dataDir,
 			},
 		});
 		expect(result.status).toBe(1);
@@ -258,7 +258,7 @@ describe("cli e2e", () => {
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_SESSION_DATA_DIR: sessionDir,
+				TCODE_SESSION_DATA_DIR: sessionDir,
 			},
 		});
 
@@ -275,7 +275,7 @@ describe("cli e2e", () => {
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_SESSION_DATA_DIR: sessionDir,
+				TCODE_SESSION_DATA_DIR: sessionDir,
 			},
 		});
 
@@ -517,8 +517,8 @@ Skill from docs path.`,
 		const homeDir = mkdtempSync(path.join(os.tmpdir(), "cli-e2e-home-"));
 		const workspace = mkdtempSync(path.join(os.tmpdir(), "cli-e2e-workspace-"));
 		tempDirs.push(homeDir, workspace);
-		const globalAgentsDir = path.join(homeDir, ".cline", "agents");
-		const workspaceAgentsDir = path.join(workspace, ".cline", "agents");
+		const globalAgentsDir = path.join(homeDir, ".tcode", "agents");
+		const workspaceAgentsDir = path.join(workspace, ".tcode", "agents");
 		mkdirSync(globalAgentsDir, { recursive: true });
 		mkdirSync(workspaceAgentsDir, { recursive: true });
 		writeFileSync(
@@ -545,7 +545,7 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DIR: path.join(homeDir, ".cline"),
+				TCODE_DIR: path.join(homeDir, ".tcode"),
 			},
 		});
 		expect(textResult.status).toBe(0);
@@ -564,7 +564,7 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DIR: path.join(homeDir, ".cline"),
+				TCODE_DIR: path.join(homeDir, ".tcode"),
 			},
 		});
 		expect(jsonResult.status).toBe(0);
@@ -586,8 +586,8 @@ Break work into clear steps.`,
 		const dataDir = mkdtempSync(path.join(os.tmpdir(), "cli-e2e-data-"));
 		const workspace = mkdtempSync(path.join(os.tmpdir(), "cli-e2e-workspace-"));
 		tempDirs.push(homeDir, dataDir, workspace);
-		const workspacePluginsDir = path.join(workspace, ".cline", "plugins");
-		const userPluginsDir = path.join(homeDir, ".cline", "plugins");
+		const workspacePluginsDir = path.join(workspace, ".tcode", "plugins");
+		const userPluginsDir = path.join(homeDir, ".tcode", "plugins");
 		const documentsPluginsDir = path.join(
 			homeDir,
 			"Documents",
@@ -618,8 +618,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DIR: path.join(homeDir, ".cline"),
-				CLINE_DATA_DIR: dataDir,
+				TCODE_DIR: path.join(homeDir, ".tcode"),
+				TCODE_DATA_DIR: dataDir,
 			},
 		});
 		expect(textResult.status).toBe(0);
@@ -642,8 +642,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DIR: path.join(homeDir, ".cline"),
-				CLINE_DATA_DIR: dataDir,
+				TCODE_DIR: path.join(homeDir, ".tcode"),
+				TCODE_DATA_DIR: dataDir,
 			},
 		});
 		expect(jsonResult.status).toBe(0);
@@ -659,13 +659,13 @@ Break work into clear steps.`,
 		expect(
 			parsed.some((plugin) =>
 				plugin.path.endsWith(
-					path.join(".cline", "plugins", "workspace-plugin.ts"),
+					path.join(".tcode", "plugins", "workspace-plugin.ts"),
 				),
 			),
 		).toBe(true);
 		expect(
 			parsed.some((plugin) =>
-				plugin.path.endsWith(path.join(".cline", "plugins", "user-plugin.js")),
+				plugin.path.endsWith(path.join(".tcode", "plugins", "user-plugin.js")),
 			),
 		).toBe(true);
 		expect(
@@ -680,7 +680,7 @@ Break work into clear steps.`,
 	it("lists configured mcp servers", () => {
 		const tempRoot = mkdtempSync(path.join(os.tmpdir(), "cli-e2e-mcp-"));
 		tempDirs.push(tempRoot);
-		const settingsPath = path.join(tempRoot, "cline_mcp_settings.json");
+		const settingsPath = path.join(tempRoot, "tcode_mcp_settings.json");
 		writeFileSync(
 			settingsPath,
 			JSON.stringify(
@@ -710,7 +710,7 @@ Break work into clear steps.`,
 		const textResult = runCli(["config", "mcp"], {
 			env: {
 				...createIsolatedEnv(),
-				CLINE_MCP_SETTINGS_PATH: settingsPath,
+				TCODE_MCP_SETTINGS_PATH: settingsPath,
 			},
 		});
 		expect(textResult.status).toBe(0);
@@ -723,7 +723,7 @@ Break work into clear steps.`,
 		const jsonResult = runCli(["config", "mcp", "--json"], {
 			env: {
 				...createIsolatedEnv(),
-				CLINE_MCP_SETTINGS_PATH: settingsPath,
+				TCODE_MCP_SETTINGS_PATH: settingsPath,
 			},
 		});
 		expect(jsonResult.status).toBe(0);
@@ -751,7 +751,7 @@ Break work into clear steps.`,
 		const dataDir = mkdtempSync(path.join(os.tmpdir(), "cli-e2e-data-"));
 		const workspace = mkdtempSync(path.join(os.tmpdir(), "cli-e2e-workspace-"));
 		tempDirs.push(homeDir, dataDir, workspace);
-		const workspacePluginsDir = path.join(workspace, ".cline", "plugins");
+		const workspacePluginsDir = path.join(workspace, ".tcode", "plugins");
 		const globalSettingsPath = path.join(
 			dataDir,
 			"settings",
@@ -788,8 +788,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DATA_DIR: dataDir,
-				CLINE_GLOBAL_SETTINGS_PATH: globalSettingsPath,
+				TCODE_DATA_DIR: dataDir,
+				TCODE_GLOBAL_SETTINGS_PATH: globalSettingsPath,
 			},
 		});
 		expect(textResult.status).toBe(0);
@@ -812,8 +812,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_DATA_DIR: dataDir,
-				CLINE_GLOBAL_SETTINGS_PATH: globalSettingsPath,
+				TCODE_DATA_DIR: dataDir,
+				TCODE_GLOBAL_SETTINGS_PATH: globalSettingsPath,
 			},
 		});
 		expect(jsonResult.status).toBe(0);
@@ -875,7 +875,7 @@ Break work into clear steps.`,
 		const hookPath = path.join(logDir, "hook-events.jsonl");
 		const defaultHookPath = path.join(
 			homeDir,
-			".cline",
+			".tcode",
 			"data",
 			"logs",
 			"hooks.jsonl",
@@ -884,8 +884,8 @@ Break work into clear steps.`,
 			env: {
 				...createIsolatedEnv(),
 				HOME: homeDir,
-				CLINE_SESSION_DATA_DIR: sessionDir,
-				CLINE_HOOKS_LOG_PATH: hookPath,
+				TCODE_SESSION_DATA_DIR: sessionDir,
+				TCODE_HOOKS_LOG_PATH: hookPath,
 			},
 			stdin: JSON.stringify({
 				hookName: "tool_call",

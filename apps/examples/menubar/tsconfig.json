@@ -6,26 +6,26 @@
 		"moduleResolution": "Bundler",
 		"target": "ESNext",
 		"paths": {
-			"@cline/agents": ["../../../sdk/packages/agents/src/index.ts"],
-			"@cline/agents/*": [
+			"@tarogo/agents": ["../../../sdk/packages/agents/src/index.ts"],
+			"@tarogo/agents/*": [
 				"../../../sdk/packages/agents/src/*",
 				"../../../sdk/packages/agents/src/*/index.ts"
 			],
-			"@cline/core": ["../../../sdk/packages/core/src/index.ts"],
-			"@cline/core/hub/daemon-entry": [
+			"@tarogo/core": ["../../../sdk/packages/core/src/index.ts"],
+			"@tarogo/core/hub/daemon-entry": [
 				"../../../sdk/packages/core/src/hub/daemon/entry.ts"
 			],
-			"@cline/core/*": [
+			"@tarogo/core/*": [
 				"../../../sdk/packages/core/src/*",
 				"../../../sdk/packages/core/src/*/index.ts"
 			],
-			"@cline/llms": ["../../../sdk/packages/llms/src/index.ts"],
-			"@cline/shared": ["../../../sdk/packages/shared/src/index.ts"],
-			"@cline/shared/storage": [
+			"@tarogo/llms": ["../../../sdk/packages/llms/src/index.ts"],
+			"@tarogo/shared": ["../../../sdk/packages/shared/src/index.ts"],
+			"@tarogo/shared/storage": [
 				"../../../sdk/packages/shared/src/storage/index.ts"
 			],
-			"@cline/shared/db": ["../../../sdk/packages/shared/src/db/index.ts"],
-			"@cline/shared/*": [
+			"@tarogo/shared/db": ["../../../sdk/packages/shared/src/db/index.ts"],
+			"@tarogo/shared/*": [
 				"../../../sdk/packages/shared/src/*",
 				"../../../sdk/packages/shared/src/*/index.ts"
 			]

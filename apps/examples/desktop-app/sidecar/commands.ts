@@ -14,7 +14,7 @@ import type {
 	ProviderClient,
 	ProviderProtocol,
 	SaveProviderSettingsActionRequest,
-} from "@cline/core";
+} from "@tarogo/core";
 import {
 	addLocalProvider,
 	ClineAccountService,
@@ -46,8 +46,8 @@ import {
 	setDisabledPlugin,
 	setDisabledTools,
 	toggleDisabledTool,
-} from "@cline/core";
-import { getClineEnvironmentConfig } from "@cline/shared";
+} from "@tarogo/core";
+import { getClineEnvironmentConfig } from "@tarogo/shared";
 import { broadcastEvent, resolveSidecarAskQuestion } from "./context";
 import {
 	findArtifactUnderDir,

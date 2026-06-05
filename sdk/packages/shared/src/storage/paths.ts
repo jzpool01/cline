@@ -12,7 +12,7 @@ import { dirname, join, resolve } from "node:path";
 import type { PluginManifest } from "..";
 
 const DEPRECATED_CONFIG_DIR = ".clinerules";
-const CLINE_CONFIG_DIR = ".cline";
+const TCODE_CONFIG_DIR = ".tcode";
 const LEGACY_AGENT_SKILLS_CONFIG_DIR = ".agents";
 
 export const AGENT_CONFIG_DIRECTORY_NAME = "agents";
@@ -23,7 +23,7 @@ export const WORKFLOWS_CONFIG_DIRECTORY_NAME = "workflows";
 export const PLUGINS_DIRECTORY_NAME = "plugins";
 export const AGENTS_RULES_FILE_NAME = "AGENTS.md";
 
-export const CLINE_MCP_SETTINGS_FILE_NAME = "cline_mcp_settings.json";
+export const TCODE_MCP_SETTINGS_FILE_NAME = "tcode_mcp_settings.json";
 
 function resolveDefaultHomeDir(): string {
 	const envHome = process?.env?.HOME?.trim();
@@ -69,42 +69,42 @@ export function setHomeDirIfUnset(dir: string) {
 	HOME_DIR = trimmed;
 }
 
-let CLINE_DIR: string | undefined;
-let CLINE_DIR_SET_EXPLICITLY = false;
+let TCODE_DIR: string | undefined;
+let TCODE_DIR_SET_EXPLICITLY = false;
 
-export function setClineDir(dir: string): void {
+export function setTcodeDir(dir: string): void {
 	const trimmed = dir.trim();
 	if (!trimmed) {
 		return;
 	}
-	CLINE_DIR = trimmed;
-	CLINE_DIR_SET_EXPLICITLY = true;
+	TCODE_DIR = trimmed;
+	TCODE_DIR_SET_EXPLICITLY = true;
 }
 
-export function setClineDirIfUnset(dir: string): void {
-	if (CLINE_DIR_SET_EXPLICITLY) {
+export function setTcodeDirIfUnset(dir: string): void {
+	if (TCODE_DIR_SET_EXPLICITLY) {
 		return;
 	}
 	const trimmed = dir.trim();
 	if (!trimmed) {
 		return;
 	}
-	CLINE_DIR = trimmed;
+	TCODE_DIR = trimmed;
 }
 
-export function resolveClineDir(): string {
-	if (CLINE_DIR) {
-		return CLINE_DIR;
+export function resolveTcodeDir(): string {
+	if (TCODE_DIR) {
+		return TCODE_DIR;
 	}
-	const envDir = process.env.CLINE_DIR?.trim();
+	const envDir = process.env.TCODE_DIR?.trim();
 	if (envDir) {
 		return envDir;
 	}
-	return join(HOME_DIR, ".cline");
+	return join(HOME_DIR, ".tcode");
 }
 
-export function resolveDocumentsClineDirectoryPath(): string {
-	return join(HOME_DIR, "Documents", "Cline");
+export function resolveDocumentsTcodeDirectoryPath(): string {
+	return join(HOME_DIR, "Documents", "Tcode");
 }
 
 type DocumentsExtensionName =
@@ -117,39 +117,39 @@ type DocumentsExtensionName =
 export function resolveDocumentsExtensionPath(
 	name: DocumentsExtensionName,
 ): string {
-	return join(resolveDocumentsClineDirectoryPath(), name);
+	return join(resolveDocumentsTcodeDirectoryPath(), name);
 }
 
-export function resolveClineDataDir(): string {
-	const explicitDir = process.env.CLINE_DATA_DIR?.trim();
+export function resolveTcodeDataDir(): string {
+	const explicitDir = process.env.TCODE_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
-	return join(resolveClineDir(), "data");
+	return join(resolveTcodeDir(), "data");
 }
 
 export function resolveSessionDataDir(): string {
-	const explicitDir = process.env.CLINE_SESSION_DATA_DIR?.trim();
+	const explicitDir = process.env.TCODE_SESSION_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
-	return join(resolveClineDataDir(), "sessions");
+	return join(resolveTcodeDataDir(), "sessions");
 }
 
 export function resolveTeamDataDir(): string {
-	const explicitDir = process.env.CLINE_TEAM_DATA_DIR?.trim();
+	const explicitDir = process.env.TCODE_TEAM_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
-	return join(resolveClineDataDir(), "teams");
+	return join(resolveTcodeDataDir(), "teams");
 }
 
 export function resolveDbDataDir(): string {
-	const explicitDir = process.env.CLINE_DB_DATA_DIR?.trim();
+	const explicitDir = process.env.TCODE_DB_DATA_DIR?.trim();
 	if (explicitDir) {
 		return explicitDir;
 	}
-	return join(resolveClineDataDir(), "db");
+	return join(resolveTcodeDataDir(), "db");
 }
 
 /**
@@ -158,7 +158,7 @@ export function resolveDbDataDir(): string {
  * retention, and query patterns stay decoupled from session storage.
  */
 export function resolveCronDbPath(): string {
-	const explicitPath = process.env.CLINE_CRON_DB_PATH?.trim();
+	const explicitPath = process.env.TCODE_CRON_DB_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
@@ -173,7 +173,7 @@ export interface ResolveCronSpecsDirOptions {
 	 * to provide their own merged/global/workspace cron source root.
 	 */
 	cronSpecsDir?: string;
-	/** Defaults to `global`, i.e. `~/.cline/cron`. */
+	/** Defaults to `global`, i.e. `~/.tcode/cron`. */
 	scope?: CronSpecsScope;
 	/** Required when `scope` is `workspace`. */
 	workspaceRoot?: string;
@@ -181,25 +181,25 @@ export interface ResolveCronSpecsDirOptions {
 
 /**
  * Global file-based cron spec authoring directory:
- *   `~/.cline/cron/`
+ *   `~/.tcode/cron/`
  */
 export function resolveGlobalCronSpecsDir(): string {
-	return join(resolveClineDir(), "cron");
+	return join(resolveTcodeDir(), "cron");
 }
 
 /**
  * Workspace file-based cron spec authoring directory reserved for future
  * workspace-scoped automation support:
- *   `${workspaceRoot}/.cline/cron/`
+ *   `${workspaceRoot}/.tcode/cron/`
  */
 export function resolveWorkspaceCronSpecsDir(workspaceRoot: string): string {
-	return join(workspaceRoot, ".cline", "cron");
+	return join(workspaceRoot, ".tcode", "cron");
 }
 
 /**
  * Directory containing file-based cron spec authoring.
  *
- * Default: global `~/.cline/cron/`.
+ * Default: global `~/.tcode/cron/`.
  * One-off: `*.md`
  * Recurring: `*.cron.md`
  * Event-driven: `events/*.event.md`
@@ -260,27 +260,27 @@ export function resolveCronEventsDir(
 }
 
 export function resolveProviderSettingsPath(): string {
-	const explicitPath = process.env.CLINE_PROVIDER_SETTINGS_PATH?.trim();
+	const explicitPath = process.env.TCODE_PROVIDER_SETTINGS_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
-	return join(resolveClineDataDir(), "settings", "providers.json");
+	return join(resolveTcodeDataDir(), "settings", "providers.json");
 }
 
 export function resolveGlobalSettingsPath(): string {
-	const explicitPath = process.env.CLINE_GLOBAL_SETTINGS_PATH?.trim();
+	const explicitPath = process.env.TCODE_GLOBAL_SETTINGS_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
-	return join(resolveClineDataDir(), "settings", "global-settings.json");
+	return join(resolveTcodeDataDir(), "settings", "global-settings.json");
 }
 
 export function resolveMcpSettingsPath(): string {
-	const explicitPath = process.env.CLINE_MCP_SETTINGS_PATH?.trim();
+	const explicitPath = process.env.TCODE_MCP_SETTINGS_PATH?.trim();
 	if (explicitPath) {
 		return explicitPath;
 	}
-	return join(resolveClineDataDir(), "settings", CLINE_MCP_SETTINGS_FILE_NAME);
+	return join(resolveTcodeDataDir(), "settings", TCODE_MCP_SETTINGS_FILE_NAME);
 }
 
 function dedupePaths(paths: ReadonlyArray<string>): string[] {
@@ -302,13 +302,13 @@ function getWorkspaceSkillDirectories(workspacePath?: string): string[] {
 	}
 	return [
 		DEPRECATED_CONFIG_DIR,
-		CLINE_CONFIG_DIR,
+		TCODE_CONFIG_DIR,
 		LEGACY_AGENT_SKILLS_CONFIG_DIR,
 	].map((dir) => join(workspacePath, dir, SKILLS_CONFIG_DIRECTORY_NAME));
 }
 
 export function resolveAgentsConfigDirPath(): string {
-	return join(resolveClineDir(), AGENT_CONFIG_DIRECTORY_NAME);
+	return join(resolveTcodeDir(), AGENT_CONFIG_DIRECTORY_NAME);
 }
 
 export function resolveAgentConfigSearchPaths(
@@ -316,7 +316,7 @@ export function resolveAgentConfigSearchPaths(
 ): string[] {
 	return dedupePaths([
 		workspacePath
-			? join(workspacePath, CLINE_CONFIG_DIR, AGENT_CONFIG_DIRECTORY_NAME)
+			? join(workspacePath, TCODE_CONFIG_DIR, AGENT_CONFIG_DIRECTORY_NAME)
 			: "",
 		resolveAgentsConfigDirPath(),
 	]);
@@ -327,12 +327,12 @@ export function resolveHooksConfigSearchPaths(
 ): string[] {
 	const hooks = [
 		resolveDocumentsExtensionPath("Hooks"),
-		join(resolveClineDir(), HOOKS_CONFIG_DIRECTORY_NAME),
+		join(resolveTcodeDir(), HOOKS_CONFIG_DIRECTORY_NAME),
 	];
 	if (workspacePath) {
 		hooks.push(
 			join(workspacePath, DEPRECATED_CONFIG_DIR, HOOKS_CONFIG_DIRECTORY_NAME),
-			join(workspacePath, CLINE_CONFIG_DIR, HOOKS_CONFIG_DIRECTORY_NAME),
+			join(workspacePath, TCODE_CONFIG_DIR, HOOKS_CONFIG_DIRECTORY_NAME),
 		);
 	}
 	return dedupePaths(hooks);
@@ -343,7 +343,7 @@ export function resolveSkillsConfigSearchPaths(
 ): string[] {
 	return dedupePaths([
 		...getWorkspaceSkillDirectories(workspacePath),
-		join(resolveClineDir(), SKILLS_CONFIG_DIRECTORY_NAME),
+		join(resolveTcodeDir(), SKILLS_CONFIG_DIRECTORY_NAME),
 		join(
 			HOME_DIR,
 			LEGACY_AGENT_SKILLS_CONFIG_DIR,
@@ -362,7 +362,7 @@ export function resolveRulesConfigSearchPaths(
 	const wsPaths = workspacePath
 		? [
 				join(workspacePath, DEPRECATED_CONFIG_DIR),
-				join(workspacePath, CLINE_CONFIG_DIR, RULES_CONFIG_DIRECTORY_NAME),
+				join(workspacePath, TCODE_CONFIG_DIR, RULES_CONFIG_DIRECTORY_NAME),
 			]
 		: [];
 	const workspaceAgentsFile = workspacePath
@@ -372,7 +372,7 @@ export function resolveRulesConfigSearchPaths(
 		...workspaceAgentsFile,
 		...wsPaths,
 		resolveGlobalAgentsRulesPath(),
-		join(resolveClineDir(), RULES_CONFIG_DIRECTORY_NAME),
+		join(resolveTcodeDir(), RULES_CONFIG_DIRECTORY_NAME),
 		resolveDocumentsExtensionPath("Rules"),
 	]);
 }
@@ -385,9 +385,9 @@ export function resolveWorkflowsConfigSearchPaths(
 			? join(workspacePath, ".clinerules", WORKFLOWS_CONFIG_DIRECTORY_NAME)
 			: "",
 		resolveDocumentsExtensionPath("Workflows"),
-		join(resolveClineDir(), WORKFLOWS_CONFIG_DIRECTORY_NAME),
+		join(resolveTcodeDir(), WORKFLOWS_CONFIG_DIRECTORY_NAME),
 		workspacePath
-			? join(workspacePath, ".cline", WORKFLOWS_CONFIG_DIRECTORY_NAME)
+			? join(workspacePath, ".tcode", WORKFLOWS_CONFIG_DIRECTORY_NAME)
 			: "",
 	]);
 }
@@ -396,8 +396,8 @@ export function resolvePluginConfigSearchPaths(
 	workspacePath?: string,
 ): string[] {
 	return dedupePaths([
-		workspacePath ? join(workspacePath, ".cline", PLUGINS_DIRECTORY_NAME) : "",
-		join(resolveClineDir(), PLUGINS_DIRECTORY_NAME),
+		workspacePath ? join(workspacePath, ".tcode", PLUGINS_DIRECTORY_NAME) : "",
+		join(resolveTcodeDir(), PLUGINS_DIRECTORY_NAME),
 		resolveDocumentsExtensionPath("Plugins"),
 	]);
 }
@@ -423,12 +423,12 @@ function readPluginPackageManifest(
 ): PluginPackageManifest | null {
 	try {
 		const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf8")) as {
-			cline?: PluginPackageManifest;
+			tcode?: PluginPackageManifest;
 		};
-		if (!packageJson.cline || typeof packageJson.cline !== "object") {
+		if (!packageJson.tcode || typeof packageJson.tcode !== "object") {
 			return null;
 		}
-		return packageJson.cline;
+		return packageJson.tcode;
 	} catch {
 		return null;
 	}
@@ -580,7 +580,7 @@ export function ensureHookLogDir(filePath?: string): string {
 		ensureParentDir(filePath);
 		return dirname(filePath);
 	}
-	const dir = join(resolveClineDataDir(), "logs");
+	const dir = join(resolveTcodeDataDir(), "logs");
 	if (!existsSync(dir)) {
 		mkdirSync(dir, { recursive: true });
 	}

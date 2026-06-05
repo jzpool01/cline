@@ -25,10 +25,10 @@
 		]
 	},
 	"peerDependencies": {
-		"@cline/core": "*"
+		"@tarogo/core": "*"
 	},
 	"peerDependenciesMeta": {
-		"@cline/core": {
+		"@tarogo/core": {
 			"optional": true
 		}
 	},

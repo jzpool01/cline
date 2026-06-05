@@ -4,7 +4,7 @@ import {
 	setDisabledTools,
 	type UserInstructionConfigService,
 	uninstallPlugin,
-} from "@cline/core";
+} from "@tarogo/core";
 import {
 	type InteractiveConfigData,
 	type InteractiveConfigItem,

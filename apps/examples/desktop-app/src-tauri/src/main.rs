@@ -348,7 +348,7 @@ fn ensure_desktop_backend_started(
 }
 
 fn resolve_mcp_settings_path() -> Result<PathBuf, String> {
-    if let Ok(value) = std::env::var("CLINE_MCP_SETTINGS_PATH") {
+    if let Ok(value) = std::env::var("TCODE_MCP_SETTINGS_PATH") {
         let trimmed = value.trim();
         if !trimmed.is_empty() {
             return Ok(PathBuf::from(trimmed));

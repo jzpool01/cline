@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 
-// Publishes cline and all platform-specific binary packages to npm.
+// Publishes tcode and all platform-specific binary packages to npm.
 //
 // Usage:
 //   bun script/publish-npm.ts                 # publish with "latest" tag
@@ -30,23 +30,23 @@ const { values } = parseArgs({
 
 const dryRun = values["dry-run"] ?? false;
 const npmTag = values.tag ?? "latest";
-const wrapperPackageName = "cline";
+const wrapperPackageName = "tcode";
 
 const expectedPlatformPackages = [
-	"@cline/cli-darwin-arm64",
-	"@cline/cli-darwin-x64",
-	"@cline/cli-linux-arm64",
-	"@cline/cli-linux-x64",
-	"@cline/cli-windows-arm64",
-	"@cline/cli-windows-x64",
+	"@tarogo/tcode-darwin-arm64",
+	"@tarogo/tcode-darwin-x64",
+	"@tarogo/tcode-linux-arm64",
+	"@tarogo/tcode-linux-x64",
+	"@tarogo/tcode-windows-arm64",
+	"@tarogo/tcode-windows-x64",
 ] as const;
 
 const hostSdkPackages = [
-	{ name: "@cline/sdk", directory: "sdk" },
-	{ name: "@cline/core", directory: "core" },
-	{ name: "@cline/agents", directory: "agents" },
-	{ name: "@cline/llms", directory: "llms" },
-	{ name: "@cline/shared", directory: "shared" },
+	{ name: "@tarogo/sdk", directory: "sdk" },
+	{ name: "@tarogo/core", directory: "core" },
+	{ name: "@tarogo/agents", directory: "agents" },
+	{ name: "@tarogo/llms", directory: "llms" },
+	{ name: "@tarogo/shared", directory: "shared" },
 ] as const;
 
 interface PlatformPackageManifest {
@@ -244,7 +244,7 @@ console.log("\nPublishing platform packages...");
 const platformTasks = Object.keys(binaries)
 	.sort()
 	.map(async (name) => {
-		const dirName = name.replace("@cline/", "");
+		const dirName = name.replace("@tarogo/", "");
 		const pkgDir = join(cliDir, "dist", dirName);
 
 		await publishPackage({
@@ -312,7 +312,7 @@ const bugs = "bugs" in mainPkgRecord ? mainPkgRecord.bugs : undefined;
 const wrapperPackageJson = {
 	name: wrapperPackageName,
 	version,
-	description: description || "Cline CLI",
+	description: description || "Tarogo tcode",
 	license: license || "Apache-2.0",
 	...(keywords ? { keywords } : {}),
 	...(author ? { author } : {}),
@@ -320,7 +320,7 @@ const wrapperPackageJson = {
 	...(bugs ? { bugs } : {}),
 	...(sourceRepository ? { repository: sourceRepository } : {}),
 	bin: {
-		cline: "./bin/cline",
+		tcode: "./bin/tcode",
 	},
 	scripts: {
 		postinstall: "node ./postinstall.mjs || true",
@@ -352,5 +352,5 @@ if (dryRun) {
 	);
 
 	console.log("\nInstall with:");
-	console.log(`  npm install -g ${wrapperPackageName}`);
+	console.log(`  npm install -g tcode`);
 }

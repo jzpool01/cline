@@ -1,25 +1,25 @@
 import { join } from "node:path";
-import { resolveTeamDataDir } from "@cline/shared/storage";
+import { resolveTeamDataDir } from "@tarogo/shared/storage";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { createDelegatedAgentConfigProvider } from "./delegated-agent";
 import { AgentTeamsRuntime } from "./multi-agent";
 import { createAgentTeamsTools } from "./team-tools";
 
 type EnvSnapshot = {
-	CLINE_DATA_DIR: string | undefined;
-	CLINE_TEAM_DATA_DIR: string | undefined;
+	TCODE_DATA_DIR: string | undefined;
+	TCODE_TEAM_DATA_DIR: string | undefined;
 };
 
 function captureEnv(): EnvSnapshot {
 	return {
-		CLINE_DATA_DIR: process.env.CLINE_DATA_DIR,
-		CLINE_TEAM_DATA_DIR: process.env.CLINE_TEAM_DATA_DIR,
+		TCODE_DATA_DIR: process.env.TCODE_DATA_DIR,
+		TCODE_TEAM_DATA_DIR: process.env.TCODE_TEAM_DATA_DIR,
 	};
 }
 
 function restoreEnv(snapshot: EnvSnapshot): void {
-	process.env.CLINE_DATA_DIR = snapshot.CLINE_DATA_DIR;
-	process.env.CLINE_TEAM_DATA_DIR = snapshot.CLINE_TEAM_DATA_DIR;
+	process.env.TCODE_DATA_DIR = snapshot.TCODE_DATA_DIR;
+	process.env.TCODE_TEAM_DATA_DIR = snapshot.TCODE_TEAM_DATA_DIR;
 }
 
 function makeTeammateConfigProvider(
@@ -39,17 +39,17 @@ describe("resolveTeamDataDir", () => {
 		restoreEnv(snapshot);
 	});
 
-	it("uses CLINE_TEAM_DATA_DIR when set", () => {
+	it("uses TCODE_TEAM_DATA_DIR when set", () => {
 		snapshot = captureEnv();
-		process.env.CLINE_TEAM_DATA_DIR = "/tmp/team-dir";
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		process.env.TCODE_TEAM_DATA_DIR = "/tmp/team-dir";
+		process.env.TCODE_DATA_DIR = "/tmp/cline-data";
 		expect(resolveTeamDataDir()).toBe("/tmp/team-dir");
 	});
 
-	it("falls back to CLINE_DATA_DIR/teams", () => {
+	it("falls back to TCODE_DATA_DIR/teams", () => {
 		snapshot = captureEnv();
-		delete process.env.CLINE_TEAM_DATA_DIR;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		delete process.env.TCODE_TEAM_DATA_DIR;
+		process.env.TCODE_DATA_DIR = "/tmp/cline-data";
 		expect(resolveTeamDataDir()).toBe(join("/tmp/cline-data", "teams"));
 	});
 });

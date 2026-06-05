@@ -1,9 +1,9 @@
-import type { ChatStartSessionRequest } from "@cline/core";
+import type { ChatStartSessionRequest } from "@tarogo/core";
 import {
 	createUserInstructionConfigService,
 	HubSessionClient,
-} from "@cline/core";
-import type { ConnectLinearOptions, LinearConnectorState } from "@cline/shared";
+} from "@tarogo/core";
+import type { ConnectLinearOptions, LinearConnectorState } from "@tarogo/shared";
 import { type Adapter, Chat, ConsoleLogger, type Thread } from "chat";
 import type { Command } from "commander";
 import type { CliLoggerAdapter } from "../../logging/adapter";

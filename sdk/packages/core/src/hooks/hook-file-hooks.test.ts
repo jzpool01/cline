@@ -2,11 +2,11 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import {
-	resolveClineDir,
-	resolveDocumentsClineDirectoryPath,
-	setClineDir,
+	resolveTcodeDir,
+	resolveDocumentsTcodeDirectoryPath,
+	setTcodeDir,
 	setHomeDir,
-} from "@cline/shared/storage";
+} from "@tarogo/shared/storage";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
 	createHookAuditHooks,
@@ -119,24 +119,24 @@ function afterToolContext(input: unknown = { path: "README.md" }) {
 
 describe("createHookConfigFileHooks", () => {
 	const originalHomeDir = dirname(
-		dirname(resolveDocumentsClineDirectoryPath()),
+		dirname(resolveDocumentsTcodeDirectoryPath()),
 	);
-	const originalClineDir = resolveClineDir();
+	const originalTcodeDir = resolveTcodeDir();
 	let isolatedRoot = "";
 
 	beforeAll(async () => {
 		isolatedRoot = await mkdtemp(join(tmpdir(), "hooks-home-"));
 		const isolatedHomeDir = join(isolatedRoot, "home");
-		const isolatedClineDir = join(isolatedRoot, "cline");
+		const isolatedTcodeDir = join(isolatedRoot, "cline");
 		await mkdir(isolatedHomeDir, { recursive: true });
-		await mkdir(isolatedClineDir, { recursive: true });
+		await mkdir(isolatedTcodeDir, { recursive: true });
 		setHomeDir(isolatedHomeDir);
-		setClineDir(isolatedClineDir);
+		setTcodeDir(isolatedTcodeDir);
 	});
 
 	afterAll(async () => {
 		setHomeDir(originalHomeDir);
-		setClineDir(originalClineDir);
+		setTcodeDir(originalTcodeDir);
 		if (isolatedRoot) {
 			await rm(isolatedRoot, { recursive: true, force: true });
 		}
@@ -413,8 +413,8 @@ describe("createHookConfigFileHooks", () => {
 
 	it("writes audit tool timing and completed turn payloads", async () => {
 		const outputPath = join(tmpdir(), `hooks-audit-${Date.now()}.jsonl`);
-		const originalLogPath = process.env.CLINE_HOOKS_LOG_PATH;
-		process.env.CLINE_HOOKS_LOG_PATH = outputPath;
+		const originalLogPath = process.env.TCODE_HOOKS_LOG_PATH;
+		process.env.TCODE_HOOKS_LOG_PATH = outputPath;
 		try {
 			const hooks = createHookAuditHooks({
 				workspacePath: "/workspace",
@@ -455,9 +455,9 @@ describe("createHookConfigFileHooks", () => {
 			});
 		} finally {
 			if (originalLogPath === undefined) {
-				delete process.env.CLINE_HOOKS_LOG_PATH;
+				delete process.env.TCODE_HOOKS_LOG_PATH;
 			} else {
-				process.env.CLINE_HOOKS_LOG_PATH = originalLogPath;
+				process.env.TCODE_HOOKS_LOG_PATH = originalLogPath;
 			}
 			await rm(outputPath, { force: true });
 		}

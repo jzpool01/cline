@@ -139,7 +139,7 @@ vi.mock("./runtime/run-interactive", () => {
 });
 vi.mock("./utils/session", () => sessionMocks);
 vi.mock("./session/session", () => sessionMocks);
-vi.mock("@cline/core", () => {
+vi.mock("@tarogo/core", () => {
 	return {
 		resolveProviderConfig: llmMocks.resolveProviderConfig,
 		createTeamName: vi.fn(() => "team-test"),
@@ -765,13 +765,13 @@ describe("runCli lightweight command dispatch", () => {
 			expect.anything(),
 			undefined,
 			expect.objectContaining({
-				clineApiBaseUrl: undefined,
-				clineProviderSettings: undefined,
+				tcodeApiBaseUrl: undefined,
+				tcodeProviderSettings: undefined,
 			}),
 		);
 	});
 
-	it("passes Cline provider settings as Cline account options", async () => {
+	it("passes Cline provider settings as Tarogo account options", async () => {
 		const clineSettings = {
 			provider: "cline",
 			baseUrl: "https://api.example.test",
@@ -795,8 +795,8 @@ describe("runCli lightweight command dispatch", () => {
 			expect.anything(),
 			undefined,
 			expect.objectContaining({
-				clineApiBaseUrl: "https://api.example.test",
-				clineProviderSettings: clineSettings,
+				tcodeApiBaseUrl: "https://api.example.test",
+				tcodeProviderSettings: clineSettings,
 			}),
 		);
 	});

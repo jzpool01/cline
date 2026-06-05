@@ -9,19 +9,19 @@ import {
 } from ".";
 
 type EnvSnapshot = {
-	CLINE_DATA_DIR: string | undefined;
+	TCODE_DATA_DIR: string | undefined;
 	CLINE_HUB_DISCOVERY_PATH: string | undefined;
 };
 
 function captureEnv(): EnvSnapshot {
 	return {
-		CLINE_DATA_DIR: process.env.CLINE_DATA_DIR,
+		TCODE_DATA_DIR: process.env.TCODE_DATA_DIR,
 		CLINE_HUB_DISCOVERY_PATH: process.env.CLINE_HUB_DISCOVERY_PATH,
 	};
 }
 
 function restoreEnv(snapshot: EnvSnapshot): void {
-	process.env.CLINE_DATA_DIR = snapshot.CLINE_DATA_DIR;
+	process.env.TCODE_DATA_DIR = snapshot.TCODE_DATA_DIR;
 	process.env.CLINE_HUB_DISCOVERY_PATH = snapshot.CLINE_HUB_DISCOVERY_PATH;
 }
 
@@ -35,7 +35,7 @@ describe("hub discovery", () => {
 	it("stores shared hub discovery under the locks directory by default", () => {
 		snapshot = captureEnv();
 		delete process.env.CLINE_HUB_DISCOVERY_PATH;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		process.env.TCODE_DATA_DIR = "/tmp/cline-data";
 
 		expect(resolveHubOwnerContext("shared").discoveryPath).toBe(
 			join(
@@ -60,7 +60,7 @@ describe("hub discovery", () => {
 	it("writes and clears discovery records at the resolved location", async () => {
 		snapshot = captureEnv();
 		delete process.env.CLINE_HUB_DISCOVERY_PATH;
-		process.env.CLINE_DATA_DIR = "/tmp/cline-data";
+		process.env.TCODE_DATA_DIR = "/tmp/cline-data";
 
 		const discoveryPath = resolveHubOwnerContext("shared").discoveryPath;
 		const record = {

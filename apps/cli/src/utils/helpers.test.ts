@@ -13,29 +13,29 @@ import {
 } from "./helpers";
 
 type EnvSnapshot = {
-	CLINE_DATA_DIR: string | undefined;
-	CLINE_DB_DATA_DIR: string | undefined;
-	CLINE_HOOKS_LOG_PATH: string | undefined;
-	CLINE_SESSION_ID: string | undefined;
-	CLINE_SESSION_DATA_DIR: string | undefined;
+	TCODE_DATA_DIR: string | undefined;
+	TCODE_DB_DATA_DIR: string | undefined;
+	TCODE_HOOKS_LOG_PATH: string | undefined;
+	TCODE_SESSION_ID: string | undefined;
+	TCODE_SESSION_DATA_DIR: string | undefined;
 };
 
 function captureEnv(): EnvSnapshot {
 	return {
-		CLINE_DATA_DIR: process.env.CLINE_DATA_DIR,
-		CLINE_DB_DATA_DIR: process.env.CLINE_DB_DATA_DIR,
-		CLINE_HOOKS_LOG_PATH: process.env.CLINE_HOOKS_LOG_PATH,
-		CLINE_SESSION_ID: process.env.CLINE_SESSION_ID,
-		CLINE_SESSION_DATA_DIR: process.env.CLINE_SESSION_DATA_DIR,
+		TCODE_DATA_DIR: process.env.TCODE_DATA_DIR,
+		TCODE_DB_DATA_DIR: process.env.TCODE_DB_DATA_DIR,
+		TCODE_HOOKS_LOG_PATH: process.env.TCODE_HOOKS_LOG_PATH,
+		TCODE_SESSION_ID: process.env.TCODE_SESSION_ID,
+		TCODE_SESSION_DATA_DIR: process.env.TCODE_SESSION_DATA_DIR,
 	};
 }
 
 function restoreEnv(snapshot: EnvSnapshot): void {
-	process.env.CLINE_DATA_DIR = snapshot.CLINE_DATA_DIR;
-	process.env.CLINE_DB_DATA_DIR = snapshot.CLINE_DB_DATA_DIR;
-	process.env.CLINE_HOOKS_LOG_PATH = snapshot.CLINE_HOOKS_LOG_PATH;
-	process.env.CLINE_SESSION_ID = snapshot.CLINE_SESSION_ID;
-	process.env.CLINE_SESSION_DATA_DIR = snapshot.CLINE_SESSION_DATA_DIR;
+	process.env.TCODE_DATA_DIR = snapshot.TCODE_DATA_DIR;
+	process.env.TCODE_DB_DATA_DIR = snapshot.TCODE_DB_DATA_DIR;
+	process.env.TCODE_HOOKS_LOG_PATH = snapshot.TCODE_HOOKS_LOG_PATH;
+	process.env.TCODE_SESSION_ID = snapshot.TCODE_SESSION_ID;
+	process.env.TCODE_SESSION_DATA_DIR = snapshot.TCODE_SESSION_DATA_DIR;
 }
 
 describe("parseArgs", () => {
@@ -403,10 +403,10 @@ describe("hook payload validation and audit logging", () => {
 		tempDir = mkdtempSync(path.join(os.tmpdir(), "cli-helper-audit-"));
 		const expectedPath = path.join(tempDir, "logs", "hooks.jsonl");
 		const env = captureEnv();
-		process.env.CLINE_DATA_DIR = tempDir;
-		delete process.env.CLINE_HOOKS_LOG_PATH;
-		delete process.env.CLINE_SESSION_ID;
-		delete process.env.CLINE_SESSION_DATA_DIR;
+		process.env.TCODE_DATA_DIR = tempDir;
+		delete process.env.TCODE_HOOKS_LOG_PATH;
+		delete process.env.TCODE_SESSION_ID;
+		delete process.env.TCODE_SESSION_DATA_DIR;
 
 		await appendHookAudit({
 			clineVersion: "",
@@ -433,14 +433,14 @@ describe("hook payload validation and audit logging", () => {
 		expect(content).toContain('"agent_id":"agent_1"');
 	});
 
-	it("writes hook audits to CLINE_HOOKS_LOG_PATH when set", async () => {
+	it("writes hook audits to TCODE_HOOKS_LOG_PATH when set", async () => {
 		tempDir = mkdtempSync(path.join(os.tmpdir(), "cli-helper-env-audit-"));
 		const expectedPath = path.join(tempDir, "hooks", "from-env.jsonl");
 		const env = captureEnv();
-		process.env.CLINE_HOOKS_LOG_PATH = expectedPath;
-		delete process.env.CLINE_DATA_DIR;
-		delete process.env.CLINE_SESSION_ID;
-		delete process.env.CLINE_SESSION_DATA_DIR;
+		process.env.TCODE_HOOKS_LOG_PATH = expectedPath;
+		delete process.env.TCODE_DATA_DIR;
+		delete process.env.TCODE_SESSION_ID;
+		delete process.env.TCODE_SESSION_DATA_DIR;
 
 		await appendHookAudit({
 			clineVersion: "",
@@ -476,12 +476,12 @@ describe("sandbox environment", () => {
 		const previous = {
 			CLINE_SANDBOX: process.env.CLINE_SANDBOX,
 			CLINE_SANDBOX_DATA_DIR: process.env.CLINE_SANDBOX_DATA_DIR,
-			CLINE_DATA_DIR: process.env.CLINE_DATA_DIR,
-			CLINE_DB_DATA_DIR: process.env.CLINE_DB_DATA_DIR,
-			CLINE_SESSION_DATA_DIR: process.env.CLINE_SESSION_DATA_DIR,
-			CLINE_TEAM_DATA_DIR: process.env.CLINE_TEAM_DATA_DIR,
-			CLINE_PROVIDER_SETTINGS_PATH: process.env.CLINE_PROVIDER_SETTINGS_PATH,
-			CLINE_HOOKS_LOG_PATH: process.env.CLINE_HOOKS_LOG_PATH,
+			TCODE_DATA_DIR: process.env.TCODE_DATA_DIR,
+			TCODE_DB_DATA_DIR: process.env.TCODE_DB_DATA_DIR,
+			TCODE_SESSION_DATA_DIR: process.env.TCODE_SESSION_DATA_DIR,
+			TCODE_TEAM_DATA_DIR: process.env.TCODE_TEAM_DATA_DIR,
+			TCODE_PROVIDER_SETTINGS_PATH: process.env.TCODE_PROVIDER_SETTINGS_PATH,
+			TCODE_HOOKS_LOG_PATH: process.env.TCODE_HOOKS_LOG_PATH,
 		};
 		try {
 			const resolved = configureSandboxEnvironment({
@@ -494,32 +494,32 @@ describe("sandbox environment", () => {
 			expect(process.env.CLINE_SANDBOX_DATA_DIR).toBe(
 				path.join(root, "sandbox-state"),
 			);
-			expect(process.env.CLINE_DATA_DIR).toBe(path.join(root, "sandbox-state"));
-			expect(process.env.CLINE_DB_DATA_DIR).toBe(
+			expect(process.env.TCODE_DATA_DIR).toBe(path.join(root, "sandbox-state"));
+			expect(process.env.TCODE_DB_DATA_DIR).toBe(
 				path.join(root, "sandbox-state", "db"),
 			);
-			expect(process.env.CLINE_SESSION_DATA_DIR).toBe(
+			expect(process.env.TCODE_SESSION_DATA_DIR).toBe(
 				path.join(root, "sandbox-state", "sessions"),
 			);
-			expect(process.env.CLINE_TEAM_DATA_DIR).toBe(
+			expect(process.env.TCODE_TEAM_DATA_DIR).toBe(
 				path.join(root, "sandbox-state", "teams"),
 			);
-			expect(process.env.CLINE_PROVIDER_SETTINGS_PATH).toBe(
+			expect(process.env.TCODE_PROVIDER_SETTINGS_PATH).toBe(
 				path.join(root, "sandbox-state", "settings", "providers.json"),
 			);
-			expect(process.env.CLINE_HOOKS_LOG_PATH).toBe(
+			expect(process.env.TCODE_HOOKS_LOG_PATH).toBe(
 				path.join(root, "sandbox-state", "logs", "hooks.jsonl"),
 			);
 		} finally {
 			process.env.CLINE_SANDBOX = previous.CLINE_SANDBOX;
 			process.env.CLINE_SANDBOX_DATA_DIR = previous.CLINE_SANDBOX_DATA_DIR;
-			process.env.CLINE_DATA_DIR = previous.CLINE_DATA_DIR;
-			process.env.CLINE_DB_DATA_DIR = previous.CLINE_DB_DATA_DIR;
-			process.env.CLINE_SESSION_DATA_DIR = previous.CLINE_SESSION_DATA_DIR;
-			process.env.CLINE_TEAM_DATA_DIR = previous.CLINE_TEAM_DATA_DIR;
-			process.env.CLINE_PROVIDER_SETTINGS_PATH =
-				previous.CLINE_PROVIDER_SETTINGS_PATH;
-			process.env.CLINE_HOOKS_LOG_PATH = previous.CLINE_HOOKS_LOG_PATH;
+			process.env.TCODE_DATA_DIR = previous.TCODE_DATA_DIR;
+			process.env.TCODE_DB_DATA_DIR = previous.TCODE_DB_DATA_DIR;
+			process.env.TCODE_SESSION_DATA_DIR = previous.TCODE_SESSION_DATA_DIR;
+			process.env.TCODE_TEAM_DATA_DIR = previous.TCODE_TEAM_DATA_DIR;
+			process.env.TCODE_PROVIDER_SETTINGS_PATH =
+				previous.TCODE_PROVIDER_SETTINGS_PATH;
+			process.env.TCODE_HOOKS_LOG_PATH = previous.TCODE_HOOKS_LOG_PATH;
 			rmSync(root, { recursive: true, force: true });
 		}
 	});

@@ -14,7 +14,7 @@ import {
 	type AgentPlugin,
 	type AgentToolContext,
 	createTool,
-} from "@cline/core";
+} from "@tarogo/core";
 
 /**
  * Background Terminal Plugin Example
@@ -57,9 +57,9 @@ declare global {
 }
 
 const DEFAULT_SHELL = process.env.SHELL || "/bin/zsh";
-const CLINE_DATA_DIR =
-	process.env.CLINE_DATA_DIR || join(homedir(), ".cline", "data");
-const JOBS_DIR = join(CLINE_DATA_DIR, "plugins", "background-shell", "jobs");
+const TCODE_DATA_DIR =
+	process.env.TCODE_DATA_DIR || join(homedir(), ".tcode", "data");
+const JOBS_DIR = join(TCODE_DATA_DIR, "plugins", "background-shell", "jobs");
 let sessionDefaultCwd = process.cwd();
 let setupSessionId: string | undefined;
 

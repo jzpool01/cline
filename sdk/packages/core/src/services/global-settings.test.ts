@@ -1,7 +1,7 @@
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { ITelemetryService } from "@cline/shared";
+import type { ITelemetryService } from "@tarogo/shared";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
 	GlobalSettingsSchema,
@@ -13,10 +13,10 @@ import {
 } from "./global-settings";
 
 describe("global-settings", () => {
-	const previousGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+	const previousGlobalSettingsPath = process.env.TCODE_GLOBAL_SETTINGS_PATH;
 
 	afterEach(() => {
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
 	});
 
 	it("defines the global settings file schema", () => {
@@ -63,7 +63,7 @@ describe("global-settings", () => {
 		const root = await mkdtemp(join(tmpdir(), "core-global-settings-"));
 		try {
 			const settingsPath = join(root, "global-settings.json");
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+			process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 
 			writeGlobalSettings({
 				disabledTools: [" editor ", "read_files", "editor"],
@@ -110,7 +110,7 @@ describe("global-settings", () => {
 		const root = await mkdtemp(join(tmpdir(), "core-global-settings-"));
 		try {
 			const settingsPath = join(root, "global-settings.json");
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+			process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 
 			setDisabledPlugin("/plugins/example.js", true);
 			setDisabledTools(["read_files", "editor"], true);
@@ -135,7 +135,7 @@ describe("global-settings", () => {
 		const root = await mkdtemp(join(tmpdir(), "core-global-settings-"));
 		try {
 			const settingsPath = join(root, "global-settings.json");
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+			process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 			const captureRequired = vi.fn();
 			const telemetry = {
 				captureRequired,
@@ -158,7 +158,7 @@ describe("global-settings", () => {
 			const root = await mkdtemp(join(tmpdir(), "core-global-settings-"));
 			try {
 				const settingsPath = join(root, "global-settings.json");
-				process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+				process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 				writeGlobalSettings({ disabledTools: ["editor"] });
 				readGlobalSettings();
 
@@ -177,7 +177,7 @@ describe("global-settings", () => {
 			const root = await mkdtemp(join(tmpdir(), "core-global-settings-"));
 			try {
 				const settingsPath = join(root, "global-settings.json");
-				process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+				process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 				writeGlobalSettings({ disabledTools: ["editor"] });
 				readGlobalSettings();
 
@@ -202,21 +202,21 @@ describe("global-settings", () => {
 				const pathA = join(rootA, "global-settings.json");
 				const pathB = join(rootB, "global-settings.json");
 
-				process.env.CLINE_GLOBAL_SETTINGS_PATH = pathA;
+				process.env.TCODE_GLOBAL_SETTINGS_PATH = pathA;
 				writeGlobalSettings({ disabledTools: ["editor"] });
 				expect(readGlobalSettings()).toEqual({
 					disabledTools: ["editor"],
 					telemetryOptOut: false,
 				});
 
-				process.env.CLINE_GLOBAL_SETTINGS_PATH = pathB;
+				process.env.TCODE_GLOBAL_SETTINGS_PATH = pathB;
 				writeGlobalSettings({ disabledTools: ["read_files"] });
 				expect(readGlobalSettings()).toEqual({
 					disabledTools: ["read_files"],
 					telemetryOptOut: false,
 				});
 
-				process.env.CLINE_GLOBAL_SETTINGS_PATH = pathA;
+				process.env.TCODE_GLOBAL_SETTINGS_PATH = pathA;
 				expect(readGlobalSettings()).toEqual({
 					disabledTools: ["editor"],
 					telemetryOptOut: false,
@@ -231,7 +231,7 @@ describe("global-settings", () => {
 			const root = await mkdtemp(join(tmpdir(), "core-global-settings-"));
 			try {
 				const settingsPath = join(root, "missing-global-settings.json");
-				process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+				process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 
 				expect(readGlobalSettings()).toEqual({ telemetryOptOut: false });
 				expect(readGlobalSettings()).toEqual({ telemetryOptOut: false });
@@ -244,7 +244,7 @@ describe("global-settings", () => {
 			const root = await mkdtemp(join(tmpdir(), "core-global-settings-"));
 			try {
 				const settingsPath = join(root, "global-settings.json");
-				process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+				process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 				writeGlobalSettings({
 					disabledTools: ["editor"],
 					disabledPlugins: ["/plugins/example.js"],
@@ -270,7 +270,7 @@ describe("global-settings", () => {
 			const root = await mkdtemp(join(tmpdir(), "core-global-settings-"));
 			try {
 				const settingsPath = join(root, "global-settings.json");
-				process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+				process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 
 				expect(readGlobalSettings()).toEqual({ telemetryOptOut: false });
 

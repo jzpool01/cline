@@ -3,7 +3,7 @@ import { dirname } from "node:path";
 import {
 	type McpServerOAuthState,
 	resolveDefaultMcpSettingsPath,
-} from "@cline/core";
+} from "@tarogo/core";
 
 export interface McpServerEntry {
 	name: string;

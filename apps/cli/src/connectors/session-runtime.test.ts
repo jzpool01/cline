@@ -12,9 +12,9 @@ const {
 	mockGetProviderCollection: vi.fn(),
 }));
 
-vi.mock("@cline/core", async () => {
+vi.mock("@tarogo/core", async () => {
 	const actual =
-		await vi.importActual<typeof import("@cline/core")>("@cline/core");
+		await vi.importActual<typeof import("@tarogo/core")>("@tarogo/core");
 	return {
 		...actual,
 		ProviderSettingsManager: class {

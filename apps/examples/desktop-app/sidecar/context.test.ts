@@ -1,4 +1,4 @@
-import type { RuntimeCapabilities } from "@cline/core";
+import type { RuntimeCapabilities } from "@tarogo/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { SidecarContext } from "./types";
 
@@ -6,9 +6,9 @@ const createCoreMock = vi.hoisted(() => vi.fn());
 const connectMock = vi.hoisted(() => vi.fn());
 const subscribeMock = vi.hoisted(() => vi.fn());
 
-vi.mock("@cline/core", async () => {
+vi.mock("@tarogo/core", async () => {
 	const actual =
-		await vi.importActual<typeof import("@cline/core")>("@cline/core");
+		await vi.importActual<typeof import("@tarogo/core")>("@tarogo/core");
 	return {
 		...actual,
 		ClineCore: {

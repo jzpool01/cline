@@ -5,8 +5,8 @@ import {
 	HubUIClient,
 	stopLocalHubServerGracefully,
 	toHubHealthUrl,
-} from "@cline/core";
-import type { HubUINotifyPayload } from "@cline/shared";
+} from "@tarogo/core";
+import type { HubUINotifyPayload } from "@tarogo/shared";
 import { handleSessionEvent } from "./agent-events";
 import {
 	rejectAllPendingApprovals,

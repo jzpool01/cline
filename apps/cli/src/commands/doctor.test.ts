@@ -13,7 +13,7 @@ import { getCliBuildInfo } from "../utils/common";
 
 const {
 	mockSpawnSync,
-	mockResolveClineDataDir,
+	mockResolveTcodeDataDir,
 	mockResolveSharedHubOwnerContext,
 	mockReadHubDiscovery,
 	mockProbeHubServer,
@@ -23,7 +23,7 @@ const {
 	mockStopAllConnectors,
 } = vi.hoisted(() => ({
 	mockSpawnSync: vi.fn(),
-	mockResolveClineDataDir: vi.fn(() => "/tmp/cline-data"),
+	mockResolveTcodeDataDir: vi.fn(() => "/tmp/cline-data"),
 	mockResolveSharedHubOwnerContext: vi.fn(() => ({
 		ownerId: "hub-owner",
 		discoveryPath: path.join(
@@ -50,8 +50,8 @@ vi.mock("node:child_process", () => ({
 	spawnSync: mockSpawnSync,
 }));
 
-vi.mock("@cline/core", () => ({
-	resolveClineDataDir: mockResolveClineDataDir,
+vi.mock("@tarogo/core", () => ({
+	resolveTcodeDataDir: mockResolveTcodeDataDir,
 	resolveSharedHubOwnerContext: mockResolveSharedHubOwnerContext,
 	clearHubDiscovery: mockClearHubDiscovery,
 	probeHubServer: mockProbeHubServer,
@@ -75,7 +75,7 @@ describe("runDoctorCommand", () => {
 
 	afterEach(() => {
 		vi.clearAllMocks();
-		mockResolveClineDataDir.mockReturnValue("/tmp/cline-data");
+		mockResolveTcodeDataDir.mockReturnValue("/tmp/cline-data");
 		mockStopLocalHubServerGracefully.mockResolvedValue(false);
 		mockStopAllConnectors.mockResolvedValue({
 			stoppedProcesses: 0,
@@ -313,7 +313,7 @@ describe("createDoctorCommand log subcommand", () => {
 			path.join(os.tmpdir(), `${commandName}-doctor-log-test-`),
 		);
 		tempDirs.push(dataDir);
-		mockResolveClineDataDir.mockReturnValue(dataDir);
+		mockResolveTcodeDataDir.mockReturnValue(dataDir);
 		mockEnsureFileExists.mockImplementation((filePath: string) => {
 			mkdirSync(path.dirname(filePath), { recursive: true });
 			appendFileSync(filePath, "");
@@ -358,7 +358,7 @@ describe("createDoctorCommand log subcommand", () => {
 			path.join(os.tmpdir(), `${commandName}-doctor-log-test-`),
 		);
 		tempDirs.push(dataDir);
-		mockResolveClineDataDir.mockReturnValue(dataDir);
+		mockResolveTcodeDataDir.mockReturnValue(dataDir);
 
 		const errors: string[] = [];
 		let exitCode = 0;

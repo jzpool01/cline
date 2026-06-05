@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import type { ProviderConfig } from "@cline/llms";
-import { resolveProviderSettingsPath } from "@cline/shared/storage";
+import type { ProviderConfig } from "@tarogo/llms";
+import { resolveProviderSettingsPath } from "@tarogo/shared/storage";
 import { describe, expect, it } from "vitest";
 import { createContextCompactionPrepareTurn } from "./compaction";
 

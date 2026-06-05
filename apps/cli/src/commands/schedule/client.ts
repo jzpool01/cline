@@ -3,7 +3,7 @@ import {
 	HubScheduleCommandService,
 	HubScheduleService,
 	sendHubCommand,
-} from "@cline/core";
+} from "@tarogo/core";
 import {
 	ensureCliHubServer,
 	parseHubEndpointOverride,

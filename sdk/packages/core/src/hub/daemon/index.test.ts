@@ -13,7 +13,7 @@ const {
 	probeHubServer,
 	requestHubShutdown,
 	readHubDiscovery,
-	resolveClineDataDir,
+	resolveTcodeDataDir,
 	resolveHubBuildId,
 	writeHubDiscovery,
 	CLINE_RUN_AS_HUB_DAEMON_ENV,
@@ -35,7 +35,7 @@ const {
 	probeHubServer: vi.fn(),
 	requestHubShutdown: vi.fn(async () => true),
 	readHubDiscovery: vi.fn(),
-	resolveClineDataDir: vi.fn(() => "/tmp/cline-data"),
+	resolveTcodeDataDir: vi.fn(() => "/tmp/cline-data"),
 	resolveHubBuildId: vi.fn(() => "current-build"),
 	writeHubDiscovery: vi.fn(),
 	CLINE_RUN_AS_HUB_DAEMON_ENV: "CLINE_RUN_AS_HUB_DAEMON",
@@ -53,7 +53,7 @@ vi.mock("node:fs", () => ({
 	openSync,
 }));
 
-vi.mock("@cline/shared", () => ({
+vi.mock("@tarogo/shared", () => ({
 	CLINE_RUN_AS_HUB_DAEMON_ENV,
 	CLINE_HUB_PORT: 25463,
 	CLINE_HUB_DEV_PORT: 25466,
@@ -78,7 +78,7 @@ vi.mock("../discovery", () => ({
 	createHubServerUrl,
 	probeHubServer,
 	readHubDiscovery,
-	resolveClineDataDir,
+	resolveTcodeDataDir,
 	resolveHubBuildId,
 	writeHubDiscovery,
 }));

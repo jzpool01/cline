@@ -2,7 +2,7 @@ import {
 	type ClineCore,
 	CORE_BUILD_VERSION,
 	type HubUIClient,
-} from "@cline/core";
+} from "@tarogo/core";
 import type { WebviewHubEvent } from "../webview-protocol";
 import type {
 	BrowserPeer,

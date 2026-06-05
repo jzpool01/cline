@@ -14,7 +14,7 @@
  *  - `canStartRun` / `shutdown` guards enforce the lifecycle rules.
  */
 
-import type { AgentRuntime, AgentRuntimeConfig } from "@cline/agents";
+import type { AgentRuntime, AgentRuntimeConfig } from "@tarogo/agents";
 import type {
 	AgentConfig,
 	AgentEvent,
@@ -25,7 +25,7 @@ import type {
 	AgentRuntimeEvent,
 	AgentTool,
 	AgentToolContext,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import { describe, expect, it, vi } from "vitest";
 import { CLINE_INTERNAL_TELEMETRY_METADATA_KEY } from "../../services/telemetry/tool-context";
 import {

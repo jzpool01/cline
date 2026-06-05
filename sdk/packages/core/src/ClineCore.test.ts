@@ -16,7 +16,7 @@ vi.mock("./runtime/host/host", () => ({
 	createRuntimeHost: createRuntimeHostMock,
 }));
 
-import type { AgentResult } from "@cline/shared";
+import type { AgentResult } from "@tarogo/shared";
 import { ClineCore } from "./ClineCore";
 
 function createStartInput(): ClineCoreStartInput {
@@ -459,9 +459,9 @@ describe("ClineCore", () => {
 
 	it("exposes event automation through ClineCore instead of CronService", async () => {
 		const root = mkdtempSync(join(tmpdir(), "cline-core-automation-"));
-		const cronDir = join(root, ".cline", "cron");
+		const cronDir = join(root, ".tcode", "cron");
 		const reportsDir = join(cronDir, "reports");
-		const dbPath = join(root, ".cline", "data", "db", "cron.db");
+		const dbPath = join(root, ".tcode", "data", "db", "cron.db");
 		mkdirSync(join(cronDir, "events"), { recursive: true });
 		writeFileSync(
 			join(cronDir, "events", "local.event.md"),

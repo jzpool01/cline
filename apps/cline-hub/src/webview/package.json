@@ -1,5 +1,5 @@
 {
-	"name": "@cline/cline-hub-webview",
+	"name": "@tarogo/hub-webview",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",

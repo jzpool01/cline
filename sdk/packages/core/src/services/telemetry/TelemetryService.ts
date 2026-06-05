@@ -3,7 +3,7 @@ import type {
 	ITelemetryService,
 	TelemetryMetadata,
 	TelemetryProperties,
-} from "@cline/shared";
+} from "@tarogo/shared";
 import type { ITelemetryAdapter } from "./ITelemetryAdapter";
 import { TelemetryLoggerSink } from "./TelemetryLoggerSink";
 

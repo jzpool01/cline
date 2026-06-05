@@ -5,8 +5,8 @@ import {
 	readHubDiscovery,
 	resolveSharedHubOwnerContext,
 	stopLocalHubServerGracefully,
-} from "@cline/core";
-import { formatUptime } from "@cline/shared";
+} from "@tarogo/core";
+import { formatUptime } from "@tarogo/shared";
 import { Command } from "commander";
 
 interface HubCommandIo {

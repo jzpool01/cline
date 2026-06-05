@@ -1,4 +1,4 @@
-import { resolveSessionBackend, listSessionHistoryFromBackend } from "@cline/core";
+import { resolveSessionBackend, listSessionHistoryFromBackend } from "@tarogo/core";
 import { getCliTelemetryService } from "../utils/telemetry";
 import { Command } from "commander";
 
@@ -38,7 +38,7 @@ export function createStatusCommand(
 			const limit = Math.min(parseInt(opts.sessions ?? "50", 10) || 50, 500);
 
 			// 1. Provider config
-			const { ProviderSettingsManager } = await import("@cline/core");
+			const { ProviderSettingsManager } = await import("@tarogo/core");
 			const psm = new ProviderSettingsManager();
 			const lastUsed = psm.getLastUsedProviderSettings();
 			const providerId = lastUsed?.provider ?? "not configured";
@@ -109,7 +109,7 @@ export function createStatusCommand(
 			}
 
 			// Text output
-			writeln("Cline Status");
+			writeln("tcode Status");
 			writeln("");
 
 			// Provider section
@@ -131,7 +131,7 @@ export function createStatusCommand(
 				writeln(`    Total Cost:     ${fmtCost(usage.totalCost)}`);
 			} else {
 				writeln("  Token Usage");
-				writeln("    No session data found. Start a session with `cline --tui`.");
+				writeln("    No session data found. Start a session with `tcode --tui`.");
 			}
 
 			setExitCode(0);

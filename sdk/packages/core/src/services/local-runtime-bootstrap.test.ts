@@ -37,11 +37,11 @@ function createSpawnTool() {
 }
 
 describe("prepareLocalRuntimeBootstrap", () => {
-	const previousGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+	const previousGlobalSettingsPath = process.env.TCODE_GLOBAL_SETTINGS_PATH;
 	let resetModulesAfterEach = false;
 
 	afterEach(() => {
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = previousGlobalSettingsPath;
 		vi.doUnmock("../extensions/plugin/plugin-config-loader");
 		if (resetModulesAfterEach) {
 			vi.resetModules();
@@ -121,7 +121,7 @@ describe("prepareLocalRuntimeBootstrap", () => {
 		resetModulesAfterEach = true;
 		const tempRoot = mkdtempSync(join(tmpdir(), "local-bootstrap-global-"));
 		const settingsPath = join(tempRoot, "global-settings.json");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = settingsPath;
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = settingsPath;
 		writeFileSync(
 			settingsPath,
 			JSON.stringify({ disabledTools: ["blocked_tool"] }, null, 2),

@@ -2,7 +2,7 @@ import { chmodSync, existsSync, mkdtempSync, rmSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { setClineDir, setHomeDir } from "@cline/shared/storage";
+import { setTcodeDir, setHomeDir } from "@tarogo/shared/storage";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { readGlobalSettings, writeGlobalSettings } from "./global-settings";
 import { uninstallPlugin } from "./plugin-uninstall";
@@ -11,29 +11,29 @@ describe("plugin uninstall service", () => {
 	let root = "";
 	let home = "";
 	let originalHome: string | undefined;
-	let originalClineDir: string | undefined;
-	let originalClineDataDir: string | undefined;
+	let originalTcodeDir: string | undefined;
+	let originalTcodeDataDir: string | undefined;
 	let originalGlobalSettingsPath: string | undefined;
 
 	beforeEach(() => {
 		root = mkdtempSync(join(tmpdir(), "core-plugin-uninstall-"));
 		home = join(root, "home");
 		originalHome = process.env.HOME;
-		originalClineDir = process.env.CLINE_DIR;
-		originalClineDataDir = process.env.CLINE_DATA_DIR;
-		originalGlobalSettingsPath = process.env.CLINE_GLOBAL_SETTINGS_PATH;
+		originalTcodeDir = process.env.TCODE_DIR;
+		originalTcodeDataDir = process.env.TCODE_DATA_DIR;
+		originalGlobalSettingsPath = process.env.TCODE_GLOBAL_SETTINGS_PATH;
 		process.env.HOME = home;
-		process.env.CLINE_DIR = join(home, ".cline");
-		process.env.CLINE_DATA_DIR = join(home, ".cline", "data");
-		process.env.CLINE_GLOBAL_SETTINGS_PATH = join(
+		process.env.TCODE_DIR = join(home, ".tcode");
+		process.env.TCODE_DATA_DIR = join(home, ".tcode", "data");
+		process.env.TCODE_GLOBAL_SETTINGS_PATH = join(
 			home,
-			".cline",
+			".tcode",
 			"data",
 			"settings",
 			"global-settings.json",
 		);
 		setHomeDir(home);
-		setClineDir(process.env.CLINE_DIR);
+		setTcodeDir(process.env.TCODE_DIR);
 	});
 
 	afterEach(() => {
@@ -42,20 +42,20 @@ describe("plugin uninstall service", () => {
 		} else {
 			process.env.HOME = originalHome;
 		}
-		if (originalClineDir === undefined) {
-			delete process.env.CLINE_DIR;
+		if (originalTcodeDir === undefined) {
+			delete process.env.TCODE_DIR;
 		} else {
-			process.env.CLINE_DIR = originalClineDir;
+			process.env.TCODE_DIR = originalTcodeDir;
 		}
-		if (originalClineDataDir === undefined) {
-			delete process.env.CLINE_DATA_DIR;
+		if (originalTcodeDataDir === undefined) {
+			delete process.env.TCODE_DATA_DIR;
 		} else {
-			process.env.CLINE_DATA_DIR = originalClineDataDir;
+			process.env.TCODE_DATA_DIR = originalTcodeDataDir;
 		}
 		if (originalGlobalSettingsPath === undefined) {
-			delete process.env.CLINE_GLOBAL_SETTINGS_PATH;
+			delete process.env.TCODE_GLOBAL_SETTINGS_PATH;
 		} else {
-			process.env.CLINE_GLOBAL_SETTINGS_PATH = originalGlobalSettingsPath;
+			process.env.TCODE_GLOBAL_SETTINGS_PATH = originalGlobalSettingsPath;
 		}
 		rmSync(root, { recursive: true, force: true });
 	});
@@ -63,7 +63,7 @@ describe("plugin uninstall service", () => {
 	it("uninstalls an installed package plugin by package name", async () => {
 		const installPath = join(
 			home,
-			".cline",
+			".tcode",
 			"plugins",
 			"_installed",
 			"local",
@@ -112,8 +112,8 @@ describe("plugin uninstall service", () => {
 	});
 
 	it("uninstalls a direct plugin file by path", async () => {
-		const pluginPath = join(home, ".cline", "plugins", "direct-plugin.ts");
-		await mkdir(join(home, ".cline", "plugins"), { recursive: true });
+		const pluginPath = join(home, ".tcode", "plugins", "direct-plugin.ts");
+		await mkdir(join(home, ".tcode", "plugins"), { recursive: true });
 		await writeFile(
 			pluginPath,
 			"export default { name: 'direct', manifest: { capabilities: ['tools'] } };",
@@ -127,7 +127,7 @@ describe("plugin uninstall service", () => {
 	});
 
 	it("keeps disabled plugin settings if file deletion fails", async () => {
-		const pluginRoot = join(home, ".cline", "plugins");
+		const pluginRoot = join(home, ".tcode", "plugins");
 		const pluginPath = join(pluginRoot, "locked-plugin.ts");
 		await mkdir(pluginRoot, { recursive: true });
 		await writeFile(

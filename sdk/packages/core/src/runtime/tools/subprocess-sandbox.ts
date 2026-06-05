@@ -3,7 +3,7 @@ import { basename } from "node:path";
 import {
 	augmentNodeCommandForDebug,
 	withResolvedClineBuildEnv,
-} from "@cline/shared";
+} from "@tarogo/shared";
 
 interface SandboxCallMessage {
 	type: "call";

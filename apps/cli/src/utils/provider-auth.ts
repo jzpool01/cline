@@ -1,5 +1,5 @@
-import { Llms, type ProviderSettings } from "@cline/core";
-import { isOAuthProviderId } from "@cline/shared";
+import { Llms, type ProviderSettings } from "@tarogo/core";
+import { isOAuthProviderId } from "@tarogo/shared";
 
 export type OAuthCredentials = {
 	access: string;
@@ -23,7 +23,7 @@ export function normalizeAuthProviderId(providerId: string): string {
 }
 
 /**
- * Re-exports `isOAuthProviderId` from `@cline/shared` so the CLI has a
+ * Re-exports `isOAuthProviderId` from `@tarogo/shared` so the CLI has a
  * single source of truth for the OAuth provider list. Existing call sites
  * keep their `isOAuthProvider` import name.
  */
@@ -33,7 +33,7 @@ export function toProviderApiKey(
 	providerId: string,
 	credentials: Pick<OAuthCredentials, "access">,
 ): string {
-	if (providerId === "cline") {
+	if (providerId === "tarogo") {
 		return credentials.access.startsWith("workos:")
 			? credentials.access
 			: `workos:${credentials.access}`;

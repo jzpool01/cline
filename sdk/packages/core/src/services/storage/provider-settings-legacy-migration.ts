@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import * as LlmsModels from "@cline/llms";
-import { resolveClineDataDir } from "@cline/shared/storage";
+import * as LlmsModels from "@tarogo/llms";
+import { resolveTcodeDataDir } from "@tarogo/shared/storage";
 import {
 	emptyStoredProviderSettings,
 	type ProviderSettings,
@@ -255,7 +255,7 @@ function readJsonObject<T extends object>(filePath: string): T | undefined {
 function resolveLegacyStorage(
 	options: MigrateLegacyProviderSettingsOptions,
 ): LegacyProviderStorage | undefined {
-	const dataDir = options.dataDir ?? resolveClineDataDir();
+	const dataDir = options.dataDir ?? resolveTcodeDataDir();
 	const globalStatePath =
 		options.globalStatePath ?? join(dataDir, "globalState.json");
 	const secretsPath = options.secretsPath ?? join(dataDir, "secrets.json");
