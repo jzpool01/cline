@@ -332,3 +332,57 @@ See [DEVELOPMENT.md](./DEVELOPMENT.md) for local development setup, monorepo str
 ## License
 
 [Apache 2.0 © Cline Bot Inc.](https://github.com/cline/cline/blob/main/LICENSE)
+
+2.3 执行签名
+codesign --entitlements entitlements.plist \
+         --timestamp \
+         --options runtime \
+         --sign "Developer ID Application: Mobisoft Inc. China (RW9W9RZD3M)" \
+         --force \
+         --verbose \
+         ./dist/tcode-darwin-arm64/bin/tcode
+
+codesign --entitlements entitlements.plist \
+         --timestamp \
+         --options runtime \
+         --sign "Developer ID Application: Mobisoft Inc. China (RW9W9RZD3M)" \
+         --force \
+         --verbose \
+         ./dist/tcode-darwin-x64/bin/tcode
+2.4 验证签名
+
+codesign -vvv --verify ./dist/tcode-darwin-arm64/bin/tcode
+codesign -vvv --verify ./dist/tcode-darwin-x64/bin/tcode
+
+spctl --assess --type execute ./dist/tcode-darwin-arm64/bin/tcode -v
+spctl --assess --type execute ./dist/tcode-darwin-x64/bin/tcode -v
+
+3.1 存储凭证到钥匙串
+bash
+xcrun notarytool store-credentials "TCodeNotary" \
+  --apple-id "jzhou@kitapps.com.cn" \
+  --team-id "RW9W9RZD3M" \
+  --password "vifs-wkqj-ddvu-lqcr"
+
+app-specific-password 需要在 Apple ID 账户页面 的 “App 专用密码” 生成。
+vifs-wkqj-ddvu-lqcr
+
+3.2 打包并提交公证
+
+# 将可执行文件打包成 zip
+zip tcode.zip tcode
+
+# 提交公证
+xcrun notarytool submit ./dist/tcode-darwin-arm64/bin/tcode.zip \
+  --keychain-profile "TCodeNotary" \
+  --wait
+3.3 附加公证票据
+
+spctl --assess --type execute ./dist/tcode-darwin-arm64/bin/tcode -v
+
+
+
+xcrun notarytool submit ./dist/tcode-darwin-x64/bin/tcode.zip \
+  --keychain-profile "TCodeNotary" \
+  --wait
+spctl --assess --type execute ./dist/tcode-darwin-x64/bin/tcode -v
