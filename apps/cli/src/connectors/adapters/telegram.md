@@ -13,7 +13,7 @@ Create a bot with `@BotFather`:
 Start the connector:
 
 ```bash
-cline connect telegram -k "$TELEGRAM_BOT_TOKEN"
+tcode connect telegram -k "$TELEGRAM_BOT_TOKEN"
 ```
 
 The connector discovers the bot username from the token. Use `--bot-username`
@@ -23,16 +23,16 @@ Useful variants:
 
 ```bash
 # Keep logs in the active terminal while debugging.
-cline connect telegram -i -k "$TELEGRAM_BOT_TOKEN"
+tcode connect telegram -i -k "$TELEGRAM_BOT_TOKEN"
 
 # Read credentials from env vars.
-TELEGRAM_BOT_TOKEN=123456:ABCDEF... cline connect telegram
+TELEGRAM_BOT_TOKEN=123456:ABCDEF... tcode connect telegram
 
 # Override the workspace and model used for Telegram sessions.
-cline connect telegram -k "$TELEGRAM_BOT_TOKEN" --cwd /path/to/repo --provider cline --model openai/gpt-5.3-codex
+tcode connect telegram -k "$TELEGRAM_BOT_TOKEN" --cwd /path/to/repo --provider cline --model openai/gpt-5.3-codex
 
 # Disable tools for untrusted Telegram surfaces.
-cline connect telegram -k "$TELEGRAM_BOT_TOKEN" --no-tools
+tcode connect telegram -k "$TELEGRAM_BOT_TOKEN" --no-tools
 
 # Stop Telegram connector processes and sessions.
 cline connect --stop telegram
@@ -71,17 +71,17 @@ Tools are enabled by default for Telegram sessions. That means anyone who can su
 Use `--no-tools` when the Telegram surface is not trusted:
 
 ```bash
-cline connect telegram -k "$TELEGRAM_BOT_TOKEN" --no-tools
+tcode connect telegram -k "$TELEGRAM_BOT_TOKEN" --no-tools
 ```
 
 When the connector starts with `--no-tools`, chat commands such as `/tools on` and `/yolo on` cannot re-enable tools for that connector run.
 
-For participant restrictions, run the interactive connector wizard with `cline connect`. The Telegram wizard asks whether to restrict access, points you to `@userinfobot`, and configures your numeric Telegram user ID.
+For participant restrictions, run the interactive connector wizard with `tcode connect`. The Telegram wizard asks whether to restrict access, points you to `@userinfobot`, and configures your numeric Telegram user ID.
 
 You can also pass the user ID directly:
 
 ```bash
-cline connect telegram -k "$TELEGRAM_BOT_TOKEN" --allowed-user-id 12345
+tcode connect telegram -k "$TELEGRAM_BOT_TOKEN" --allowed-user-id 12345
 ```
 
 You can also pass a manual `--hook-command` that returns `{"action":"deny"}` for unauthorized `session.authorize` events. If neither access option is configured, messages are allowed.

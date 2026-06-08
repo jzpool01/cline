@@ -46,7 +46,7 @@ describe("provider-ids", () => {
 		await expect(getProvider("openai-compatible")).resolves.toMatchObject({
 			id: "openai-compatible",
 			name: "OpenAI Compatible",
-			baseUrl: "https://api.openai.com/v1",
+			baseUrl: "https://api.tarogo.com",
 			defaultModelId: "gpt-4o",
 			client: "openai-compatible",
 		});

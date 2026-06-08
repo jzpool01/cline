@@ -401,7 +401,7 @@ export async function runScheduleWizard(): Promise<number> {
 	if (!ensured.ok) {
 		s.stop("Failed to connect to hub server");
 		p.log.error(
-			"Schedules require the hub server. Start it with: cline hub start",
+			"Schedules require the hub server. Start it with: tcode hub start",
 		);
 		p.outro("Failed");
 		return 1;

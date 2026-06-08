@@ -75,8 +75,8 @@ const ACTION_ITEMS: Array<{
 		action: "account",
 		label: "Open Account",
 		shortcut: "Opt+A",
-		description: "View or switch your Cline account",
-		keywords: ["account", "login", "auth", "cline"],
+		description: "View or switch your Tcode account",
+		keywords: ["account", "login", "auth", "tcode"],
 	},
 	{
 		action: "compact",

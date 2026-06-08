@@ -90,7 +90,7 @@ describe("getProviderConfigFields", () => {
 		expect(result.authMethod).toBe("api-key");
 		expect(result.fields.apiKey).toEqual({});
 		expect(result.fields.baseUrl?.defaultValue).toBe(
-			"https://api.openai.com/v1",
+			"https://api.tarogo.com",
 		);
 	});
 

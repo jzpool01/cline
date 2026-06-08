@@ -38,22 +38,10 @@ export interface MenuOption {
 
 export const MAIN_MENU: MenuOption[] = [
 	{
-		label: "Sign in with Cline",
-		value: "cline",
-		detail: "Latest models with regular free promos",
-		icon: "\u263a",
-	},
-	{
-		label: "Sign in with ChatGPT",
-		value: "openai-codex",
-		detail: "Use your ChatGPT Plus subscription",
-		icon: "\u2726",
-	},
-	{
-		label: "Bring your own provider",
-		value: "byo",
-		detail: "API key or local server (e.g. Ollama)",
-		icon: "\u26b7",
+		label: "OpenAI Compatible",
+		value: "openai-compatible",
+		detail: "Configure with base URL, model ID, and API key",
+		icon: "\u26a1",
 	},
 ];
 
@@ -140,7 +128,7 @@ export function toModelEntriesFromKnownModels(
 
 export function getOAuthProviderLabel(providerId: string): string {
 	if (providerId === "cline") {
-		return "Cline";
+		return "Tcode";
 	}
 	if (providerId === "openai-codex") {
 		return "ChatGPT";

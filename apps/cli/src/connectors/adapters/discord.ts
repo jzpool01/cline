@@ -431,7 +431,7 @@ async function fetchDiscordJson(input: {
 		headers: {
 			Authorization: `Bot ${input.botToken}`,
 			...(input.body ? { "Content-Type": "application/json" } : {}),
-			"User-Agent": "Cline Discord Connector",
+			"User-Agent": "Tcode Discord Connector",
 		},
 		...(input.body ? { body: JSON.stringify(input.body) } : {}),
 	});
@@ -1016,7 +1016,7 @@ class DiscordConnector extends ConnectorBase<
 				formatBackgroundStartMessage: (pid) =>
 					`[discord] starting background connector pid=${pid} application=${options.applicationId}`,
 				foregroundHint:
-					"[discord] use `cline connect discord -i ...` to run in the foreground",
+					"[discord] use `tcode connect discord -i ...` to run in the foreground",
 				launchFailureMessage:
 					"failed to launch Discord connector in background",
 			})

@@ -48,7 +48,7 @@ const LOADED_ACTIONS: AccountAction[] = [
 	{
 		id: "change-model",
 		label: "Change model",
-		description: "Open the Cline model selector",
+		description: "Open the Tcode model selector",
 		enabled: true,
 	},
 	{
@@ -69,7 +69,7 @@ const UNAUTHENTICATED_ACTIONS: AccountAction[] = [
 	{
 		id: "login",
 		label: "Sign in or create account",
-		description: "Use Cline OAuth",
+		description: "Use Tcode OAuth",
 		enabled: true,
 	},
 	{
@@ -445,7 +445,7 @@ export function AccountDialogContent(
 		return (
 			<box flexDirection="column" paddingX={1} gap={1}>
 				<text fg="cyan">Cline Account</text>
-				<text>Sign in or create a Cline account.</text>
+				<text>Sign in or create a Tcode account.</text>
 				<text fg="gray">
 					Get access to the latest models with regular free promos and
 					discounts.
@@ -498,7 +498,7 @@ export function AccountDialogContent(
 	const displayName =
 		loaded.user.displayName?.trim() ||
 		loaded.user.email?.trim() ||
-		"Cline user";
+		"Tcode user";
 	const activeAccount = loaded.activeOrganization?.name ?? "Personal account";
 
 	return (

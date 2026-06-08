@@ -56,23 +56,10 @@ export function resolveCliNoticeStatePath(
 }
 
 export function getTcodeCliMigrationNotice(
-	dataDir = resolveTcodeDataDir(),
-	env: NodeJS.ProcessEnv = process.env,
+	_dataDir = resolveTcodeDataDir(),
+	_env: NodeJS.ProcessEnv = process.env,
 ): CliMigrationNotice | undefined {
-	const noticePath = resolveCliNoticeStatePath(dataDir);
-	const noticeState = readNoticeState(noticePath);
-	const forceNotice = env[FORCE_NOTICE_ENV]?.trim() === "1";
-	const disableNotice = env[DISABLE_NOTICE_ENV]?.trim() === "1";
-	if (disableNotice && !forceNotice) {
-		return undefined;
-	}
-	if (noticeState.shown[NOTICE_ID] && !forceNotice) {
-		return undefined;
-	}
-	return {
-		id: NOTICE_ID,
-		title: "Welcome to the new Tarogo CLI",
-	};
+	return undefined;
 }
 
 export function markTcodeCliMigrationNoticeShown(

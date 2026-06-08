@@ -179,7 +179,7 @@ export function McpManagerContent(
 					<text fg={palette.error}>OAuth error</text>
 					<text fg={palette.error}>{selectedServer.lastError}</text>
 					<text fg="gray">
-						Run cline mcp and choose Authorize OAuth to retry.
+						Run tcode mcp and choose Authorize OAuth to retry.
 					</text>
 				</box>
 			)}

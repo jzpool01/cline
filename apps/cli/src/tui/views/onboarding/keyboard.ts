@@ -77,7 +77,8 @@ export function useOnboardingKeyboard(input: {
 			}
 			if (input.step === "byo_apikey") {
 				input.resetByoFields();
-				input.setStep("byo_provider");
+				input.setStep("menu");
+				input.setMenuSelected(0);
 				return;
 			}
 			if (input.step === "byo_provider") {
@@ -105,7 +106,8 @@ export function useOnboardingKeyboard(input: {
 				return;
 			}
 			if (input.step === "custom_model_id") {
-				input.setStep("model_picker");
+				input.setStep("menu");
+				input.setMenuSelected(0);
 				return;
 			}
 			if (input.step === "thinking_level") {
@@ -143,8 +145,8 @@ export function useOnboardingKeyboard(input: {
 			if (key.name === "return") {
 				const option = MAIN_MENU[input.menuSelected];
 				if (!option) return;
-				if (option.value === "cline" || option.value === "openai-codex") {
-					input.startOAuthFlow(option.value);
+				if (option.value === "openai-compatible") {
+					input.selectProvider("openai-compatible");
 				} else {
 					input.setStep("byo_provider");
 				}

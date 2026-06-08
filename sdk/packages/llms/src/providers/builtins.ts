@@ -438,7 +438,7 @@ const OPENAI_COMPATIBLE_SPECS: BuiltinSpec[] = [
 		capabilities: ["tools"],
 		defaultModelId: "gpt-4o",
 		apiKeyEnv: ["OPENAI_API_KEY"],
-		defaults: { baseUrl: "https://api.openai.com/v1" },
+		defaults: { baseUrl: "https://api.tarogo.com" },
 	},
 	{
 		id: "cline",
