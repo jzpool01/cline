@@ -222,13 +222,13 @@ export function StatusBar(props: StatusBarProps) {
 			? `${modelId.slice(0, modelMaxLen - 3)}...`
 			: modelId;
 
-	// Repo row: [workspace (branch) | N files +X -Y]
-	// Git stats stay visible; path/branch truncates with "..." when narrow.
+	// Repo row: [tcode | N files +X -Y]
+	// Git stats stay visible; "tcode" truncates with "..." when narrow.
 	const hasGitDiff = gitDiffStats && gitDiffStats.files > 0;
 	const gitSuffix = hasGitDiff
 		? ` | ${gitDiffStats.files} file${gitDiffStats.files !== 1 ? "s" : ""} +${gitDiffStats.additions} -${gitDiffStats.deletions}`
 		: "";
-	const pathPart = workspaceName + (gitBranch ? ` (${gitBranch})` : "");
+	const pathPart = "tcode"
 	const pathMax = Math.max(5, avail - gitSuffix.length);
 	const truncatedPath =
 		pathPart.length > pathMax
