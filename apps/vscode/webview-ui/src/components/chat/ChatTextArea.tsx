@@ -923,6 +923,16 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 					} else {
 						console.warn("No valid images were processed")
 					}
+				} else if (pastedText) {
+					// Fallback: handle regular text paste explicitly to ensure compatibility
+					// across all platforms (especially Windows VSCode webview)
+					e.preventDefault()
+					const newValue = inputValue.slice(0, cursorPosition) + pastedText + inputValue.slice(cursorPosition)
+					setInputValue(newValue)
+					const newCursorPosition = cursorPosition + pastedText.length
+					setCursorPosition(newCursorPosition)
+					setIntendedCursorPosition(newCursorPosition)
+					setShowContextMenu(false)
 				}
 			},
 			[

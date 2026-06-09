@@ -60,6 +60,10 @@ export function useRootKeyboard(input: {
 	onRestoreCheckpoint: () => Promise<void>;
 	onOpenCommandPalette: () => Promise<void>;
 	onCommandPaletteShortcut: (key: KeyEvent) => boolean;
+	/** Get the currently selected text from the renderer (for copy-on-Ctrl+C) */
+	getSelectedText?: () => string;
+	/** Copy text to clipboard (used when Ctrl+C should copy instead of exit) */
+	copyToClipboard?: (text: string) => boolean;
 }) {
 	const session = useSession();
 	const lastEscapeRef = useRef(0);
@@ -85,6 +89,16 @@ export function useRootKeyboard(input: {
 		}
 
 		if (key.ctrl && key.name === "c") {
+			// If there's selected text in the renderer, copy it to clipboard
+			const selectedText = input.getSelectedText?.();
+			if (selectedText) {
+				input.copyToClipboard?.(selectedText);
+				return;
+			}
+			// On Windows, Ctrl+C is the standard COPY shortcut - skip clear/exit behavior
+			if (process.platform === "win32") {
+				return;
+			}
 			if (!input.isDialogOpen && hasInputText) {
 				input.setInputKey((k) => k + 1);
 				input.setInputValue("");

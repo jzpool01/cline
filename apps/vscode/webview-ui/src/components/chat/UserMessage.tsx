@@ -103,6 +103,18 @@ const UserMessage: React.FC<UserMessageProps> = ({ text, images, files, messageT
 						onBlur={(e) => handleBlur(e)}
 						onChange={(e) => setEditedText(e.target.value)}
 						onKeyDown={handleKeyDown}
+						onPaste={(e) => {
+						// Explicitly handle text paste to ensure compatibility on all platforms
+						const pastedText = e.clipboardData.getData("text")
+						if (pastedText) {
+							e.preventDefault()
+							const target = e.currentTarget
+							const cursorPos = target.selectionStart
+							const newValue =
+								editedText.slice(0, cursorPos) + pastedText + editedText.slice(cursorPos)
+							setEditedText(newValue)
+						}
+					}}
 						ref={textAreaRef}
 						style={{
 							width: "100%",

@@ -53,6 +53,10 @@ export function useOnboardingKeyboard(input: {
 		if (input.step === "done") return;
 
 		if (key.ctrl && key.name === "c") {
+			// On Windows, Ctrl+C is the standard COPY shortcut - don't intercept it
+			if (process.platform === "win32") {
+				return;
+			}
 			input.onExit();
 			return;
 		}

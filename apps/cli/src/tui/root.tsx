@@ -457,16 +457,20 @@ function App(props: TuiProps) {
 		[dialog, invokableSkillCommands, showToast, termHeight],
 	);
 
+	const selectionTextRef = useRef("");
 	useEffect(() => {
 		const { handleSelection, dispose } = createSelectionCopyHandler({
 			copyToClipboardOSC52: (text) => renderer.copyToClipboardOSC52(text),
 			showToast,
 		});
-
-		renderer.on("selection", handleSelection);
+		const wrappedHandler = (selection: { getSelectedText: () => string }) => {
+			selectionTextRef.current = selection.getSelectedText();
+			handleSelection(selection as never);
+		};
+		renderer.on("selection", wrappedHandler);
 		return () => {
 			dispose();
-			renderer.off("selection", handleSelection);
+			renderer.off("selection", wrappedHandler);
 		};
 	}, [renderer, showToast]);
 
@@ -853,6 +857,8 @@ function App(props: TuiProps) {
 		onRestoreCheckpoint: openCheckpointRestore,
 		onOpenCommandPalette: openCommandPalette,
 		onCommandPaletteShortcut: runCommandPaletteShortcut,
+		getSelectedText: () => selectionTextRef.current,
+		copyToClipboard: (text) => renderer.copyToClipboardOSC52(text),
 	});
 
 	const acOptions = autocomplete.getFilteredOptions();
