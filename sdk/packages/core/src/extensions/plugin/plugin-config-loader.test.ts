@@ -85,7 +85,7 @@ describe("plugin-config-loader", () => {
 				JSON.stringify({
 					name: "plugin-package",
 					private: true,
-					cline: {
+					tcode: {
 						plugins: [
 							{
 								paths: ["./src/index.ts"],
@@ -127,7 +127,7 @@ describe("plugin-config-loader", () => {
 				JSON.stringify({
 					name: "plugin-package",
 					private: true,
-					cline: {
+					tcode: {
 						plugins: [
 							{
 								paths: ["./src/index.ts"],
@@ -172,7 +172,7 @@ describe("plugin-config-loader", () => {
 				JSON.stringify({
 					name: "plugin-package",
 					private: true,
-					cline: {
+					tcode: {
 						plugins: [
 							{
 								paths: ["./src/index.ts"],
@@ -215,7 +215,7 @@ describe("plugin-config-loader", () => {
 				JSON.stringify({
 					name: "plugin-package",
 					private: true,
-					cline: {
+					tcode: {
 						plugins: [{ paths: ["./src/index.ts"] }],
 					},
 				}),
@@ -292,7 +292,7 @@ describe("plugin-config-loader", () => {
 				JSON.stringify({
 					name: "cline-installed-plugin-demo",
 					private: true,
-					cline: {
+					tcode: {
 						plugins: [{ paths: ["./package/index.ts"] }],
 					},
 				}),
@@ -333,7 +333,7 @@ describe("plugin-config-loader", () => {
 			setHomeDir(home);
 			const workspacePlugins = join(workspace, ".tcode", "plugins");
 			const userPlugins = join(home, ".tcode", "plugins");
-			const documentsPlugins = join(home, "Documents", "Cline", "Plugins");
+			const documentsPlugins = join(home, "Documents", "Tcode", "Plugins");
 			await mkdir(workspacePlugins, { recursive: true });
 			await mkdir(userPlugins, { recursive: true });
 			await mkdir(documentsPlugins, { recursive: true });

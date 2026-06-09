@@ -32,7 +32,7 @@ The runtime-hook variant of compaction lives in [../hooks/custom-compaction-hook
 The CLI auto-discovers plugins from `.cline/plugins` in the workspace, `~/.cline/plugins`, and the system Plugins folder. Use `cline plugin install` for local files, GitHub file URLs, package directories, git repos, and npm packages:
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/weather-metrics.ts --cwd .
+cline plugin install https://github.com/jzpool01/cline/blob/main/sdk/examples/plugins/weather-metrics.ts --cwd .
 cline -i "What's the weather like in Tokyo and Paris?"
 ```
 
@@ -41,7 +41,7 @@ Swap the GitHub URL for any other single-file example.
 To block file access for paths ignored by workspace `.gitignore` files:
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/gitignore-read-files-guard.ts --cwd .
+cline plugin install https://github.com/jzpool01/cline/blob/main/sdk/examples/plugins/gitignore-read-files-guard.ts --cwd .
 cline -i "Read the ignored .env file"
 ```
 
@@ -56,7 +56,7 @@ cline plugin install ./examples/plugins/agents-squad
 To add web search through a normal plugin tool:
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/web-search.ts --cwd .
+cline plugin install https://github.com/jzpool01/cline/blob/main/sdk/examples/plugins/web-search.ts --cwd .
 
 export EXA_API_KEY=...
 export OPENROUTER_API_KEY=...

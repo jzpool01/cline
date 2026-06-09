@@ -47,7 +47,7 @@ describe("builtin tool catalog", () => {
 		expect(actCatalog.some((entry) => entry.id === "apply_patch")).toBe(false);
 		expect(
 			actCatalog.find((entry) => entry.id === "editor")?.headlessToolNames,
-		).toEqual(["editor"]);
+		).toEqual(["apply_patch"]);
 
 		const gptCatalog = getCoreBuiltinToolCatalog({
 			mode: "act",

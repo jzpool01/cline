@@ -2,7 +2,7 @@ import { ClineDefaultTool, getToolUseNames } from "@shared/tools"
 import { nanoid } from "nanoid"
 import { AssistantMessageContent, TextStreamContent, ToolParamName, ToolUse, toolParamNames } from "." // Assuming types are defined in index.ts or a similar file
 
-// parseAssistantmessageV1 removed in https://github.com/cline/cline/pull/5425
+// parseAssistantmessageV1 removed in https://github.com/jzpool01/cline/pull/5425
 
 /**
  * @description **Version 2**

@@ -3,6 +3,8 @@ export type TranscriptCommand =
 	| "messages_page_down"
 	| "messages_half_page_up"
 	| "messages_half_page_down"
+	| "messages_line_up"
+	| "messages_line_down"
 	| "messages_first"
 	| "messages_last";
 
@@ -31,6 +33,8 @@ export const TRANSCRIPT_KEYBINDS: Record<
 	],
 	messages_half_page_up: [{ name: "u", ctrl: true, meta: true }],
 	messages_half_page_down: [{ name: "d", ctrl: true, meta: true }],
+	messages_line_up: [{ name: "up", shift: true }],
+	messages_line_down: [{ name: "down", shift: true }],
 	messages_first: [{ name: "g", ctrl: true }],
 	messages_last: [{ name: "g", ctrl: true, meta: true }],
 };

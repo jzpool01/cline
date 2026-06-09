@@ -223,7 +223,7 @@ mkdir -p ~/.cline/cron/events
 cp examples/cron/events/local-plugin-event.event.md ~/.cline/cron/events/
 
 # Load the plugin that emits these events
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/automation-events.ts
+cline plugin install https://github.com/jzpool01/cline/blob/main/sdk/examples/plugins/automation-events.ts
 
 # Run CLI with automation enabled; the plugin emits events
 cline --enable-automation -i "Test automation events"

@@ -77,7 +77,7 @@ describe("user instruction config loader", () => {
 			paths.some(
 				(p) =>
 					p.includes("Documents") &&
-					p.includes("Cline") &&
+					p.includes("Tcode") &&
 					p.includes("Workflows"),
 			),
 		).toBe(true);

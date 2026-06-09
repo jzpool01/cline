@@ -1114,10 +1114,9 @@ export class AgentRuntime {
 	private async executeToolCalls(
 		toolCalls: AgentToolCallPart[],
 	): Promise<AgentMessage[]> {
-		const prepared: PreparedToolExecution[] = [];
-		for (const toolCall of toolCalls) {
-			prepared.push(await this.prepareToolExecution(toolCall));
-		}
+		const prepared = await Promise.all(
+			toolCalls.map((tc) => this.prepareToolExecution(tc)),
+		);
 
 		if (this.config.toolExecution === "parallel") {
 			return Promise.all(

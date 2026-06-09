@@ -25,6 +25,8 @@ function legacyBuiltinTools(cwd: string): AgentTool[] {
 		enableSearch: true,
 		enableBash: true,
 		enableWebFetch: true,
+		enableApplyPatch: true,
+		enableEditor: false,
 	});
 }
 

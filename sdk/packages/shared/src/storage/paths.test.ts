@@ -123,19 +123,19 @@ describe("storage path resolution", () => {
 		);
 	});
 
-	it("falls back to ~/.cline/.agents for agent configs", () => {
+	it("falls back to ~/.tcode/.agents for agent configs", () => {
 		snapshot = captureEnv();
-		process.env.TCODE_DIR = "/tmp/home/.cline";
+		process.env.TCODE_DIR = "/tmp/home/.tcode";
 
 		expect(resolveAgentsConfigDirPath()).toBe(
 			join("/tmp/home", ".tcode", AGENT_CONFIG_DIRECTORY_NAME),
 		);
 	});
 
-	it("resolves global hooks from ~/.cline", () => {
+	it("resolves global hooks from ~/.tcode", () => {
 		snapshot = captureEnv();
-		process.env.TCODE_DIR = "/tmp/home/.cline";
-		process.env.TCODE_DATA_DIR = "/tmp/home/.cline/data";
+		process.env.TCODE_DIR = "/tmp/home/.tcode";
+		process.env.TCODE_DATA_DIR = "/tmp/home/.tcode/data";
 
 		expect(resolveHooksConfigSearchPaths()).toEqual(
 			expect.arrayContaining([
@@ -147,10 +147,10 @@ describe("storage path resolution", () => {
 		);
 	});
 
-	it("resolves global rules from ~/.cline", () => {
+	it("resolves global rules from ~/.tcode", () => {
 		snapshot = captureEnv();
-		process.env.TCODE_DIR = "/tmp/home/.cline";
-		process.env.TCODE_DATA_DIR = "/tmp/home/.cline/data";
+		process.env.TCODE_DIR = "/tmp/home/.tcode";
+		process.env.TCODE_DATA_DIR = "/tmp/home/.tcode/data";
 
 		expect(resolveRulesConfigSearchPaths()).toEqual(
 			expect.arrayContaining([
@@ -163,16 +163,16 @@ describe("storage path resolution", () => {
 		);
 	});
 
-	it("resolves legacy and new workflow paths, with .cline paths later for duplicate-name precedence", () => {
+	it("resolves legacy and new workflow paths, with .tcode paths later for duplicate-name precedence", () => {
 		snapshot = captureEnv();
-		process.env.TCODE_DIR = "/tmp/home/.cline";
+		process.env.TCODE_DIR = "/tmp/home/.tcode";
 		const workspacePath = "/repo/demo";
 
 		const paths = resolveWorkflowsConfigSearchPaths(workspacePath);
 
 		expect(paths).toEqual([
 			join(workspacePath, ".clinerules", "workflows"),
-			expect.stringContaining(join("Documents", "Cline", "Workflows")),
+			expect.stringContaining(join("Documents", "Tcode", "Workflows")),
 			join("/tmp/home", ".tcode", "workflows"),
 			join(workspacePath, ".tcode", "workflows"),
 		]);

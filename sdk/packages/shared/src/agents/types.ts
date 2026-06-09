@@ -878,7 +878,7 @@ export const AgentConfigSchema = z.object({
 	systemPrompt: z.string(),
 	tools: z.array(z.custom<AgentTool>()),
 	maxIterations: z.number().positive().optional(),
-	maxParallelToolCalls: z.number().int().positive().default(8),
+	maxParallelToolCalls: z.number().int().positive().default(12),
 	maxTokensPerTurn: z.number().positive().optional(),
 	apiTimeoutMs: z.number().positive().default(180000),
 	userFileContentLoader: z

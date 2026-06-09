@@ -136,7 +136,7 @@ npm run eval:e2e
 
 ### E2E Task
 
-Contribute to [cline/cline-bench](https://github.com/cline/cline-bench)
+Contribute to [cline/cline-bench](https://github.com/jzpool01/cline-bench)
 
 ## Resources
 

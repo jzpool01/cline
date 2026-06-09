@@ -202,7 +202,7 @@ Production?
 
 ## Resources
 
-Repository: https://github.com/cline/cline
-SDK Source: https://github.com/cline/cline/tree/main/sdk
+Repository: https://github.com/jzpool01/cline
+SDK Source: https://github.com/jzpool01/cline/tree/main/sdk
 Documentation: https://docs.cline.bot/sdk/overview
 Discord: https://discord.gg/cline

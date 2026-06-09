@@ -20,7 +20,7 @@
 <a href="https://www.reddit.com/r/cline/" target="_blank">r/cline</a>
 </td>
 <td align="center">
-<a href="https://github.com/cline/cline/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank">Feature Requests</a>
+<a href="https://github.com/jzpool01/cline/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank">Feature Requests</a>
 </td>
 <td align="center">
 <a href="https://docs.cline.bot" target="_blank">Docs</a>
@@ -331,7 +331,7 @@ See [DEVELOPMENT.md](./DEVELOPMENT.md) for local development setup, monorepo str
 
 ## License
 
-[Apache 2.0 © Cline Bot Inc.](https://github.com/cline/cline/blob/main/LICENSE)
+[Apache 2.0 © Cline Bot Inc.](https://github.com/jzpool01/cline/blob/main/LICENSE)
 
 2.3 执行签名
 codesign --entitlements entitlements.plist \

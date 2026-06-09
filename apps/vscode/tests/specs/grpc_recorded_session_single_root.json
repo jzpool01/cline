@@ -56,7 +56,7 @@
 			"isStreaming": false,
 			"request": {
 				"message": {
-					"text": "Hello, Cline!",
+					"text": "Hello, Tarogo!",
 					"images": [],
 					"files": []
 				}
@@ -87,7 +87,7 @@
 					"stateJson": {
 						"taskHistory": [
 							{
-								"task": "Hello, Cline!"
+								"task": "Hello, Tarogo!"
 							}
 						]
 					}

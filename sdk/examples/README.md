@@ -22,7 +22,7 @@ Examples include:
 - `background-terminal.ts` - Background shell jobs with logging
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/weather-metrics.ts
+cline plugin install https://github.com/jzpool01/cline/blob/main/sdk/examples/plugins/weather-metrics.ts
 cline -i "What's the weather like in Tokyo and Paris?"
 ```
 
@@ -36,7 +36,7 @@ TypeScript LSP plugin that gives the agent a `goto_definition` tool powered by t
 - Zero extra dependencies -- resolves `typescript` from the target project
 
 ```bash
-cline plugin install https://github.com/cline/cline/blob/main/sdk/examples/plugins/typescript-lsp/index.ts
+cline plugin install https://github.com/jzpool01/cline/blob/main/sdk/examples/plugins/typescript-lsp/index.ts
 cline -i "Find where createTool is defined"
 ```
 

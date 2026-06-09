@@ -139,7 +139,7 @@ describe("plugin install command", () => {
 	it("parses GitHub plugin file URLs as remote sources", () => {
 		expect(
 			parsePluginSource(
-				"https://github.com/cline/cline/blob/main/sdk/examples/plugins/weather-metrics.ts",
+				"https://github.com/jzpool01/cline/blob/main/sdk/examples/plugins/weather-metrics.ts",
 			),
 		).toEqual({
 			type: "remote",

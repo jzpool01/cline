@@ -1,6 +1,6 @@
-# Cline API
+# Tarogo API
 
-The Cline extension exposes an API that can be used by other extensions. To use this API in your extension:
+The Tarogo extension exposes an API that can be used by other extensions. To use this API in your extension:
 
 1. Copy `src/extension-api/cline.d.ts` to your extension's source directory.
 2. Include `cline.d.ts` in your extension's compilation.
@@ -10,7 +10,7 @@ The Cline extension exposes an API that can be used by other extensions. To use 
     const clineExtension = vscode.extensions.getExtension<ClineAPI>("saoudrizwan.claude-dev")
 
     if (!clineExtension?.isActive) {
-    	throw new Error("Cline extension is not activated")
+    	throw new Error("Tarogo extension is not activated")
     }
 
     const cline = clineExtension.exports
@@ -19,7 +19,7 @@ The Cline extension exposes an API that can be used by other extensions. To use 
     	// Now you can use the API
 
     	// Start a new task with an initial message
-    	await cline.startNewTask("Hello, Cline! Let's make a new project...")
+    	await cline.startNewTask("Hello, Tarogo! Let's make a new project...")
 
     	// Start a new task with an initial message and images
     	await cline.startNewTask("Use this design language", ["data:image/webp;base64,..."])
@@ -33,7 +33,7 @@ The Cline extension exposes an API that can be used by other extensions. To use 
     	// Simulate pressing the secondary button in the chat interface (e.g. 'Reject')
     	await cline.pressSecondaryButton()
     } else {
-    	console.error("Cline API is not available")
+    	console.error("Tarogo API is not available")
     }
     ```
 

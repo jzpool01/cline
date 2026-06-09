@@ -97,10 +97,10 @@ function readDeclaredPluginEntryPaths(packageRoot: string): string[] {
 		const parsed = JSON.parse(
 			readFileSync(join(packageRoot, PACKAGE_JSON_FILE_NAME), "utf8"),
 		) as unknown;
-		if (!isRecord(parsed) || !isRecord(parsed.cline)) {
+		if (!isRecord(parsed) || !isRecord(parsed.tcode)) {
 			return [];
 		}
-		const entries = parsed.cline.plugins;
+		const entries = parsed.tcode.plugins;
 		if (!Array.isArray(entries)) {
 			return [];
 		}

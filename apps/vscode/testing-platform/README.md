@@ -1,12 +1,12 @@
-# Cline Testing Platform
+# Tarogo Testing Platform
 
-A CLI testing framework for the Cline Core extension, providing gRPC-based integration clients and utilities for automated scenarios.
+A CLI testing framework for the Tarogo Core extension, providing gRPC-based integration clients and utilities for automated scenarios.
 
 ## Overview
 
-The platform enables end-to-end validation of Cline's core functionality through:
+The platform enables end-to-end validation of Tarogo's core functionality through:
 
-- **gRPC Adapters** – clients for Cline’s gRPC services  
+- **gRPC Adapters** – clients for Tarogo’s gRPC services  
 - **Test Harness** – runner, utilities, and type definitions  
 - **Spec Files** – JSON instructions for automated test cases  
 
@@ -27,7 +27,7 @@ testing-platform/
 - **Node.js** ≥ 18 and **npm** ≥ 8  
 - **Protocol Buffers** (used for gRPC)  
 
-Generate proto files in the **root Cline project**:
+Generate proto files in the **root Tarogo project**:
 
 ```bash
 npm run protos
@@ -35,7 +35,7 @@ npm run protos
 
 ## Setup
 
-From the root of the Cline project:
+From the root of the Tarogo project:
 
 ```bash
 npm run install:all
@@ -52,7 +52,7 @@ npm run build
 
 ## Running Spec File Tests
 
-Before running specs, make sure the standalone Cline Core gRPC server (that runs mocks and host gRPC as well) is running:
+Before running specs, make sure the standalone Tarogo Core gRPC server (that runs mocks and host gRPC as well) is running:
 
 ```bash
 npm run test:sca-server

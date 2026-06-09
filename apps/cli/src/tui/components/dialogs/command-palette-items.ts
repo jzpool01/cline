@@ -11,6 +11,7 @@ export type CommandPaletteAction =
 	| "undo"
 	| "clear"
 	| "history"
+	| "status"
 	| "help"
 	| "quit";
 
@@ -122,6 +123,13 @@ const ACTION_ITEMS: Array<{
 		keywords: ["history", "resume", "sessions"],
 	},
 	{
+		action: "status",
+		label: "View Status",
+		shortcut: "Opt+T",
+		description: "Show token usage and session info",
+		keywords: ["status", "usage", "tokens", "cost", "session"],
+	},
+	{
 		action: "help",
 		label: "Open Help",
 		shortcut: "Opt+K",
@@ -130,7 +138,7 @@ const ACTION_ITEMS: Array<{
 	},
 	{
 		action: "quit",
-		label: "Exit Cline",
+		label: "Exit Tcode",
 		shortcut: "Opt+Q",
 		description: "Close the interactive CLI",
 		keywords: ["quit", "exit"],

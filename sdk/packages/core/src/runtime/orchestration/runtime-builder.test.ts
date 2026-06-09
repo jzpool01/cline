@@ -207,7 +207,7 @@ describe("DefaultRuntimeBuilder", () => {
 		expect(names).not.toContain("editor");
 	});
 
-	it("keeps editor for non-codex/non-gpt model IDs in act mode", async () => {
+	it("keeps apply_patch for non-codex/non-gpt model IDs in act mode", async () => {
 		const runtime = await new DefaultRuntimeBuilder().build({
 			config: makeBaseConfig({
 				mode: "act",
@@ -215,8 +215,8 @@ describe("DefaultRuntimeBuilder", () => {
 		});
 
 		const names = runtime.tools.map((tool) => tool.name);
-		expect(names).toContain("editor");
-		expect(names).not.toContain("apply_patch");
+		expect(names).toContain("apply_patch");
+		expect(names).not.toContain("editor");
 	});
 
 	it("applies custom tool routing rules from session config", async () => {
@@ -562,7 +562,7 @@ Use conventional commits.`,
 				{
 					name: "review-plugin",
 					private: true,
-					cline: {
+					tcode: {
 						plugins: [{ paths: ["./index.ts"] }],
 					},
 				},
@@ -621,7 +621,7 @@ Use the review plugin guidance.`,
 			JSON.stringify({
 				name: "review-plugin",
 				private: true,
-				cline: {
+				tcode: {
 					plugins: [{ paths: ["./index.ts"] }],
 				},
 			}),
@@ -678,7 +678,7 @@ Use the review plugin guidance.`,
 			JSON.stringify({
 				name: "review-plugin",
 				private: true,
-				cline: {
+				tcode: {
 					plugins: [{ paths: ["./index.ts"] }],
 				},
 			}),
