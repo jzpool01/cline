@@ -386,7 +386,7 @@ export const e2e = test
 						TEMP_PROFILE: "true",
 						E2E_TEST: "true",
 						CLINE_ENVIRONMENT: "local",
-						TCODE_DIR: clineTestDir, // Isolate test data from user's ~/.cline
+						TCODE_DIR: clineTestDir, // Isolate test data from user's ~/.tcode
 						GRPC_RECORDER_FILE_NAME: E2ETestHelper.generateTestFileName(testInfo.title, testInfo.project.name),
 						// GRPC_RECORDER_ENABLED: "true",
 						// GRPC_RECORDER_TESTS_FILTERS_ENABLED: "true"

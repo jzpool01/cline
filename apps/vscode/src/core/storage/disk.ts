@@ -106,7 +106,7 @@ export async function getDocumentsPath(): Promise<string> {
 }
 
 /**
- * Returns the cross-platform path to the Cline home directory (~/.cline).
+ * Returns the cross-platform path to the Cline home directory (~/.tcode).
  * This works on macOS, Linux, and Windows:
  * - macOS: /Users/username/.cline
  * - Linux: /home/username/.cline
@@ -115,7 +115,7 @@ export async function getDocumentsPath(): Promise<string> {
  * This is intended to eventually replace ~/Documents/Cline as the global config location.
  */
 export function getClineHomePath(): string {
-	return path.join(os.homedir(), ".cline")
+	return path.join(os.homedir(), ".tcode")
 }
 
 export async function ensureTaskDirectoryExists(taskId: string): Promise<string> {
@@ -167,7 +167,7 @@ export async function ensureHooksDirectoryExists(): Promise<string> {
 }
 
 /**
- * Returns the global skills directory path (~/.cline/skills) without creating it.
+ * Returns the global skills directory path (~/.tcode/skills) without creating it.
  */
 function getClineSkillsDirectoryPath(): string {
 	return path.join(getClineHomePath(), "skills")

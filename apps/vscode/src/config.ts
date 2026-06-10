@@ -125,10 +125,10 @@ class ClineEndpoint {
 
 	/**
 	 * Returns the path to the endpoints.json configuration file.
-	 * Located at ~/.cline/endpoints.json
+	 * Located at ~/.tcode/endpoints.json
 	 */
 	private static getEndpointsFilePath(): string {
-		return path.join(os.homedir(), ".cline", "endpoints.json")
+		return path.join(os.homedir(), ".tcode", "endpoints.json")
 	}
 
 	/**
@@ -142,7 +142,7 @@ class ClineEndpoint {
 	/**
 	 * Loads and validates the endpoints.json file.
 	 * Checks bundled location first, then falls back to user directory.
-	 * Priority: bundled endpoints.json → ~/.cline/endpoints.json → null (standard mode)
+	 * Priority: bundled endpoints.json → ~/.tcode/endpoints.json → null (standard mode)
 	 * @returns The validated endpoints config, or null if no file exists
 	 * @throws ClineConfigurationError if a file exists but is invalid
 	 */
@@ -174,7 +174,7 @@ class ClineEndpoint {
 			// Bundled file doesn't exist or is not accessible, try user file
 		}
 
-		// 2. Try ~/.cline/endpoints.json
+		// 2. Try ~/.tcode/endpoints.json
 		const userPath = ClineEndpoint.getEndpointsFilePath()
 		try {
 			await fs.access(userPath)
@@ -274,7 +274,7 @@ class ClineEndpoint {
 	 */
 	public setEnvironment(env: string) {
 		if (this.onPremiseConfig) {
-			throw new Error("Cannot change environment in on-premise mode. Endpoints are configured via ~/.cline/endpoints.json")
+			throw new Error("Cannot change environment in on-premise mode. Endpoints are configured via ~/.tcode/endpoints.json")
 		}
 
 		switch (env.toLowerCase()) {

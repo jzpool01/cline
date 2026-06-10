@@ -1,14 +1,14 @@
 # Storage Architecture
 
-Global settings, secrets and workspace state are stored in **file-backed JSON stores** under `~/.cline/data/`. This is the shared storage layer used by VSCode, CLI, and JetBrains.
+Global settings, secrets and workspace state are stored in **file-backed JSON stores** under `~/.tcode/data/`. This is the shared storage layer used by VSCode, CLI, and JetBrains.
 
 ## Key Abstractions
 
 ### `StorageContext` (src/shared/storage/storage-context.ts)
 The entry point. Created via `createStorageContext()` and passed to `StateManager.initialize()`. Contains three `ClineFileStorage` instances:
-- `globalState` → `~/.cline/data/globalState.json`
-- `secrets` → `~/.cline/data/secrets.json` (mode 0o600)
-- `workspaceState` → `~/.cline/data/workspaces/<hash>/workspaceState.json`
+- `globalState` → `~/.tcode/data/globalState.json`
+- `secrets` → `~/.tcode/data/secrets.json` (mode 0o600)
+- `workspaceState` → `~/.tcode/data/workspaces/<hash>/workspaceState.json`
 
 ### `ClineFileStorage` (src/shared/storage/ClineFileStorage.ts)
 Synchronous JSON key-value store backed by a single file. Supports `get()`, `set()`, `setBatch()`, `delete()`. Writes are atomic (write-then-rename).
@@ -52,7 +52,7 @@ On VSCode startup, a migration copies data from VSCode's `ExtensionContext` stor
 ## File Layout
 
 ```
-~/.cline/
+~/.tcode/
   data/
     globalState.json          # Global settings & state
     secrets.json              # API keys (mode 0o600)
