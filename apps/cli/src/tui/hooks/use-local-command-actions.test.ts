@@ -9,7 +9,6 @@ function makeActions(
 	overrides: Partial<Omit<LocalSlashCommandActionInput, "name">> = {},
 ): Omit<LocalSlashCommandActionInput, "name"> {
 	return {
-		openAccount: vi.fn(),
 		openConfig: vi.fn(),
 		openMcpManager: vi.fn(async () => false),
 		openModelSelector: vi.fn(),

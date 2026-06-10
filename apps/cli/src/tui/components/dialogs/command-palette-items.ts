@@ -2,7 +2,6 @@ export type CommandPaletteAction =
 	| "settings"
 	| "change-model"
 	| "change-provider"
-	| "account"
 	| "mcp"
 	| "plugins"
 	| "compact"
@@ -71,13 +70,6 @@ const ACTION_ITEMS: Array<{
 		shortcut: "Opt+G",
 		description: "Open plugin settings",
 		keywords: ["plugins", "extensions", "settings"],
-	},
-	{
-		action: "account",
-		label: "Open Account",
-		shortcut: "Opt+A",
-		description: "View or switch your Tcode account",
-		keywords: ["account", "login", "auth", "tcode"],
 	},
 	{
 		action: "compact",

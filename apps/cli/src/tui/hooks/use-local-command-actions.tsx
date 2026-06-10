@@ -19,7 +19,6 @@ import type { OpenConfigOptions } from "./use-config-panel";
 export function useLocalCommandActions(input: {
 	slashCommandRegistry: SlashCommandRegistry;
 	canForkSession: boolean;
-	openAccount: () => void;
 	openConfig: (options?: OpenConfigOptions) => void;
 	openMcpManager: () => Promise<boolean>;
 	openModelSelector: () => void;
@@ -39,7 +38,6 @@ export function useLocalCommandActions(input: {
 	const {
 		slashCommandRegistry,
 		canForkSession,
-		openAccount,
 		openConfig,
 		openMcpManager,
 		openModelSelector,
@@ -209,7 +207,6 @@ export function useLocalCommandActions(input: {
 			return runLocalSlashCommandAction({
 				name: resolved.name,
 				invocation,
-				openAccount,
 				openConfig,
 				openMcpManager,
 				openModelSelector,
@@ -228,7 +225,6 @@ export function useLocalCommandActions(input: {
 			onClearConversation,
 			onExit,
 			onUndo,
-			openAccount,
 			openConfig,
 			openMcpManager,
 			openHelp,

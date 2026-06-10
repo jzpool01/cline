@@ -15,7 +15,6 @@ export type LocalSlashCommandName =
 	| "config"
 	| "mcp"
 	| "plugins"
-	| "account"
 	| "model"
 	| "compact"
 	| "skills"
@@ -62,10 +61,6 @@ const TUI_LOCAL_COMMANDS: Array<{
 	{
 		name: "model",
 		description: "Switch model or provider",
-	},
-	{
-		name: "account",
-		description: "View Tcode account",
 	},
 	{
 		name: "mcp",
@@ -117,7 +112,6 @@ const TUI_LOCAL_COMMANDS: Array<{
 const SYSTEM_COMMAND_ORDER = [
 	"settings",
 	"model",
-	"account",
 	"mcp",
 	"plugins",
 	"compact",

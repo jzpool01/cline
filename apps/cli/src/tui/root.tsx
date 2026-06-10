@@ -39,7 +39,6 @@ import {
 import { Toast, type ToastState, type ToastVariant } from "./components/toast";
 import { EventBridgeProvider } from "./contexts/event-bridge-context";
 import { SessionProvider, useSession } from "./contexts/session-context";
-import { useAccountDialog } from "./hooks/use-account-dialog";
 import { useAgentEventHandlers } from "./hooks/use-agent-events";
 import { useAutocomplete } from "./hooks/use-autocomplete";
 import { useConfigPanel } from "./hooks/use-config-panel";
@@ -238,15 +237,6 @@ function App(props: TuiProps) {
 		refocusTextarea: () => refocusTextareaRef.current(),
 	});
 
-	const openAccount = useAccountDialog({
-		dialog,
-		termHeight,
-		loadAccount: props.loadTcodeAccount,
-		switchAccount: props.switchTcodeAccount,
-		onAccountChange: props.onAccountChange,
-		openModelSelector,
-		refocusTextarea: () => refocusTextareaRef.current(),
-	});
 
 	const clearConversation = useCallback(async () => {
 		const shouldRestartSession = session.hasSubmitted;
@@ -639,7 +629,6 @@ function App(props: TuiProps) {
 	const { handleSlashCommand } = useLocalCommandActions({
 		slashCommandRegistry,
 		canForkSession,
-		openAccount,
 		openConfig,
 		openMcpManager,
 		openModelSelector,

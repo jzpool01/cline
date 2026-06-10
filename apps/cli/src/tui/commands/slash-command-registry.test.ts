@@ -98,7 +98,6 @@ describe("slash command registry", () => {
 			expect.arrayContaining([
 				"settings",
 				"mcp",
-				"account",
 				"model",
 				"skills",
 				"quit",
@@ -271,16 +270,4 @@ describe("slash command registry", () => {
 		).toContain("settings");
 	});
 
-	it("always exposes the account command", () => {
-		const registry = buildSlashCommandRegistry({});
-
-		expect(resolveSlashCommand(registry, "account")).toMatchObject({
-			source: "tui",
-			execution: "local",
-			visible: true,
-		});
-		expect(
-			getVisibleSystemSlashCommands(registry).map((command) => command.name),
-		).toContain("account");
-	});
 });

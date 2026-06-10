@@ -3,7 +3,6 @@ import type { OpenConfigOptions } from "./use-config-panel";
 
 export interface LocalSlashCommandActionInput {
 	name: string;
-	openAccount: () => void;
 	openConfig: (options?: OpenConfigOptions) => void;
 	openMcpManager: () => Promise<boolean>;
 	openModelSelector: () => void;
@@ -33,13 +32,6 @@ export function runLocalSlashCommandAction(
 	}
 	if (normalized === "skills") {
 		input.openSkills(input.invocation);
-		return true;
-	}
-	if (normalized === "mcp") {
-		return input.openMcpManager().then(() => true);
-	}
-	if (normalized === "account") {
-		input.openAccount();
 		return true;
 	}
 	if (normalized === "model") {
