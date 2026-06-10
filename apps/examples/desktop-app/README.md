@@ -1,6 +1,6 @@
 # Desktop App Example
 
-Tauri desktop shell + Bun sidecar backend + Next.js UI for running and inspecting Cline chat sessions.
+Tauri desktop shell + Bun sidecar backend + Next.js UI for running and inspecting Tarogo chat sessions.
 
 ## Dev Commands
 

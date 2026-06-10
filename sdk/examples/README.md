@@ -1,6 +1,6 @@
-# Cline SDK Examples
+# Tarogo SDK Examples
 
-Learn how to build with the Cline SDK through practical, runnable examples.
+Learn how to build with the Tarogo SDK through practical, runnable examples.
 
 ## 📁 Plugin, Hook, and Automation Examples
 
@@ -129,16 +129,16 @@ cline -i "do something"  # Hooks will execute automatically
 To use the SDK in your own Node app (outside this monorepo), start with:
 
 ```bash
-npm add @cline/core
+npm add @tarogo/core
 ```
 
-Add `@cline/agents` or `@cline/llms` only if you intentionally want lower-level control. For RPC client helpers, prefer importing from `@cline/core` when you want the app-facing SDK surface.
+Add `@tarogo/agents` or `@tarogo/llms` only if you intentionally want lower-level control. For RPC client helpers, prefer importing from `@tarogo/core` when you want the app-facing SDK surface.
 
 Current SDK layering:
 
-- `@cline/core` owns config discovery/watchers, runtime plugin loading, and the context pipeline
+- `@tarogo/core` owns config discovery/watchers, runtime plugin loading, and the context pipeline
 - context compaction is core-owned and runs through turn preparation before model calls
-- most app integrations should stay on the `@cline/core` surface unless they intentionally need lower-level agent or model control
+- most app integrations should stay on the `@tarogo/core` surface unless they intentionally need lower-level agent or model control
 
 ## 📚 Learning Path
 
@@ -156,7 +156,7 @@ Current SDK layering:
 
 ## 📖 Documentation
 
-- [Cline SDK README](../packages/README.md)
+- [Tarogo SDK README](../packages/README.md)
 - [Architecture Guide](../ARCHITECTURE.md)
 - [Individual Package Docs](../packages/)
 

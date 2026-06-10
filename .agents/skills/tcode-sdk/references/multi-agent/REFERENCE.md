@@ -1,6 +1,6 @@
 # Multi-Agent Coordination
 
-The Cline SDK supports two models for multi-agent work: sub-agents (parent-child) and teams (peer-to-peer).
+The Tarogo SDK supports two models for multi-agent work: sub-agents (parent-child) and teams (peer-to-peer).
 
 ## Sub-Agents vs Teams
 
@@ -19,7 +19,7 @@ Sub-agents are spawned by a parent agent during a run. They execute independentl
 ### Enabling Sub-Agents
 
 ```typescript
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 await cline.start({
   prompt: "Refactor the auth module and update tests",
@@ -151,7 +151,7 @@ await cline.start({
 
 ## See Also
 
-- `../clinecore/REFERENCE.md` - ClineCore runtime
+- `../clinecore/REFERENCE.md` - TarogoCore runtime
 - `../clinecore/api.md` - Session config for teams
 - `../tools/REFERENCE.md` - Tool system
 - `../plugins/REFERENCE.md` - Plugin system

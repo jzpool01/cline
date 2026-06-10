@@ -1,26 +1,26 @@
-# [experimental] @cline/llms
+# [experimental] @tarogo/llms
 
-`@cline/llms` is the model and provider layer for the Cline SDK. It gives
+`@tarogo/llms` is the model and provider layer for the Tarogo SDK. It gives
 you typed provider settings, model catalogs, shared gateway contracts, and
 AI SDK-backed handler creation for supported LLM backends.
 
 ## What You Get
 
-- `@cline/llms/runtime` for declarative config and runtime registry creation
-- `@cline/llms/providers` for handler creation and provider settings/types
-- `@cline/llms/models` for model catalogs and query helpers
-- `@cline/llms` root exports for the gateway registry and shared llm contracts
+- `@tarogo/llms/runtime` for declarative config and runtime registry creation
+- `@tarogo/llms/providers` for handler creation and provider settings/types
+- `@tarogo/llms/models` for model catalogs and query helpers
+- `@tarogo/llms` root exports for the gateway registry and shared llm contracts
 
 ## Installation
 
 ```bash
-npm install @cline/llms zod
+npm install @tarogo/llms zod
 ```
 
 ## Quick Start
 
 ```ts
-import { createHandler } from "@cline/llms";
+import { createHandler } from "@tarogo/llms";
 
 const handler = createHandler({
 	providerId: "anthropic",
@@ -49,12 +49,12 @@ Use `createLlmsRuntime(...)` when you want a small registry around:
 Preferred import:
 
 ```ts
-import { createLlmsRuntime, defineLlmsConfig } from "@cline/llms/runtime";
+import { createLlmsRuntime, defineLlmsConfig } from "@tarogo/llms/runtime";
 ```
 
 ### Providers
 
-Use `@cline/llms/providers` for:
+Use `@tarogo/llms/providers` for:
 
 - `createHandler(...)` and `createHandlerAsync(...)`
 - `ProviderSettings` and `ProviderSettingsSchema`
@@ -63,11 +63,11 @@ Use `@cline/llms/providers` for:
 
 Built-in providers are routed through the internal gateway registry and backed by
 AI SDK provider implementations. Shared gateway contracts are exported from both
-`@cline/llms` and `@cline/shared`.
+`@tarogo/llms` and `@tarogo/shared`.
 
 ### Models
 
-Use `@cline/llms/models` when you need generated provider/model metadata for
+Use `@tarogo/llms/models` when you need generated provider/model metadata for
 selection UIs, defaults, or validation.
 
 For generated catalog field semantics and token-limit behavior, see
@@ -75,17 +75,17 @@ For generated catalog field semantics and token-limit behavior, see
 
 ## Entry Points
 
-- `@cline/llms`: runtime-focused convenience entrypoint
-- `@cline/llms/node`: explicit Node/runtime entrypoint
-- `@cline/llms/browser`: browser-safe bundle
-- `@cline/llms/runtime`: focused runtime entrypoint
-- `@cline/llms/models`: model catalog/query entrypoint
-- `@cline/llms/providers`: provider handler/settings entrypoint
+- `@tarogo/llms`: runtime-focused convenience entrypoint
+- `@tarogo/llms/node`: explicit Node/runtime entrypoint
+- `@tarogo/llms/browser`: browser-safe bundle
+- `@tarogo/llms/runtime`: focused runtime entrypoint
+- `@tarogo/llms/models`: model catalog/query entrypoint
+- `@tarogo/llms/providers`: provider handler/settings entrypoint
 
 ## Related Packages
 
-- `@cline/agents`: agent loop and tool execution
-- `@cline/core`: stateful runtime assembly and provider settings storage
+- `@tarogo/agents`: agent loop and tool execution
+- `@tarogo/core`: stateful runtime assembly and provider settings storage
 
 ## More Examples
 
@@ -103,7 +103,7 @@ Use this for API-key-backed provider validation against real endpoints.
 ```bash
 LLMS_LIVE_TESTS=1 \
 LLMS_LIVE_PROVIDERS_PATH=/absolute/path/to/packages/llms/src/tests/live-providers.example.json \
-bun -F @cline/llms run test:live
+bun -F @tarogo/llms run test:live
 ```
 
 Reasoning-focused live run (same command, different flags):
@@ -111,7 +111,7 @@ Reasoning-focused live run (same command, different flags):
 ```bash
 LLMS_LIVE_REASONING_TESTS=1 \
 LLMS_LIVE_REASONING_PROVIDERS_PATH=/absolute/path/to/packages/llms/src/tests/live-providers.reasoning.example.json \
-bun -F @cline/llms run test:live
+bun -F @tarogo/llms run test:live
 ```
 
 Tool-use-focused live run (same command, different flags):
@@ -119,7 +119,7 @@ Tool-use-focused live run (same command, different flags):
 ```bash
 LLMS_LIVE_TOOL_TESTS=1 \
 LLMS_LIVE_TOOL_PROVIDERS_PATH=/absolute/path/to/packages/llms/src/tests/live-providers.tools.example.json \
-bun -F @cline/llms run test:live
+bun -F @tarogo/llms run test:live
 ```
 
 Optional:

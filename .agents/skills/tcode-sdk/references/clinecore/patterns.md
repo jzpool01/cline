@@ -1,11 +1,11 @@
-# ClineCore Patterns
+# TarogoCore Patterns
 
 ## Basic Session with Built-in Tools
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { TarogoCore } from "@tarogo/sdk"
 
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 const session = await cline.start({
   prompt: "Read package.json and summarize the dependencies",
@@ -25,7 +25,7 @@ await cline.dispose()
 ## Streaming Session with UI Updates
 
 ```typescript
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 cline.subscribe((event) => {
   switch (event.type) {
@@ -54,7 +54,7 @@ await cline.start({
 ## Multi-Turn Session
 
 ```typescript
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 const session = await cline.start({
   prompt: "Create a new Express server",
@@ -81,7 +81,7 @@ await cline.dispose()
 Auto-approve reads, require approval for writes:
 
 ```typescript
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "my-app",
   toolPolicies: {
     read_files: { autoApprove: true },
@@ -105,7 +105,7 @@ const cline = await ClineCore.create({
 ## Custom Tools Alongside Built-ins
 
 ```typescript
-import { ClineCore, createTool } from "@cline/sdk"
+import { TarogoCore, createTool } from "@tarogo/sdk"
 import { z } from "zod"
 
 const deployTool = createTool({
@@ -120,7 +120,7 @@ const deployTool = createTool({
   },
 })
 
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 await cline.start({
   prompt: "Deploy the app to staging",
@@ -139,10 +139,10 @@ await cline.start({
 Load plugins inline with `extensions` and provide workspace context so plugins can access `ctx.workspaceInfo`:
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { TarogoCore } from "@tarogo/sdk"
 import myPlugin from "./my-plugin"
 
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "my-app",
   backendMode: "local",
 })
@@ -180,7 +180,7 @@ See `../plugins/REFERENCE.md` for the full plugin authoring guide.
 ## Session Listing and Replay
 
 ```typescript
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 // List recent sessions
 const sessions = await cline.list(10)
@@ -202,7 +202,7 @@ console.log(`Total tokens: ${usage.aggregateUsage.totalInputTokens + usage.aggre
 ## Graceful Shutdown
 
 ```typescript
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 process.on("SIGTERM", async () => {
   await cline.dispose("SIGTERM received")
@@ -217,9 +217,9 @@ process.on("SIGTERM", async () => {
 For request/response workloads (API endpoints, queue consumers):
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { TarogoCore } from "@tarogo/sdk"
 
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "worker",
   backendMode: "local",
 })
@@ -249,7 +249,7 @@ Multiple clients can attach to the same session:
 
 ```typescript
 // Process 1: start session
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "backend",
   backendMode: "hub",
 })
@@ -260,7 +260,7 @@ const session = await cline.start({
 })
 
 // Process 2: attach and stream events
-const viewer = await ClineCore.create({
+const viewer = await TarogoCore.create({
   clientName: "dashboard",
   backendMode: "hub",
 })

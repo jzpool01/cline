@@ -2,7 +2,7 @@ export const DEFAULT_REQUEST_HEADERS: Record<string, string> = {
 	"HTTP-Referer": "https://cline.bot",
 	"X-Title": "Cline",
 	"X-IS-MULTIROOT": "false",
-	"X-CLIENT-TYPE": "cline-sdk",
+	"X-TCODE-TYPE": "tcode-sdk",
 };
 
 export function serializeAbortReason(reason: unknown): unknown {

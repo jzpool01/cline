@@ -19,7 +19,7 @@ English | <a href="https://github.com/jzpool01/cline/blob/main/locales/es/README
 <a href="https://github.com/jzpool01/cline/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank"><strong>Feature Requests</strong></a>
 </td>
 <td align="center">
-<a href="https://docs.cline.bot/getting-started/installing-cline" target="_blank"><strong>Getting Started</strong></a>
+<a href="https://docs.tarogo.bot/getting-started/installing-cline" target="_blank"><strong>Getting Started</strong></a>
 </td>
 </tbody>
 </table>
@@ -38,7 +38,7 @@ Thanks to [Claude Sonnet's agentic coding capabilities](https://www.anthropic.c
 4. When a task is completed, Tarogo will present the result to you with a terminal command like `open -a "Google Chrome" index.html`, which you run with a click of a button.
 
 > [!TIP]
-> Follow [this guide](https://docs.cline.bot/features/customization/opening-cline-in-sidebar) to open Tarogo on the right side of your editor. This lets you use Tarogo side-by-side with your file explorer, and see how he changes your workspace more clearly.
+> Follow [this guide](https://docs.tarogo.bot/features/customization/opening-cline-in-sidebar) to open Tarogo on the right side of your editor. This lets you use Tarogo side-by-side with your file explorer, and see how he changes your workspace more clearly.
 
 ---
 

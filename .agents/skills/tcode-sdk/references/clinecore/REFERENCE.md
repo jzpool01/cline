@@ -1,10 +1,10 @@
-# ClineCore Runtime
+# TarogoCore Runtime
 
-`ClineCore` is the full-featured runtime from `@cline/core`. It wraps the `Agent` loop with session persistence, built-in tools (bash, editor, file reading, search, web fetch), config discovery, plugin loading, and optional hub-backed multi-process support.
+`TarogoCore` is the full-featured runtime from `@tarogo/core`. It wraps the `Agent` loop with session persistence, built-in tools (bash, editor, file reading, search, web fetch), config discovery, plugin loading, and optional hub-backed multi-process support.
 
-## When to Use ClineCore
+## When to Use TarogoCore
 
-| Use ClineCore when... | Use Agent instead when... |
+| Use TarogoCore when... | Use Agent instead when... |
 |---|---|
 | You need built-in tools (bash, editor, etc.) | You only need custom tools |
 | You want session persistence to disk | Stateless is fine |
@@ -16,9 +16,9 @@
 ## Quick Start
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { TarogoCore } from "@tarogo/sdk"
 
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 const session = await cline.start({
   prompt: "Set up CI with GitHub Actions",
@@ -43,7 +43,7 @@ Every `cline.start()` call creates a session with a unique ID. Sessions persist 
 
 ### Built-in Tools
 
-ClineCore provides these tools automatically when `enableTools: true`:
+TarogoCore provides these tools automatically when `enableTools: true`:
 
 | Tool | Description |
 |------|-------------|
@@ -56,7 +56,7 @@ ClineCore provides these tools automatically when `enableTools: true`:
 
 ### Config Discovery
 
-ClineCore watches `.cline/` directories for:
+TarogoCore watches `.cline/` directories for:
 - Rules (system prompt additions)
 - Skills (domain knowledge)
 - Workflows (multi-step procedures)
@@ -77,7 +77,7 @@ The default mode is `"auto"`. For simple scripts and CLI tools, `"local"` avoids
 
 ## Key APIs
 
-- `ClineCore.create(options)` - Create and initialize
+- `TarogoCore.create(options)` - Create and initialize
 - `cline.start(input)` - Start a new session
 - `cline.send({ sessionId, prompt })` - Send follow-up message
 - `cline.subscribe(listener)` - Listen to session events
@@ -110,7 +110,7 @@ cline.subscribe((event) => {
 })
 ```
 
-ClineCore results use `AgentResult` with `.text` (not `.outputText` like the standalone Agent's `AgentRunResult`).
+TarogoCore results use `AgentResult` with `.text` (not `.outputText` like the standalone Agent's `AgentRunResult`).
 
 ## Session Persistence
 
@@ -123,7 +123,7 @@ Sessions are stored at:
 
 ## Next Steps
 
-- `api.md` - Full ClineCore API reference
+- `api.md` - Full TarogoCore API reference
 - `patterns.md` - Common patterns and best practices
 - `gotchas.md` - Pitfalls and debugging
 - `../tools/REFERENCE.md` - Custom tool creation

@@ -1,6 +1,6 @@
-# [experimental] @cline/core
+# [experimental] @tarogo/core
 
-`@cline/core` is the stateful orchestration layer of the Cline SDK. It
+`@tarogo/core` is the stateful orchestration layer of the Tarogo SDK. It
 connects the agent runtime, provider settings, storage, default tools, and
 session lifecycle into a host-ready runtime.
 
@@ -10,26 +10,26 @@ session lifecycle into a host-ready runtime.
 - provider settings and account services
 - default runtime tools and MCP integration
 - storage-backed session and team state helpers
-- host-facing Node helpers through `@cline/core`
+- host-facing Node helpers through `@tarogo/core`
 
 ## Installation
 
 ```bash
-npm install @cline/core
+npm install @tarogo/core
 ```
 
 ## Entry Points
 
-- `@cline/core`: core contracts, shared utilities, and Node/server helpers for building hosts and runtimes
+- `@tarogo/core`: core contracts, shared utilities, and Node/server helpers for building hosts and runtimes
 
 ## Typical Usage
 
-Most host apps should start with `@cline/core`.
+Most host apps should start with `@tarogo/core`.
 
 ```ts
-import { ClineCore } from "@cline/core";
+import { TarogoCore } from "@tarogo/core";
 
-const cline = await ClineCore.create({});
+const cline = await TarogoCore.create({});
 
 const result = await cline.start({
 	config: {
@@ -53,7 +53,7 @@ await cline.dispose();
 
 ## Session Bootstrap
 
-`ClineCore.create(...)` also accepts `prepare(input)`.
+`TarogoCore.create(...)` also accepts `prepare(input)`.
 
 Use it when a host needs to prepare workspace-scoped runtime state before each
 session starts, then apply watcher/extensions/telemetry inputs through
@@ -64,25 +64,25 @@ contract.
 
 ### Runtime and Sessions
 
-Use `@cline/core` for host-facing runtime assembly:
+Use `@tarogo/core` for host-facing runtime assembly:
 
-- `ClineCore.create(...)`
+- `TarogoCore.create(...)`
 - `createRuntimeHost(...)`
 - `LocalRuntimeHost`
 - `HubRuntimeHost` and `RemoteRuntimeHost`
 - `DefaultRuntimeBuilder`
 
-`ClineCore` is the app-facing session API. The lower-level `RuntimeHost`
+`TarogoCore` is the app-facing session API. The lower-level `RuntimeHost`
 boundary uses runtime-primitive names such as `startSession` and `runTurn` so
 transport adapters stay distinct from product methods like `start` and `send`.
 Service-style operations such as pending prompt edits, accumulated usage lookup,
-and active-session model switching are exposed through `ClineCore` when the
+and active-session model switching are exposed through `TarogoCore` when the
 selected transport supports them rather than being part of the minimal host
 primitive vocabulary.
 
 ### Default Tools
 
-`@cline/core` owns the built-in host tools and executors:
+`@tarogo/core` owns the built-in host tools and executors:
 
 - `createBuiltinTools(...)`
 - `createDefaultTools(...)`
@@ -96,12 +96,12 @@ The package also exports storage and settings helpers such as:
 - `CoreSettingsService` and `createCoreSettingsService`
 - MCP settings helpers such as `setMcpServerDisabled`
 - `SqliteTeamStore`
-- SQLite-backed local session stores and artifacts through `@cline/core`
+- SQLite-backed local session stores and artifacts through `@tarogo/core`
 
 ## Related Packages
 
-- `@cline/agents`: stateless agent loop and tool primitives
-- `@cline/llms`: provider/model configuration and handlers
+- `@tarogo/agents`: stateless agent loop and tool primitives
+- `@tarogo/llms`: provider/model configuration and handlers
 
 ## More Examples
 

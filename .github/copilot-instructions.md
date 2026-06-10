@@ -1,4 +1,4 @@
-# Copilot Instructions for Cline
+# Copilot Instructions for Tarogo
 
 This is a VS Code extension. Read `.clinerules/general.md` for tribal knowledge and nuanced patterns.
 
@@ -19,7 +19,7 @@ This is a VS Code extension. Read `.clinerules/general.md` for tribal knowledge 
 2. **Generate**: `npm run protos`.
 3. **Backend handler**: `src/core/controller/<domain>/`. 
 4. **Frontend call**: `UiServiceClient.myMethod(Request.create({...}))`.
-- Adding enums (e.g. `ClineSay`) → also update `src/shared/proto-conversions/cline-message.ts`.
+- Adding enums (e.g. `TarogoSay`) → also update `src/shared/proto-conversions/cline-message.ts`.
 
 ## Adding API Providers (silent failure risk)
 Three proto conversion updates are **required** or the provider silently resets to Anthropic:
@@ -32,12 +32,12 @@ Also update: `src/shared/api.ts`, `src/shared/providers/providers.json`, `src/co
 For Responses API providers: add to `isNextGenModelProvider()` in `src/utils/model-utils.ts` and set `apiFormat: ApiFormat.OPENAI_RESPONSES` on models.
 
 ## Adding Tools to System Prompt (5+ file chain)
-1. Add enum to `ClineDefaultTool` in `src/shared/tools.ts`.
+1. Add enum to `TarogoDefaultTool` in `src/shared/tools.ts`.
 2. Create definition in `src/core/prompts/system-prompt/tools/` (export `[GENERIC]` minimum).
 3. Register in `src/core/prompts/system-prompt/tools/init.ts`.
 4. Whitelist in `src/core/prompts/system-prompt/variants/*/config.ts` for each model family.
 5. Handler in `src/core/task/tools/handlers/`, wire in `ToolExecutor.ts`.
-6. If tool has UI: add `ClineSay` enum in proto → `ExtensionMessage.ts` → `cline-message.ts` → `ChatRow.tsx`.
+6. If tool has UI: add `TarogoSay` enum in proto → `ExtensionMessage.ts` → `cline-message.ts` → `ChatRow.tsx`.
 7. Regenerate snapshots: `UPDATE_SNAPSHOTS=true npm run test:unit`.
 
 ## Modifying System Prompt

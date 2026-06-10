@@ -1,6 +1,6 @@
 # Going to Production
 
-Guidelines for deploying Cline SDK agents in production environments.
+Guidelines for deploying Tarogo SDK agents in production environments.
 
 ## Error Handling
 
@@ -22,7 +22,7 @@ switch (result.status) {
 }
 ```
 
-For ClineCore, check `finishReason`:
+For TarogoCore, check `finishReason`:
 
 ```typescript
 const session = await cline.start({ ... })
@@ -98,9 +98,9 @@ agent.subscribe((event) => {
 The SDK supports OpenTelemetry for traces, metrics, and logs:
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { TarogoCore } from "@tarogo/sdk"
 
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "my-app",
   // OpenTelemetry config is picked up from environment
   // OTEL_EXPORTER_OTLP_ENDPOINT, OTEL_SERVICE_NAME, etc.
@@ -112,7 +112,7 @@ const cline = await ClineCore.create({
 Use the `BasicLogger` interface for injectable logging:
 
 ```typescript
-import type { BasicLogger } from "@cline/sdk"
+import type { BasicLogger } from "@tarogo/sdk"
 
 const logger: BasicLogger = {
   debug: (msg, meta) => console.debug(msg, meta),
@@ -203,7 +203,7 @@ toolPolicies: {
 For request/response workloads (API endpoints, queue consumers):
 
 ```typescript
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "worker",
   backendMode: "local",
 })
@@ -222,7 +222,7 @@ app.post("/agent", async (req, res) => {
 For long-running services with session management:
 
 ```typescript
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "service",
   backendMode: "hub",
 })
@@ -247,7 +247,7 @@ See `../scheduling/REFERENCE.md` for recurring agent tasks.
 ## See Also
 
 - `../agent/REFERENCE.md` - Agent overview
-- `../clinecore/REFERENCE.md` - ClineCore overview
+- `../clinecore/REFERENCE.md` - TarogoCore overview
 - `../tools/REFERENCE.md` - Tool configuration
 - `../plugins/REFERENCE.md` - Metrics plugins
 - `../scheduling/REFERENCE.md` - Scheduled agents

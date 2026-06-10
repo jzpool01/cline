@@ -1,9 +1,9 @@
-# Cline SDK Examples
+# Tarogo SDK Examples
 
-Learn how to build with the Cline SDK through working examples, ordered from simple to complex.
+Learn how to build with the Tarogo SDK through working examples, ordered from simple to complex.
 
 ## SDK Skill
-If you use a coding agent (Claude Code, Codex, Cline, etc.), install the [Cline SDK skill](https://github.com/cline/sdk-skill) to give your agent context on the SDK's APIs and best practices to help you build with the Cline SDK.
+If you use a coding agent (Claude Code, Codex, Tarogo, etc.), install the [Tarogo SDK skill](https://github.com/cline/sdk-skill) to give your agent context on the SDK's APIs and best practices to help you build with the Tarogo SDK.
 
 ```bash
 npx skills add cline/sdk-skill
@@ -33,7 +33,7 @@ Requires Node.js 22+.
 |---------|-------------|----------|
 | [quickstart](./quickstart) | Send one prompt, stream the response. ~15 lines of code. | `Agent`, `subscribe`, `run()` |
 | [cli-agent](./cli-agent) | Interactive terminal chat with a shell tool. | `createTool`, multi-turn `run()`/`continue()`, streaming |
-| [cline-core-cli-agent](./cline-core-cli-agent) | Interactive terminal chat powered by ClineCore. | `ClineCore.create()`, `cline.start()`, `cline.send()`, built-in tools, streaming |
+| [cline-core-cli-agent](./cline-core-cli-agent) | Interactive terminal chat powered by TarogoCore. | `TarogoCore.create()`, `cline.start()`, `cline.send()`, built-in tools, streaming |
 
 ### Intermediate
 
@@ -55,14 +55,14 @@ Requires Node.js 22+.
 When building your own app, install the public SDK package:
 
 ```bash
-npm add @cline/sdk
+npm add @tarogo/sdk
 ```
 
-`@cline/sdk` re-exports everything from `@cline/core`. You only need `@cline/agents` or `@cline/llms` if you want lower-level control over the agent runtime or model gateway directly.
+`@tarogo/sdk` re-exports everything from `@tarogo/core`. You only need `@tarogo/agents` or `@tarogo/llms` if you want lower-level control over the agent runtime or model gateway directly.
 
 ## Learn more
 
 - [SDK package docs](../../sdk/packages/README.md)
 - [Architecture guide](../../ARCHITECTURE.md)
-- [Plugin examples](../../examples/plugins) - extend the Cline SDK and CLI with custom tools and event hooks
-- [Hook examples](../../examples/hooks) - lifecycle hooks for logging, blocking, and injection for Cline SDK and CLI
+- [Plugin examples](../../examples/plugins) - extend the Tarogo SDK and CLI with custom tools and event hooks
+- [Hook examples](../../examples/hooks) - lifecycle hooks for logging, blocking, and injection for Tarogo SDK and CLI

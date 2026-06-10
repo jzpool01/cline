@@ -1,13 +1,13 @@
 # Events
 
-The Cline SDK has three event layers. Which one you use depends on whether you're working with the standalone `Agent` class or `ClineCore`.
+The Tarogo SDK has three event layers. Which one you use depends on whether you're working with the standalone `Agent` class or `TarogoCore`.
 
 ## Which Events Do I Get?
 
 | If you use... | You subscribe with... | You receive... | Text streaming event |
 |---|---|---|---|
 | Standalone `Agent` | `agent.subscribe()` | `AgentRuntimeEvent` | `assistant-text-delta` |
-| `ClineCore` | `cline.subscribe()` | `CoreSessionEvent` | `chunk` (with `payload.type === "text"`) |
+| `TarogoCore` | `cline.subscribe()` | `CoreSessionEvent` | `chunk` (with `payload.type === "text"`) |
 
 These are different event types with different shapes. Do not mix them up.
 
@@ -126,9 +126,9 @@ const agent = new Agent({
 })
 ```
 
-## Layer 2: AgentEvent (ClineCore Internal)
+## Layer 2: AgentEvent (TarogoCore Internal)
 
-When using `ClineCore`, a `RuntimeEventAdapter` translates Layer 1 events into a legacy format called `AgentEvent`. You do not interact with this layer directly -- it is projected into `CoreSessionEvent` for subscribers. The key mappings:
+When using `TarogoCore`, a `RuntimeEventAdapter` translates Layer 1 events into a legacy format called `AgentEvent`. You do not interact with this layer directly -- it is projected into `CoreSessionEvent` for subscribers. The key mappings:
 
 | AgentRuntimeEvent (Layer 1) | AgentEvent (Layer 2) |
 |---|---|
@@ -146,9 +146,9 @@ When using `ClineCore`, a `RuntimeEventAdapter` translates Layer 1 events into a
 
 This layer exists for backwards compatibility. If you see event types like `content_update` or `iteration_start` in other documentation, they refer to this layer, not to what `agent.subscribe()` emits.
 
-## Layer 3: CoreSessionEvent (ClineCore Subscriber)
+## Layer 3: CoreSessionEvent (TarogoCore Subscriber)
 
-Emitted by `ClineCore` via `cline.subscribe()`. These are higher-level session events.
+Emitted by `TarogoCore` via `cline.subscribe()`. These are higher-level session events.
 
 ```typescript
 type CoreSessionEvent =
@@ -205,11 +205,11 @@ cline.subscribe(handler, { sessionId: "specific-session-id" })
 
 ## Hub Events (Layer 3b)
 
-When ClineCore runs in hub mode (via `backendMode: "hub"` or `"auto"` when a hub is available), events are projected over WebSocket using `HubEventName` types like `assistant.delta`, `iteration.started`, `tool.started`, etc. You do not interact with these directly -- `cline.subscribe()` still gives you `CoreSessionEvent` regardless of backend mode.
+When TarogoCore runs in hub mode (via `backendMode: "hub"` or `"auto"` when a hub is available), events are projected over WebSocket using `HubEventName` types like `assistant.delta`, `iteration.started`, `tool.started`, etc. You do not interact with these directly -- `cline.subscribe()` still gives you `CoreSessionEvent` regardless of backend mode.
 
 ## Result Type Differences
 
-The standalone Agent and ClineCore return different result types:
+The standalone Agent and TarogoCore return different result types:
 
 | API | Result type | Text property |
 |---|---|---|
@@ -228,7 +228,7 @@ agent.subscribe((event) => {
 })
 ```
 
-### Streaming Text (ClineCore)
+### Streaming Text (TarogoCore)
 
 ```typescript
 cline.subscribe((event) => {
@@ -264,6 +264,6 @@ agent.subscribe((event) => {
 ## See Also
 
 - `../agent/REFERENCE.md` - Agent runtime overview
-- `../clinecore/REFERENCE.md` - ClineCore session management
+- `../clinecore/REFERENCE.md` - TarogoCore session management
 - `../plugins/REFERENCE.md` - Plugin hooks for lifecycle events
 - `../production/REFERENCE.md` - Observability in production

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/icons/icon.png" width="80" alt="Cline" />
+  <img src="assets/icons/icon.png" width="80" alt="Tarogo" />
 </p>
 
-<h1 align="center">Cline</h1>
+<h1 align="center">Tarogo</h1>
 
 <p align="center">
 The open source coding agent in your IDE and terminal.
@@ -14,7 +14,7 @@ The open source coding agent in your IDE and terminal.
 <table>
 <tbody>
 <td align="center">
-<a href="https://docs.cline.bot" target="_blank"><strong>Docs</strong></a>
+<a href="https://docs.tarogo.bot" target="_blank"><strong>Docs</strong></a>
 </td>
 <td align="center">
 <a href="https://discord.gg/cline" target="_blank"><strong>Discord</strong></a>
@@ -43,7 +43,7 @@ The open source coding agent in your IDE and terminal.
 
 ### CLI
 
-Run Cline in your terminal.
+Run Tarogo in your terminal.
 Interactive chat or fully headless
 for CI/CD and scripting.
 
@@ -89,7 +89,7 @@ and use tools with human-in-the-loop approval.
 
 ### JetBrains Plugin
 
-The same Cline experience in IntelliJ IDEA,
+The same Tarogo experience in IntelliJ IDEA,
 PyCharm, WebStorm, GoLand, and the rest of
 the JetBrains family.
 
@@ -111,10 +111,10 @@ the JetBrains family.
 Build your own AI agents and integrations powered by the same engine that runs the CLI, Kanban, VS Code extension, and JetBrains plugin. Custom tools, multi-agent teams, connectors, scheduled automations, and more.
 
 ```
-npm install @cline/sdk
+npm install @tarogo/sdk
 ```
 
-<a href="https://docs.cline.bot/cline-sdk/overview">Documentation</a>
+<a href="https://docs.tarogo.bot/cline-sdk/overview">Documentation</a>
 <br><br>
 
 </td>
@@ -133,27 +133,27 @@ npm install @cline/sdk
 | **VS Code Extension** | The Marketplace extension and extension host integration. | [`/`](https://github.com/jzpool01/cline/tree/main) (WIP migrating) | [CHANGELOG.md](https://github.com/jzpool01/cline/blob/main/CHANGELOG.md) |
 | **JetBrains Plugin** | JetBrains-hosted client that talks to the shared agent core. | Currently we are not open-sourcing JetBrains plugins | - |
 | **Kanban** | Web-based multi-agent task board. | [`cline/kanban`](https://github.com/cline/kanban) | [CHANGELOG.md](https://github.com/cline/kanban/blob/main/CHANGELOG.md) |
-| **Docs site** | Public documentation pages. | [`docs/`](https://docs.cline.bot/) | - |
+| **Docs site** | Public documentation pages. | [`docs/`](https://docs.tarogo.bot/) | - |
 
 ## Edits Code Across Your Project
 
-Cline reads your project structure, understands the relationships between files, and makes coordinated changes across your codebase. It monitors linter and compiler errors as it works, fixing issues like missing imports, type mismatches, and syntax errors before you even see them. In VS Code and JetBrains, every edit shows up as a diff you can review, modify, or revert. All changes are tracked with checkpoints, so you can easily undo the agent's work.
+Tarogo reads your project structure, understands the relationships between files, and makes coordinated changes across your codebase. It monitors linter and compiler errors as it works, fixing issues like missing imports, type mismatches, and syntax errors before you even see them. In VS Code and JetBrains, every edit shows up as a diff you can review, modify, or revert. All changes are tracked with checkpoints, so you can easily undo the agent's work.
 
 ## Runs Bash Commands
 
-Cline executes commands directly in your terminal and watches the output in real time. Install packages, run build scripts, execute tests, deploy applications, manage databases. For long-running processes like dev servers, Cline continues working in the background and reacts to new output as it appears, catching compile errors, test failures, and server crashes as they happen.
+Tarogo executes commands directly in your terminal and watches the output in real time. Install packages, run build scripts, execute tests, deploy applications, manage databases. For long-running processes like dev servers, Tarogo continues working in the background and reacts to new output as it appears, catching compile errors, test failures, and server crashes as they happen.
 
 ## Plan and Act
 
-Toggle between Plan mode and Act mode. In Plan mode, Cline explores your codebase, asks clarifying questions, and lays out a strategy. Once you're aligned, switch to Act mode and Cline executes the plan. Every file edit and terminal command requires your approval, so you stay in control of what actually changes. Or toggle auto-approve and let Cline run autonomously.
+Toggle between Plan mode and Act mode. In Plan mode, Tarogo explores your codebase, asks clarifying questions, and lays out a strategy. Once you're aligned, switch to Act mode and Tarogo executes the plan. Every file edit and terminal command requires your approval, so you stay in control of what actually changes. Or toggle auto-approve and let Tarogo run autonomously.
 
 ## Rules and Skills
 
-Define project-specific rules in `.clinerules` files that guide how Cline works in your codebase: coding standards, architecture conventions, deployment procedures, testing requirements. Rules are picked up automatically by the CLI, VS Code extension, and JetBrains plugin. Use skills to let the model load specific rules when needed. 
+Define project-specific rules in `.clinerules` files that guide how Tarogo works in your codebase: coding standards, architecture conventions, deployment procedures, testing requirements. Rules are picked up automatically by the CLI, VS Code extension, and JetBrains plugin. Use skills to let the model load specific rules when needed. 
 
 ## Works With Every Model
 
-Cline is not locked to a single AI provider. Use whichever model fits your workflow:
+Tarogo is not locked to a single AI provider. Use whichever model fits your workflow:
 
 | Provider | Models |
 |----------|--------|
@@ -170,10 +170,10 @@ Cline is not locked to a single AI provider. Use whichever model fits your workf
 
 ## Extend With Plugins or MCP Servers
 
-Extend Cline's capabilities with plugins. Using the SDK, register tools and lifecycle hooks programmatically through the plugin system for logging, auditing, policy enforcement, or adding domain-specific capabilities. Simple plugin example below.
+Extend Tarogo's capabilities with plugins. Using the SDK, register tools and lifecycle hooks programmatically through the plugin system for logging, auditing, policy enforcement, or adding domain-specific capabilities. Simple plugin example below.
 
 ```typescript
-import { Agent, createTool } from "@cline/sdk"
+import { Agent, createTool } from "@tarogo/sdk"
 
 const deployTool = createTool({
   name: "deploy",
@@ -186,7 +186,7 @@ const deployTool = createTool({
 
 const agent = new Agent({ tools: [deployTool], /* ... */ })
 ```
-...or use [MCP servers](https://github.com/modelcontextprotocol) to connect to databases, query APIs, manage cloud infrastructure, and interact with external systems. Use [community-built servers](https://github.com/modelcontextprotocol/servers) or ask Cline to create custom tools on the fly. In the CLI, manage servers with `cline mcp`.
+...or use [MCP servers](https://github.com/modelcontextprotocol) to connect to databases, query APIs, manage cloud infrastructure, and interact with external systems. Use [community-built servers](https://github.com/modelcontextprotocol/servers) or ask Tarogo to create custom tools on the fly. In the CLI, manage servers with `cline mcp`.
 
 ## Multi-Agent Teams
 
@@ -222,7 +222,7 @@ cline connect slack --bot-token $SLACK_TOKEN --app-token $SLACK_APP_TOKEN
 
 ## Headless CLI for CI/CD
 
-Run Cline with zero interaction for scripting and automation. Pipe input, get JSON output, chain commands, integrate into CI/CD pipelines.
+Run Tarogo with zero interaction for scripting and automation. Pipe input, get JSON output, chain commands, integrate into CI/CD pipelines.
 
 ```bash
 cline "Run tests and fix any failures"
@@ -236,4 +236,4 @@ Start with the [Contributing Guide](CONTRIBUTING.md). Join our [Discord](https:/
 
 ## License
 
-[Apache 2.0 © 2026 Cline Bot Inc.](./LICENSE)
+[Apache 2.0 © 2026 Tarogo Bot Inc.](./LICENSE)

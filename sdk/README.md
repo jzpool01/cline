@@ -18,10 +18,10 @@
 </table>
 </div>
 
-The Cline SDK is a TypeScript framework for building AI agents that can edit files, run shell commands, browse the web, call APIs, and use any custom tool you give them. It's the same engine that powers [Cline](https://github.com/jzpool01/cline), packaged as a library you can embed in your own applications.
+The Tarogo SDK is a TypeScript framework for building AI agents that can edit files, run shell commands, browse the web, call APIs, and use any custom tool you give them. It's the same engine that powers [Tarogo](https://github.com/jzpool01/cline), packaged as a library you can embed in your own applications.
 
 ```typescript
-import { Agent } from "@cline/sdk"
+import { Agent } from "@tarogo/sdk"
 
 const agent = new Agent({
   providerId: "cline",
@@ -39,12 +39,12 @@ That's it. The agent streams its response, calls tools if you give it any, and r
 ## Install
 
 ```bash
-npm install @cline/sdk
+npm install @tarogo/sdk
 ```
 
 ## SDK Skill
 
-If you use a coding agent (Claude Code, Codex, Cline, etc.), install the [Cline SDK skill](https://github.com/cline/sdk-skill) to give your agent context on the SDK's APIs and best practices to help you build with the Cline SDK.
+If you use a coding agent (Claude Code, Codex, Tarogo, etc.), install the [Tarogo SDK skill](https://github.com/cline/sdk-skill) to give your agent context on the SDK's APIs and best practices to help you build with the Tarogo SDK.
 
 ```bash
 npx skills add cline/sdk-skill
@@ -89,14 +89,14 @@ Explore full working examples in [`examples/`](examples) and app examples in [`a
 | [Hooks](examples/hooks) | File-based and runtime hooks for logging, review gates, context injection, and lifecycle automation |
 | [Cron Automations](examples/cron) | Recurring and event-driven automation specs for scheduled quality checks and PR workflows |
 | [Desktop App](apps/examples/desktop-app) | Tauri desktop shell with a Bun sidecar backend and Next.js UI |
-| [VS Code Extension App](apps/examples/vscode) | VS Code extension example that runs Cline sessions over the RPC runtime |
+| [VS Code Extension App](apps/examples/vscode) | VS Code extension example that runs Tarogo sessions over the RPC runtime |
 
 ## Custom Tools
 
 Tools are how agents interact with the world. Define a tool with a name, a description the model reads, a JSON Schema for inputs, and a function that does the work:
 
 ```typescript
-import { createTool } from "@cline/sdk"
+import { createTool } from "@tarogo/sdk"
 
 const deploy = createTool({
   name: "deploy",
@@ -180,14 +180,14 @@ const metrics: AgentPlugin = {
 }
 ```
 
-## ClineCore: Full Runtime
+## TarogoCore: Full Runtime
 
-When you need session persistence, built-in tools, config discovery, and multi-process support, use `ClineCore`:
+When you need session persistence, built-in tools, config discovery, and multi-process support, use `TarogoCore`:
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { TarogoCore } from "@tarogo/sdk"
 
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 const session = await cline.start({
   prompt: "Set up CI with GitHub Actions",
@@ -203,7 +203,7 @@ const session = await cline.start({
 console.log(session.result?.text)
 ```
 
-`ClineCore` gives the agent built-in tools (`bash`, `editor`, `read_files`, `apply_patch`, `search`, `fetch_web`), persists sessions to SQLite, discovers config from `.cline/` directories, and optionally connects to an RPC sidecar for scheduled agents and cross-process session management.
+`TarogoCore` gives the agent built-in tools (`bash`, `editor`, `read_files`, `apply_patch`, `search`, `fetch_web`), persists sessions to SQLite, discovers config from `.cline/` directories, and optionally connects to an RPC sidecar for scheduled agents and cross-process session management.
 
 ## Packages
 
@@ -211,17 +211,17 @@ The SDK is a layered stack. Use as much or as little as you need:
 
 | Package | What it does |
 |---------|-------------|
-| `@cline/sdk` | Everything you need -- install this one |
-| `@cline/core` | Sessions, persistence, built-in tools, config discovery, RPC |
-| `@cline/agents` | Stateless agent loop with tool execution and streaming |
-| `@cline/llms` | LLM provider gateway (Anthropic, OpenAI, Google, Bedrock, Mistral, and more) |
-| `@cline/shared` | Types, tool creation helpers, hook engine |
+| `@tarogo/sdk` | Everything you need -- install this one |
+| `@tarogo/core` | Sessions, persistence, built-in tools, config discovery, RPC |
+| `@tarogo/agents` | Stateless agent loop with tool execution and streaming |
+| `@tarogo/llms` | LLM provider gateway (Anthropic, OpenAI, Google, Bedrock, Mistral, and more) |
+| `@tarogo/shared` | Types, tool creation helpers, hook engine |
 
-`@cline/sdk` is an alias for `@cline/core` that re-exports from all packages, so a single install gives you the full API. The individual packages are available if you want a minimal dependency footprint.
+`@tarogo/sdk` is an alias for `@tarogo/core` that re-exports from all packages, so a single install gives you the full API. The individual packages are available if you want a minimal dependency footprint.
 
 ## CLI
 
-The Cline CLI gives you terminal access to the full SDK:
+The Tarogo CLI gives you terminal access to the full SDK:
 
 ```bash
 # Interactive agent
@@ -270,4 +270,4 @@ To contribute to the project, start with our [Contributing Guide](CONTRIBUTING.m
 
 ## License
 
-[Apache 2.0 © 2026 Cline Bot Inc.](./LICENSE)
+[Apache 2.0 © 2026 Tarogo Bot Inc.](./LICENSE)

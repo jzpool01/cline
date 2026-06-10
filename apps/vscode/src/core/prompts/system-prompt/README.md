@@ -17,7 +17,7 @@ npm run test:unit
 ```
 src/core/prompts/system-prompt/
 ├── registry/
-│   ├── ClineToolSet.ts            # Tool set management & registry
+│   ├── TarogoToolSet.ts            # Tool set management & registry
 │   ├── PromptRegistry.ts          # Singleton registry for loading/managing prompts
 │   ├── PromptBuilder.ts           # Builds final prompts with template resolution
 │   └── utils.ts                   # Model family detection utilities
@@ -143,15 +143,15 @@ interface PromptVariant {
   placeholders: { [key: string]: string };      // Default placeholder values
 
   // Tool configuration
-  tools?: ClineDefaultTool[];                    // Ordered list of tools to include
-  toolOverrides?: { [K in ClineDefaultTool]?: ConfigOverride }; // Tool-specific customizations
+  tools?: TarogoDefaultTool[];                    // Ordered list of tools to include
+  toolOverrides?: { [K in TarogoDefaultTool]?: ConfigOverride }; // Tool-specific customizations
 }
 
 interface PromptConfig {
   modelName?: string;
   temperature?: number;
   maxTokens?: number;
-  tools?: ClineToolSpec[];
+  tools?: TarogoToolSpec[];
   [key: string]: any;                            // Additional arbitrary config
 }
 
@@ -357,26 +357,26 @@ Current Working Directory: {{workingDir}}
 
 ### 6. Tool System
 
-Tools are managed through the `ClineToolSet` and can be configured per variant:
+Tools are managed through the `TarogoToolSet` and can be configured per variant:
 
 ```typescript
-class ClineToolSet {
-  private static variants: Map<ModelFamily, Set<ClineToolSet>> = new Map();
+class TarogoToolSet {
+  private static variants: Map<ModelFamily, Set<TarogoToolSet>> = new Map();
 
-  static register(config: ClineToolSpec): ClineToolSet {
-    return new ClineToolSet(config.id, config);
+  static register(config: TarogoToolSpec): TarogoToolSet {
+    return new TarogoToolSet(config.id, config);
   }
 
-  static getTools(variant: ModelFamily): ClineToolSet[] {
-    const toolsSet = ClineToolSet.variants.get(variant) || new Set();
-    const defaultSet = ClineToolSet.variants.get(ModelFamily.GENERIC) || new Set();
+  static getTools(variant: ModelFamily): TarogoToolSet[] {
+    const toolsSet = TarogoToolSet.variants.get(variant) || new Set();
+    const defaultSet = TarogoToolSet.variants.get(ModelFamily.GENERIC) || new Set();
     return toolsSet ? Array.from(toolsSet) : Array.from(defaultSet);
   }
 }
 
 // Tool generation in PromptBuilder
 public static async getToolsPrompts(variant: PromptVariant, context: SystemPromptContext) {
-  const tools = ClineToolSet.getTools(variant.family);
+  const tools = TarogoToolSet.getTools(variant.family);
   
   // Filter and sort tools based on variant configuration
   const enabledTools = tools.filter((tool) => 
@@ -411,7 +411,7 @@ public static async getToolsPrompts(variant: PromptVariant, context: SystemPromp
 ```typescript
 // variants/generic/config.ts
 import { ModelFamily } from "@/shared/prompts";
-import { ClineDefaultTool } from "@/shared/tools";
+import { TarogoDefaultTool } from "@/shared/tools";
 import { SystemPromptSection } from "../../templates/placeholders";
 import { validateVariant } from "../../validation/VariantValidator";
 import { createVariant } from "../builder";
@@ -441,22 +441,22 @@ export const config = createVariant(ModelFamily.GENERIC)
     SystemPromptSection.USER_INSTRUCTIONS,
   )
   .tools(
-    ClineDefaultTool.BASH,
-    ClineDefaultTool.FILE_READ,
-    ClineDefaultTool.FILE_NEW,
-    ClineDefaultTool.FILE_EDIT,
-    ClineDefaultTool.SEARCH,
-    ClineDefaultTool.LIST_FILES,
-    ClineDefaultTool.LIST_CODE_DEF,
-    ClineDefaultTool.BROWSER,
-    ClineDefaultTool.MCP_USE,
-    ClineDefaultTool.MCP_ACCESS,
-    ClineDefaultTool.ASK,
-    ClineDefaultTool.ATTEMPT,
-    ClineDefaultTool.NEW_TASK,
-    ClineDefaultTool.PLAN_MODE,
-    ClineDefaultTool.MCP_DOCS,
-    ClineDefaultTool.TODO,
+    TarogoDefaultTool.BASH,
+    TarogoDefaultTool.FILE_READ,
+    TarogoDefaultTool.FILE_NEW,
+    TarogoDefaultTool.FILE_EDIT,
+    TarogoDefaultTool.SEARCH,
+    TarogoDefaultTool.LIST_FILES,
+    TarogoDefaultTool.LIST_CODE_DEF,
+    TarogoDefaultTool.BROWSER,
+    TarogoDefaultTool.MCP_USE,
+    TarogoDefaultTool.MCP_ACCESS,
+    TarogoDefaultTool.ASK,
+    TarogoDefaultTool.ATTEMPT,
+    TarogoDefaultTool.NEW_TASK,
+    TarogoDefaultTool.PLAN_MODE,
+    TarogoDefaultTool.MCP_DOCS,
+    TarogoDefaultTool.TODO,
   )
   .placeholders({
     MODEL_FAMILY: "generic",
@@ -480,7 +480,7 @@ export type GenericVariantConfig = typeof config;
 ```typescript
 // variants/next-gen/config.ts
 import { ModelFamily } from "@/shared/prompts";
-import { ClineDefaultTool } from "@/shared/tools";
+import { TarogoDefaultTool } from "@/shared/tools";
 import { SystemPromptSection } from "../../templates/placeholders";
 import { validateVariant } from "../../validation/VariantValidator";
 import { createVariant } from "../builder";
@@ -512,23 +512,23 @@ export const config = createVariant(ModelFamily.NEXT_GEN)
     SystemPromptSection.USER_INSTRUCTIONS,
   )
   .tools(
-    ClineDefaultTool.BASH,
-    ClineDefaultTool.FILE_READ,
-    ClineDefaultTool.FILE_NEW,
-    ClineDefaultTool.FILE_EDIT,
-    ClineDefaultTool.SEARCH,
-    ClineDefaultTool.LIST_FILES,
-    ClineDefaultTool.LIST_CODE_DEF,
-    ClineDefaultTool.BROWSER,
-    ClineDefaultTool.WEB_FETCH,  // Additional tool for next-gen
-    ClineDefaultTool.MCP_USE,
-    ClineDefaultTool.MCP_ACCESS,
-    ClineDefaultTool.ASK,
-    ClineDefaultTool.ATTEMPT,
-    ClineDefaultTool.NEW_TASK,
-    ClineDefaultTool.PLAN_MODE,
-    ClineDefaultTool.MCP_DOCS,
-    ClineDefaultTool.TODO,
+    TarogoDefaultTool.BASH,
+    TarogoDefaultTool.FILE_READ,
+    TarogoDefaultTool.FILE_NEW,
+    TarogoDefaultTool.FILE_EDIT,
+    TarogoDefaultTool.SEARCH,
+    TarogoDefaultTool.LIST_FILES,
+    TarogoDefaultTool.LIST_CODE_DEF,
+    TarogoDefaultTool.BROWSER,
+    TarogoDefaultTool.WEB_FETCH,  // Additional tool for next-gen
+    TarogoDefaultTool.MCP_USE,
+    TarogoDefaultTool.MCP_ACCESS,
+    TarogoDefaultTool.ASK,
+    TarogoDefaultTool.ATTEMPT,
+    TarogoDefaultTool.NEW_TASK,
+    TarogoDefaultTool.PLAN_MODE,
+    TarogoDefaultTool.MCP_DOCS,
+    TarogoDefaultTool.TODO,
   )
   .placeholders({
     MODEL_FAMILY: ModelFamily.NEXT_GEN,
@@ -556,7 +556,7 @@ export type NextGenVariantConfig = typeof config;
 ```typescript
 // variants/xs/config.ts
 import { ModelFamily } from "@/shared/prompts";
-import { ClineDefaultTool } from "@/shared/tools";
+import { TarogoDefaultTool } from "@/shared/tools";
 import { SystemPromptSection } from "../../templates/placeholders";
 import { validateVariant } from "../../validation/VariantValidator";
 import { createVariant } from "../builder";
@@ -585,19 +585,19 @@ export const config = createVariant(ModelFamily.XS)
     SystemPromptSection.USER_INSTRUCTIONS,
   )
   .tools(
-    ClineDefaultTool.BASH,
-    ClineDefaultTool.FILE_READ,
-    ClineDefaultTool.FILE_NEW,
-    ClineDefaultTool.FILE_EDIT,
-    ClineDefaultTool.SEARCH,
-    ClineDefaultTool.LIST_FILES,
-    ClineDefaultTool.ASK,
-    ClineDefaultTool.ATTEMPT,
-    ClineDefaultTool.NEW_TASK,
-    ClineDefaultTool.PLAN_MODE,
-    ClineDefaultTool.MCP_USE,
-    ClineDefaultTool.MCP_ACCESS,
-    ClineDefaultTool.MCP_DOCS,
+    TarogoDefaultTool.BASH,
+    TarogoDefaultTool.FILE_READ,
+    TarogoDefaultTool.FILE_NEW,
+    TarogoDefaultTool.FILE_EDIT,
+    TarogoDefaultTool.SEARCH,
+    TarogoDefaultTool.LIST_FILES,
+    TarogoDefaultTool.ASK,
+    TarogoDefaultTool.ATTEMPT,
+    TarogoDefaultTool.NEW_TASK,
+    TarogoDefaultTool.PLAN_MODE,
+    TarogoDefaultTool.MCP_USE,
+    TarogoDefaultTool.MCP_ACCESS,
+    TarogoDefaultTool.MCP_DOCS,
   )
   .placeholders({
     MODEL_FAMILY: ModelFamily.XS,
@@ -639,8 +639,8 @@ const config = createVariant(ModelFamily.GENERIC)
     // ... more components
   )
   .tools(                                          // Optional, type-safe tool selection
-    ClineDefaultTool.BASH,
-    ClineDefaultTool.FILE_READ,
+    TarogoDefaultTool.BASH,
+    TarogoDefaultTool.FILE_READ,
     // ... more tools
   )
   .placeholders({                                  // Optional
@@ -654,7 +654,7 @@ const config = createVariant(ModelFamily.GENERIC)
   .overrideComponent(SystemPromptSection.RULES, {  // Optional, component overrides
     template: customRulesTemplate,
   })
-  .overrideTool(ClineDefaultTool.BASH, {          // Optional, tool overrides
+  .overrideTool(TarogoDefaultTool.BASH, {          // Optional, tool overrides
     enabled: false,
   })
   .build();                                       // Returns Omit<PromptVariant, "id">
@@ -750,7 +750,7 @@ The system includes the following built-in components:
 
 ## Available Tools
 
-The system supports the following tools (mapped to `ClineDefaultTool` enum):
+The system supports the following tools (mapped to `TarogoDefaultTool` enum):
 
 - `BASH`: Execute shell commands
 - `FILE_READ`: Read file contents
@@ -774,17 +774,17 @@ The system supports the following tools (mapped to `ClineDefaultTool` enum):
 
 ### Tool Structure and Anatomy
 
-Each tool in Cline follows a specific structure with variants for different model families. Here's the anatomy of a tool:
+Each tool in Tarogo follows a specific structure with variants for different model families. Here's the anatomy of a tool:
 
 ```typescript
 // src/core/prompts/system-prompt/tools/my_new_tool.ts
 import { ModelFamily } from "@/shared/prompts"
-import { ClineDefaultTool } from "@/shared/tools"
-import type { ClineToolSpec } from "../spec"
+import { TarogoDefaultTool } from "@/shared/tools"
+import type { TarogoToolSpec } from "../spec"
 
-const id = ClineDefaultTool.MY_NEW_TOOL // Add to enum first
+const id = TarogoDefaultTool.MY_NEW_TOOL // Add to enum first
 
-const generic: ClineToolSpec = {
+const generic: TarogoToolSpec = {
 	variant: ModelFamily.GENERIC,
 	id,
 	name: "my_new_tool",
@@ -801,7 +801,7 @@ const generic: ClineToolSpec = {
 			required: false,
 			instruction: "Description of optional parameter",
 			usage: "Optional example (optional)",
-			dependencies: [ClineDefaultTool.SOME_OTHER_TOOL], // Only show if dependency exists
+			dependencies: [TarogoDefaultTool.SOME_OTHER_TOOL], // Only show if dependency exists
 		},
 	],
 }
@@ -818,11 +818,11 @@ export const my_new_tool_variants = [generic, nextGen, gpt, gemini]
 
 #### 1. Add Tool ID to Enum
 
-First, add your tool ID to the `ClineDefaultTool` enum:
+First, add your tool ID to the `TarogoDefaultTool` enum:
 
 ```typescript
 // src/shared/tools.ts
-export enum ClineDefaultTool {
+export enum TarogoDefaultTool {
 	// ... existing tools
 	MY_NEW_TOOL = "my_new_tool",
 }
@@ -835,12 +835,12 @@ Create a new file in `src/core/prompts/system-prompt/tools/` following the namin
 ```typescript
 // src/core/prompts/system-prompt/tools/my_new_tool.ts
 import { ModelFamily } from "@/shared/prompts"
-import { ClineDefaultTool } from "@/shared/tools"
-import type { ClineToolSpec } from "../spec"
+import { TarogoDefaultTool } from "@/shared/tools"
+import type { TarogoToolSpec } from "../spec"
 
-const id = ClineDefaultTool.MY_NEW_TOOL
+const id = TarogoDefaultTool.MY_NEW_TOOL
 
-const generic: ClineToolSpec = {
+const generic: TarogoToolSpec = {
 	variant: ModelFamily.GENERIC,
 	id,
 	name: "my_new_tool",
@@ -882,14 +882,14 @@ Add your tool to the registration function:
 // src/core/prompts/system-prompt/tools/init.ts
 import { my_new_tool_variants } from "./my_new_tool"
 
-export function registerClineToolSets(): void {
+export function registerTarogoToolSets(): void {
 	const allToolVariants = [
 		// ... existing tool variants
 		...my_new_tool_variants,
 	]
 
 	allToolVariants.forEach((v) => {
-		ClineToolSet.register(v)
+		TarogoToolSet.register(v)
 	})
 }
 ```
@@ -899,7 +899,7 @@ export function registerClineToolSets(): void {
 Create the actual tool implementation in the appropriate handler:
 
 ```typescript
-// In your tool handler class (e.g., ClineProvider)
+// In your tool handler class (e.g., TarogoProvider)
 async handleMyNewTool(args: { input_parameter: string; options?: string }) {
 	// Implement your tool logic here
 	const result = await performToolOperation(args.input_parameter, args.options)
@@ -918,9 +918,9 @@ async handleMyNewTool(args: { input_parameter: string; options?: string }) {
 Tools can be conditionally enabled based on context:
 
 ```typescript
-const contextAwareTool: ClineToolSpec = {
+const contextAwareTool: TarogoToolSpec = {
 	variant: ModelFamily.GENERIC,
-	id: ClineDefaultTool.CONTEXT_TOOL,
+	id: TarogoDefaultTool.CONTEXT_TOOL,
 	name: "context_tool",
 	description: "Tool that only appears in certain contexts",
 	contextRequirements: (context: SystemPromptContext) => {
@@ -938,9 +938,9 @@ const contextAwareTool: ClineToolSpec = {
 Create different tool behaviors for different model families:
 
 ```typescript
-const claude: ClineToolSpec = {
+const claude: TarogoToolSpec = {
 	variant: ModelFamily.GENERIC,
-	id: ClineDefaultTool.MODEL_SPECIFIC_TOOL,
+	id: TarogoDefaultTool.MODEL_SPECIFIC_TOOL,
 	name: "model_specific_tool",
 	description: "Tool optimized for Claude models with detailed instructions",
 	parameters: [
@@ -953,7 +953,7 @@ const claude: ClineToolSpec = {
 	],
 }
 
-const gpt: ClineToolSpec = {
+const gpt: TarogoToolSpec = {
 	...claude,
 	variant: ModelFamily.GPT,
 	description: "Tool optimized for GPT models with concise instructions",
@@ -975,9 +975,9 @@ export const model_specific_tool_variants = [claude, gpt]
 Tools can have parameters that only appear when other tools are available:
 
 ```typescript
-const dependentTool: ClineToolSpec = {
+const dependentTool: TarogoToolSpec = {
 	variant: ModelFamily.GENERIC,
-	id: ClineDefaultTool.DEPENDENT_TOOL,
+	id: TarogoDefaultTool.DEPENDENT_TOOL,
 	name: "dependent_tool",
 	description: "Tool with conditional parameters",
 	parameters: [
@@ -992,7 +992,7 @@ const dependentTool: ClineToolSpec = {
 			required: false,
 			instruction: "This parameter only appears if TODO tool is available",
 			usage: "Conditional input (optional)",
-			dependencies: [ClineDefaultTool.TODO],
+			dependencies: [TarogoDefaultTool.TODO],
 		},
 	],
 }
@@ -1069,19 +1069,19 @@ Here's a complete example of adding a new "analyze_file" tool:
 
 ```typescript
 // 1. Add to src/shared/tools.ts
-export enum ClineDefaultTool {
+export enum TarogoDefaultTool {
 	// ... existing tools
 	ANALYZE_FILE = "analyze_file",
 }
 
 // 2. Create src/core/prompts/system-prompt/tools/analyze_file.ts
 import { ModelFamily } from "@/shared/prompts"
-import { ClineDefaultTool } from "@/shared/tools"
-import type { ClineToolSpec } from "../spec"
+import { TarogoDefaultTool } from "@/shared/tools"
+import type { TarogoToolSpec } from "../spec"
 
-const id = ClineDefaultTool.ANALYZE_FILE
+const id = TarogoDefaultTool.ANALYZE_FILE
 
-const generic: ClineToolSpec = {
+const generic: TarogoToolSpec = {
 	variant: ModelFamily.GENERIC,
 	id,
 	name: "analyze_file",
@@ -1108,7 +1108,7 @@ const generic: ClineToolSpec = {
 	],
 }
 
-const nextGen: ClineToolSpec = {
+const nextGen: TarogoToolSpec = {
 	...generic,
 	variant: ModelFamily.NEXT_GEN,
 	description: "Perform comprehensive file analysis including structure, dependencies, code quality, and improvement suggestions. Ideal for code review and refactoring planning.",
@@ -1122,7 +1122,7 @@ export * from "./analyze_file"
 // 4. Add to src/core/prompts/system-prompt/tools/init.ts
 import { analyze_file_variants } from "./analyze_file"
 
-export function registerClineToolSets(): void {
+export function registerTarogoToolSets(): void {
 	const allToolVariants = [
 		// ... existing variants
 		...analyze_file_variants,
@@ -1131,7 +1131,7 @@ export function registerClineToolSets(): void {
 }
 ```
 
-This comprehensive guide should help developers understand both the architecture and practical steps needed to extend Cline with new tools.
+This comprehensive guide should help developers understand both the architecture and practical steps needed to extend Tarogo with new tools.
 
 ## Key Features
 

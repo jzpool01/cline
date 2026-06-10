@@ -1,11 +1,11 @@
-# ClineCore Gotchas
+# TarogoCore Gotchas
 
 ## Always Call dispose()
 
-`ClineCore` holds resources (file watchers, database connections, hub connections). Failing to call `dispose()` can leave orphan processes and file locks.
+`TarogoCore` holds resources (file watchers, database connections, hub connections). Failing to call `dispose()` can leave orphan processes and file locks.
 
 ```typescript
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 try {
   // ... use cline
 } finally {
@@ -15,12 +15,12 @@ try {
 
 ## Node.js 22 Required
 
-ClineCore and `@cline/core` require Node.js 22 or later. If you're on an older version, you'll get runtime errors. Check with `node --version`.
+TarogoCore and `@tarogo/core` require Node.js 22 or later. If you're on an older version, you'll get runtime errors. Check with `node --version`.
 
 ## Session Config vs Global Config
 
 Tool policies can be set at two levels:
-- Global: in `ClineCore.create({ toolPolicies })` -- applies to all sessions
+- Global: in `TarogoCore.create({ toolPolicies })` -- applies to all sessions
 - Per-session: in `cline.start({ toolPolicies })` -- overrides global for that session
 
 Per-session policies take precedence.
@@ -78,7 +78,7 @@ For automated pipelines, either:
 
 ## Plugin Discovery Paths
 
-ClineCore discovers plugins from:
+TarogoCore discovers plugins from:
 - Global: `~/.cline/plugins/`
 - Workspace: `.cline/plugins/`
 
@@ -126,7 +126,7 @@ if (session.result) {
 
 ## Compaction and Long Sessions
 
-For long-running sessions, message history grows and eventually exceeds the model's context window. ClineCore handles this via compaction, which summarizes older messages. Configure it via `compactionConfig`:
+For long-running sessions, message history grows and eventually exceeds the model's context window. TarogoCore handles this via compaction, which summarizes older messages. Configure it via `compactionConfig`:
 
 ```typescript
 config: {

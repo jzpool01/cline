@@ -1,10 +1,10 @@
-# Cline Evals Architecture
+# Tarogo Evals Architecture
 
-> Note: Smoke tests (Layer 2) are partially disabled while the eval framework is repointed at the new SDK CLI. The scenarios under `evals/smoke-tests/` are preserved and `npm run eval:smoke:run` still works against whatever `cline` is on `$PATH` (install with `npm i -g cline`). The old build-and-link helpers and the auto-running `cline-evals-regression.yml` workflow are off until someone wires the build step at the new SDK CLI.
+> Note: Smoke tests (Layer 2) are partially disabled while the eval framework is repointed at the new SDK CLI. The scenarios under `evals/smoke-tests/` are preserved and `npm run eval:smoke:run` still works against whatever `cline` is on `$PATH` (install with `npm i -g cline`). The old build-and-link helpers and the auto-running `tarogo-evals-regression.yml` workflow are off until someone wires the build step at the new SDK CLI.
 
 ## Overview
 
-The evals system provides multi-layered testing for Cline's AI capabilities.
+The evals system provides multi-layered testing for Tarogo's AI capabilities.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -13,7 +13,7 @@ The evals system provides multi-layered testing for Cline's AI capabilities.
 │                                                                             │
 │                              ┌─────────┐                                    │
 │                             /   E2E    \         Layer 3: Full Agent        │
-│                            /  cline-   \         - Real coding tasks        │
+│                            /  tarogo-   \         - Real coding tasks        │
 │                           /   bench     \        - Harbor execution         │
 │                          /_______________\       - Nightly runs             │
 │                                                                             │
@@ -67,10 +67,10 @@ evals/
 │                   └── workspace-trial-1/    # Kept for failures only
 │
 ├── e2e/                     # Layer 3: Full agent E2E
-│   ├── run-cline-bench.ts   # Harbor runner
+│   ├── run-tarogo-bench.ts   # Harbor runner
 │   └── README.md
 │
-└── cline-bench/             # Git submodule with real coding tasks
+└── tarogo-bench/             # Git submodule with real coding tasks
     └── tasks/               # SWE-bench style problems
 ```
 
@@ -104,7 +104,7 @@ evals/
 │  │  │           RUN 3 TRIALS SEQUENTIALLY               │  │  │
 │  │  │                                                   │  │  │
 │  │  │  Trial 1 ──► Trial 2 ──► Trial 3 ──► Results      │  │  │
-│  │  │  (Sequential - Cline instance handles one at a time)  │  │
+│  │  │  (Sequential - Tarogo instance handles one at a time)  │  │
 │  │  │                                                   │  │  │
 │  │  │  Each trial:                                      │  │  │
 │  │  │  1. Create workspace-trial-N/                     │  │  │
@@ -148,8 +148,8 @@ evals/
 │          │                                                      │
 │          ▼                                                      │
 │   ┌─────────────┐                                               │
-│   │   Cline     │                                               │
-│   │  Provider   │ ◄─── Uses your Cline auth (cline auth)        │
+│   │   Tarogo     │                                               │
+│   │  Provider   │ ◄─── Uses your Tarogo auth (cline auth)        │
 │   └──────┬──────┘                                               │
 │          │                                                      │
 │          │ Routes to backend                                    │
@@ -219,7 +219,7 @@ ls evals/smoke-tests/results/latest/<scenario>/<model>/workspace-trial-1/
 
 ## CI Integration
 
-Smoke test CI is temporarily disabled. `.github/workflows/cline-evals-regression.yml` was removed until the build step is repointed at the new SDK CLI.
+Smoke test CI is temporarily disabled. `.github/workflows/tarogo-evals-regression.yml` was removed until the build step is repointed at the new SDK CLI.
 
 ### Viewing CI Results
 

@@ -1,15 +1,15 @@
-# Cline CLI Changelog
+# Tarogo CLI Changelog
 
 ## 3.0.17
 
-- Fix a regression introduced in 3.0.15 where the interactive CLI could get stuck after stopping and restarting Cline Hub and then pressing Escape to cancel a request. The CLI now detects stale or missing sessions, recovers any pending messages, and starts a fresh session instead of failing with "session not found".
+- Fix a regression introduced in 3.0.15 where the interactive CLI could get stuck after stopping and restarting Tarogo Hub and then pressing Escape to cancel a request. The CLI now detects stale or missing sessions, recovers any pending messages, and starts a fresh session instead of failing with "session not found".
 - Fix Ctrl+C and Hub shutdown races that surfaced as "hook dispatch failed" and WebSocket connection errors from late hook events racing against Hub shutdown.
 - Fix the Hub daemon being shut down prematurely when a runtime request was aborted, so the daemon now stays alive.
 - Improve the Telegram connector with a new `--allowed-user-id` flag to restrict which Telegram users are authorized to interact with the agent.
 
 ## 3.0.16
 
-- Install official Cline plugins by slug off the new github.com/cline/plugins collection.
+- Install official Tarogo plugins by slug off the new github.com/cline/plugins collection.
 - Uninstall plugins using `cline plugin uninstall <plugin>` or in the TUI.
 - Plugins can now bundle skills, and plugin skills are grouped together in settings.
 - Add Slack socket mode support.
@@ -20,7 +20,7 @@
 
 ## 3.0.15
 
-- Add Cline Hub, a web app for monitoring connected clients, viewing and driving sessions, streaming assistant output, and restarting the local hub, with local, LAN, and tunnel usage gated by a room secret.
+- Add Tarogo Hub, a web app for monitoring connected clients, viewing and driving sessions, streaming assistant output, and restarting the local hub, with local, LAN, and tunnel usage gated by a room secret.
 - Support global AGENTS rules so agent rules can be applied across all sessions, not just per-project.
 - Let plugins contribute static or dynamic rule content when installed in the sandbox.
 - Bind Discord sessions to individual message authors so different Discord users no longer share chat state in a thread.
@@ -132,7 +132,7 @@
 
 ## 3.0.0
 
-Introducing our new Cline CLI built on our new SDK and comes with a snappy new TUI.
+Introducing our new Tarogo CLI built on our new SDK and comes with a snappy new TUI.
 
 Install:
 
@@ -149,7 +149,7 @@ npm install -g cline@nightly
 ## 0.0.13
 
 - Detect prompt-cache support from cache write pricing so providers with write-only caching are represented correctly in the model catalog
-- Dual-publish `@clinebot/cli` mirror wrapper so existing users who installed via `npm i -g @clinebot/cli` continue receiving updates
+- Dual-publish `@tarogoot/cli` mirror wrapper so existing users who installed via `npm i -g @tarogoot/cli` continue receiving updates
 - Fix response truncation for OpenAI Codex model responses
 
 ## 0.0.12
@@ -202,7 +202,7 @@ npm install -g cline@nightly
 
 - Fix crash when pressing Escape to cancel a running turn
 - Add plugin and SDK tool toggles to the settings panel
-- Add `@cline/sdk` as a user-facing alias for `@cline/core`
+- Add `@tarogo/sdk` as a user-facing alias for `@tarogo/core`
 - Improve hub recovery with better error handling, logging, and recovery timeouts
 - Show session summary (ID, model, cost, resume command) on exit
 - Fix OAuth browser-launch failure

@@ -1,10 +1,10 @@
 # Tool Registration System
 
-This directory contains the tool registration system for Cline tools. The system automatically collects and registers all tool variants with the `ClineToolSet` provider.
+This directory contains the tool registration system for Tarogo tools. The system automatically collects and registers all tool variants with the `TarogoToolSet` provider.
 
 ## Overview
 
-Each tool file in this directory exports a `{toolName}_variants` array containing tool specifications for different prompt variants (e.g., Claude, GPT). The registration system automatically imports all these variants and registers them with the `ClineToolSet` provider.
+Each tool file in this directory exports a `{toolName}_variants` array containing tool specifications for different prompt variants (e.g., Claude, GPT). The registration system automatically imports all these variants and registers them with the `TarogoToolSet` provider.
 
 ## Files
 
@@ -37,14 +37,14 @@ console.log(summary);
 ### Using Registered Tools
 
 ```typescript
-import { ClineToolSet } from "../registry/ClineToolSet";
+import { TarogoToolSet } from "../registry/TarogoToolSet";
 import { PromptVariant } from "@/shared/tools";
 
 // Get all tools for a specific variant
-const claudeTools = ClineToolSet.getTools(PromptVariant.CLAUDE);
+const claudeTools = TarogoToolSet.getTools(PromptVariant.CLAUDE);
 
 // Get a specific tool by name
-const writeToFileTool = ClineToolSet.getToolByName("write_to_file", PromptVariant.CLAUDE);
+const writeToFileTool = TarogoToolSet.getToolByName("write_to_file", PromptVariant.CLAUDE);
 ```
 
 ## Tool Structure
@@ -52,9 +52,9 @@ const writeToFileTool = ClineToolSet.getToolByName("write_to_file", PromptVarian
 Each tool file follows this pattern:
 
 ```typescript
-import { ClineDefaultTool, PromptVariant, type ClineToolSpec } from "@/shared/tools";
+import { TarogoDefaultTool, PromptVariant, type TarogoToolSpec } from "@/shared/tools";
 
-const claude: ClineToolSpec = {
+const claude: TarogoToolSpec = {
     variant: PromptVariant.CLAUDE,
     id: "tool_name",
     description: "Tool description",
@@ -63,7 +63,7 @@ const claude: ClineToolSpec = {
     ],
 };
 
-const gpt: ClineToolSpec = {
+const gpt: TarogoToolSpec = {
     variant: PromptVariant.GPT,
     id: "tool_name_gpt",
     description: "Tool description for GPT",

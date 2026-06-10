@@ -13,7 +13,7 @@ export type ClientName =
 	| "cline-vscode"
 	| "cline-jetbrains"
 	| "cline-cli"
-	| "cline-sdk"
+	| "tcode-sdk"
 	| "cline-kanban"
 	| "cline-acp"
 	| "cline-platform"
@@ -23,7 +23,7 @@ export type ClientName =
  * Identity of the calling client (surface + version).
  */
 export interface ClientContext {
-	/** e.g. "cline-vscode", "cline-cli", "cline-sdk" */
+	/** e.g. "cline-vscode", "cline-cli", "tcode-sdk" */
 	name: ClientName;
 	/** Semver string, e.g. "3.12.0" */
 	version?: string;

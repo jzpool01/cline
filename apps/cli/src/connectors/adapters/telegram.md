@@ -1,6 +1,6 @@
 # Telegram Connector
 
-The Telegram connector bridges a Telegram Bot API bot into Cline CLI sessions. It is a polling connector, so it does not need a public webhook URL. The connector process must stay running while Telegram access is active.
+The Telegram connector bridges a Telegram Bot API bot into Tarogo CLI sessions. It is a polling connector, so it does not need a public webhook URL. The connector process must stay running while Telegram access is active.
 
 ## Setup
 
@@ -42,7 +42,7 @@ After the connector starts, send `/help` or `/start` to the bot in Telegram.
 
 ## What It Does
 
-- Starts or reuses a Cline RPC-backed session for each Telegram thread.
+- Starts or reuses a Tarogo RPC-backed session for each Telegram thread.
 - Keeps chat history and working-directory state separately per Telegram thread.
 - Lets Telegram users ask questions, assign coding tasks, and, when tools are enabled, inspect files, edit files, run commands, and prepare PRs.
 - Supports required tool approvals from Telegram with `Y` and `N` replies.

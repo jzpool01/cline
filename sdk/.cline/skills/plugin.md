@@ -1,11 +1,11 @@
 ---
 name: cline-plugin
-description: Self-contained guide to designing, building, packaging, and distributing a plugin for any Cline-based agent (CLI, VS Code, Kanban, JetBrains, custom SDK hosts). Covers both single-file plugins and full plugin packages.
+description: Self-contained guide to designing, building, packaging, and distributing a plugin for any Tarogo-based agent (CLI, VS Code, Kanban, JetBrains, custom SDK hosts). Covers both single-file plugins and full plugin packages.
 ---
 
-# Authoring a Cline Agent Plugin
+# Authoring a Tarogo Agent Plugin
 
-A **Cline plugin** is a TypeScript module that extends any agent built on the Cline Core SDK. The same plugin runs in the Cline CLI, the VS Code and JetBrains extensions, the Kanban host, and any custom app built on `@cline/core` — write it once, every host gets the new behavior.
+A **Tarogo plugin** is a TypeScript module that extends any agent built on the Tarogo Core SDK. The same plugin runs in the Tarogo CLI, the VS Code and JetBrains extensions, the Kanban host, and any custom app built on `@tarogo/core` — write it once, every host gets the new behavior.
 
 A plugin can:
 
@@ -46,8 +46,8 @@ After validation, registration is one-shot — there's no dynamic register/unreg
 ## 2. The smallest working plugin
 
 ```ts
-import type { AgentPlugin } from "@cline/core";
-import { createTool } from "@cline/core";
+import type { AgentPlugin } from "@tarogo/core";
+import { createTool } from "@tarogo/core";
 
 const plugin: AgentPlugin = {
   name: "hello-plugin",                     // required, unique within a session
@@ -190,10 +190,10 @@ setup(api, ctx) {
 
 ## 5. Tools — `api.registerTool`
 
-Tools are how plugins give the agent new capabilities. Use the `createTool()` helper from `@cline/core`:
+Tools are how plugins give the agent new capabilities. Use the `createTool()` helper from `@tarogo/core`:
 
 ```ts
-import { createTool } from "@cline/core";
+import { createTool } from "@tarogo/core";
 
 api.registerTool(
   createTool({
@@ -326,7 +326,7 @@ Multiple builders run in registration order; the output of one is the input of t
 
 ## 8. Automation events — `api.registerAutomationEventType` + `ctx.automation`
 
-Plugins can declare normalized event types and emit them into Cline automation. Hosts that don't have automation enabled simply ignore both — your plugin should feature-detect `ctx.automation`.
+Plugins can declare normalized event types and emit them into Tarogo automation. Hosts that don't have automation enabled simply ignore both — your plugin should feature-detect `ctx.automation`.
 
 ```ts
 manifest: { capabilities: ["automationEvents"] },
@@ -375,13 +375,13 @@ cline -i "do the thing my plugin enables"
 
 ### 9.2 Explicit `extensions: [...]` in SDK config
 
-When you build your own host with `ClineCore`, pass the plugin object directly:
+When you build your own host with `TarogoCore`, pass the plugin object directly:
 
 ```ts
 import plugin from "./my-plugin";
-import { ClineCore } from "@cline/core";
+import { TarogoCore } from "@tarogo/core";
 
-const host = await ClineCore.create({ backendMode: "local" });
+const host = await TarogoCore.create({ backendMode: "local" });
 await host.start({
   config: {
     providerId: "anthropic",
@@ -428,7 +428,7 @@ This is the full shape for a single-file plugin. Save as `my-plugin.ts`, drop in
 
 ```ts
 /**
- * My Cline Plugin
+ * My Tarogo Plugin
  *
  * What it does: <one paragraph, written for users>.
  *
@@ -441,7 +441,7 @@ This is the full shape for a single-file plugin. Save as `my-plugin.ts`, drop in
  *   ANTHROPIC_API_KEY=sk-... bun run my-plugin.ts
  */
 
-import { type AgentPlugin, ClineCore, createTool } from "@cline/core";
+import { type AgentPlugin, TarogoCore, createTool } from "@tarogo/core";
 
 let sessionRoot: string | undefined;
 
@@ -484,7 +484,7 @@ const plugin: AgentPlugin = {
 
 // Optional: a runnable demo so users can `bun run` this file directly.
 async function runDemo(): Promise<void> {
-  const host = await ClineCore.create({ backendMode: "local" });
+  const host = await TarogoCore.create({ backendMode: "local" });
   try {
     const result = await host.start({
       config: {
@@ -590,10 +590,10 @@ my-cline-plugin/
     ]
   },
   "peerDependencies": {
-    "@cline/core": "*"
+    "@tarogo/core": "*"
   },
   "peerDependenciesMeta": {
-    "@cline/core": { "optional": true }
+    "@tarogo/core": { "optional": true }
   },
   "dependencies": {
     "zod": "^4.1.5"
@@ -603,12 +603,12 @@ my-cline-plugin/
 
 Field-by-field:
 
-- **`type: "module"`** — required. Cline plugins are ES modules.
-- **`exports`** — points npm consumers at the entry. For TypeScript-source plugins loaded by Cline at runtime, you can export `./index.ts` directly; the loader handles TS.
+- **`type: "module"`** — required. Tarogo plugins are ES modules.
+- **`exports`** — points npm consumers at the entry. For TypeScript-source plugins loaded by Tarogo at runtime, you can export `./index.ts` directly; the loader handles TS.
 - **`cline.plugins`** — the discovery contract. An array of entries, each with:
   - `paths` — entry files relative to the package root. For multiple plugin objects from one package, list all entries.
   - `capabilities` — pre-declared capabilities, validated by the loader before importing the entry.
-- **`peerDependencies` for `@cline/core`** — the host already provides `@cline/core`. Marking it a peer dep avoids version drift; marking it optional lets users typecheck the plugin in isolation without forcing a `@cline/core` install.
+- **`peerDependencies` for `@tarogo/core`** — the host already provides `@tarogo/core`. Marking it a peer dep avoids version drift; marking it optional lets users typecheck the plugin in isolation without forcing a `@tarogo/core` install.
 - **`dependencies`** — your own deps (parsers, schema libraries, SDKs you wrap).
 
 ### 11.3 `tsconfig.json` (optional)
@@ -643,7 +643,7 @@ If your plugin lives outside a monorepo, a minimal standalone `tsconfig.json` wo
 The same plugin shape as the single-file version, just inside a package:
 
 ```ts
-import { type AgentPlugin, createTool } from "@cline/core";
+import { type AgentPlugin, createTool } from "@tarogo/core";
 import { z } from "zod";
 
 const InputSchema = z.object({
@@ -699,7 +699,7 @@ This is the only place `import.meta.url` is appropriate in a plugin — locating
 
 ### 11.6 The override pattern (bundled / global / project)
 
-A package can ship default assets and let users override them with their own. The convention used across Cline plugins is a three-tier lookup, last write wins by `name`:
+A package can ship default assets and let users override them with their own. The convention used across Tarogo plugins is a three-tier lookup, last write wins by `name`:
 
 1. **bundled** — files inside the plugin package (defaults shipped with the plugin).
 2. **global** — files under `~/.cline/data/settings/<kind>/` (user overrides).
@@ -811,7 +811,7 @@ For higher fidelity, build a real registry (`new ContributionRegistry({ extensio
 
 ### 12.2 End-to-end with a `runDemo()`
 
-Add a `runDemo()` in your plugin file (see §10) that boots a real `ClineCore` session against `ANTHROPIC_API_KEY`:
+Add a `runDemo()` in your plugin file (see §10) that boots a real `TarogoCore` session against `ANTHROPIC_API_KEY`:
 
 ```bash
 ANTHROPIC_API_KEY=sk-... bun run my-plugin.ts
@@ -847,7 +847,7 @@ If the plugin fails validation or setup, the CLI prints a clear error and contin
 - **State leaking across sessions** — module-level variables are shared across sessions in the same process. Key by `ctx.session?.sessionId` if your host runs multiple sessions concurrently.
 - **`afterRun` firing on aborts** — guard with `if (result.status !== "completed") return;`.
 - **Heavy work in `setup()`** — `setup()` blocks session start. Defer expensive work into the first tool call or `beforeRun`.
-- **Importing host internals** — only import from `@cline/core`. Reaching into host-specific packages (e.g. CLI internals) will break in non-CLI hosts.
+- **Importing host internals** — only import from `@tarogo/core`. Reaching into host-specific packages (e.g. CLI internals) will break in non-CLI hosts.
 - **Sandboxed plugins and `telemetry`** — telemetry is process-local. Feature-detect `ctx.telemetry` and expect it to be undefined in sandboxed plugin processes.
 - **Resolving bundled assets** — use `import.meta.url` + `fileURLToPath` to find files inside your package; never `process.cwd()`. For workspace paths, do the opposite: use `ctx.workspaceInfo?.rootPath`, never `import.meta.url`.
 - **Plugin name collisions** — `name` must be unique within a session. If two plugins share a name, validation fails. Namespace by package (`my-org-redactor`, not `redactor`).
@@ -885,7 +885,7 @@ If the plugin fails validation or setup, the CLI prints a clear error and contin
 - [ ] Tool inputs have JSON Schema with `required` set.
 - [ ] `afterRun` handlers gate on `result.status === "completed"` if they only want successes.
 - [ ] State that must not leak between concurrent sessions is keyed by `ctx.session?.sessionId`.
-- [ ] (Package) `package.json` has `type: "module"`, `cline.plugins`, and `@cline/core` as an optional peer dep.
+- [ ] (Package) `package.json` has `type: "module"`, `cline.plugins`, and `@tarogo/core` as an optional peer dep.
 - [ ] (Package) Bundled assets resolved via `import.meta.url`, not `process.cwd()`.
 - [ ] Smoke test: drop the plugin into `.cline/plugins/` (or `cline plugin install`), run `cline -i "..."`, watch it work.
 

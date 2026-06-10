@@ -5,12 +5,12 @@ Global settings, secrets and workspace state are stored in **file-backed JSON st
 ## Key Abstractions
 
 ### `StorageContext` (src/shared/storage/storage-context.ts)
-The entry point. Created via `createStorageContext()` and passed to `StateManager.initialize()`. Contains three `ClineFileStorage` instances:
+The entry point. Created via `createStorageContext()` and passed to `StateManager.initialize()`. Contains three `TarogoFileStorage` instances:
 - `globalState` → `~/.tcode/data/globalState.json`
 - `secrets` → `~/.tcode/data/secrets.json` (mode 0o600)
 - `workspaceState` → `~/.tcode/data/workspaces/<hash>/workspaceState.json`
 
-### `ClineFileStorage` (src/shared/storage/ClineFileStorage.ts)
+### `TarogoFileStorage` (src/shared/storage/TarogoFileStorage.ts)
 Synchronous JSON key-value store backed by a single file. Supports `get()`, `set()`, `setBatch()`, `delete()`. Writes are atomic (write-then-rename).
 
 ### `StateManager` (src/core/storage/StateManager.ts)
@@ -33,7 +33,7 @@ StateManager.get().setSecret("mySecretKey", value)
 StateManager.get().setWorkspaceState("myWsKey", value)
 ```
 
-Remember that your data may be read by a different client than the one that wrote it. For example, a value written by Cline in JetBrains may be read by Cline CLI.
+Remember that your data may be read by a different client than the one that wrote it. For example, a value written by Tarogo in JetBrains may be read by Tarogo CLI.
 
 ## VSCode Migration (src/hosts/vscode/vscode-to-file-migration.ts)
 

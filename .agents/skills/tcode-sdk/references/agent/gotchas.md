@@ -36,10 +36,10 @@ execute: async (input) => {
 
 ## Browser Compatibility
 
-`@cline/agents` (and by extension, the `Agent` class) is browser-safe with no Node.js dependencies. However, `@cline/core` and `ClineCore` require Node.js 22+. If you import from `@cline/sdk`, you get everything including the Node-only code. For browser usage, import directly from `@cline/agents`:
+`@tarogo/agents` (and by extension, the `Agent` class) is browser-safe with no Node.js dependencies. However, `@tarogo/core` and `TarogoCore` require Node.js 22+. If you import from `@tarogo/sdk`, you get everything including the Node-only code. For browser usage, import directly from `@tarogo/agents`:
 
 ```typescript
-import { Agent } from "@cline/agents"
+import { Agent } from "@tarogo/agents"
 ```
 
 ## No Top-Level onEvent on Agent Config
@@ -96,7 +96,7 @@ The model uses the tool's `inputSchema` to decide what arguments to pass. A vagu
 
 The Agent holds all messages in memory. For long-running conversations, memory usage grows with each turn. Consider:
 
-- Using `ClineCore` with compaction for long sessions
+- Using `TarogoCore` with compaction for long sessions
 - Periodically creating a new agent with a summary of the conversation
 - Monitoring `result.usage.totalInputTokens` to track context growth
 
@@ -131,4 +131,4 @@ See `../providers/REFERENCE.md` for provider-specific setup.
 - `api.md` - Full API reference
 - `patterns.md` - Common patterns
 - `../tools/REFERENCE.md` - Tool creation
-- `../clinecore/REFERENCE.md` - Use ClineCore for persistence
+- `../clinecore/REFERENCE.md` - Use TarogoCore for persistence

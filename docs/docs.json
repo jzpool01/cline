@@ -62,7 +62,7 @@
 					{
 						"group": "Getting Started",
 						"pages": [
-							"cline-overview",
+							"tcode-overview",
 							"getting-started/installing-cline",
 							{
 								"group": "Models & Providers",
@@ -359,7 +359,7 @@
 		{
 			"name": "Overview",
 			"icon": "house",
-			"url": "cline-overview"
+			"url": "tcode-overview"
 		}
 	],
 	"redirects": [
@@ -377,7 +377,7 @@
 		},
 		{
 			"source": "/getting-started/overview",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/getting-started/your-first-project",
@@ -385,15 +385,15 @@
 		},
 		{
 			"source": "/introduction",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/introduction/welcome",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/introduction/overview",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/getting-started/model-selection-guide",
@@ -973,11 +973,11 @@
 		},
 		{
 			"source": "/contributing/doc-templates",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/contributing/documentation-guide",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/customization/workflows",
@@ -989,15 +989,15 @@
 		},
 		{
 			"source": "/getting-started/quick-start",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/getting-started/what-is-cline",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/home",
-			"destination": "/cline-overview"
+			"destination": "/tcode-overview"
 		},
 		{
 			"source": "/provider-config/aihubmix",

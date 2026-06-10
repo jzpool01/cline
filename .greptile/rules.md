@@ -67,7 +67,7 @@ Emission ownership:
 
 `task.completed` marks the moment the **assistant declared the task done**, not the moment
 the SDK session record was finalized. The local runtime emits it when it observes a successful
-`submit_and_exit` tool call (the SDK analog of original Cline's `attempt_completion`). For
+`submit_and_exit` tool call (the SDK analog of original Tarogo's `attempt_completion`). For
 non-interactive runs that finish without invoking the explicit completion tool,
 `shutdownSession` emits it as a fallback with `source: "shutdown"`.
 
@@ -77,7 +77,7 @@ Each session is guaranteed at most one `task.completed` emission. The `source` f
 ## CLI Directory-Ordering Rule
 
 The CLI accepts `--config <dir>`. The CLI **must** apply `setTcodeDir(...)` and
-`setHomeDir(...)` from `@cline/shared/storage` **before** calling
+`setHomeDir(...)` from `@tarogo/shared/storage` **before** calling
 `captureCliExtensionActivated()`. Otherwise the telemetry singleton's persisted distinct-id
 and any other on-disk telemetry state lands under `~/.cline` instead of the user's chosen
 config dir.
@@ -92,7 +92,7 @@ captureCliExtensionActivated();   // <-- after dir overrides
 
 ## Hub Daemon Metadata Forwarding
 
-Hosts that spawn a detached `@cline/core/hub/daemon-entry` process must forward telemetry
+Hosts that spawn a detached `@tarogo/core/hub/daemon-entry` process must forward telemetry
 metadata into the daemon argv so the daemon can reconstruct an equivalent
 `ITelemetryService`. The expected payload is base64-encoded JSON with snake_case keys:
 

@@ -1,4 +1,3 @@
-import { BUILD_CONSTANTS } from "../../constants"
 
 export interface PostHogClientConfig {
 	/**

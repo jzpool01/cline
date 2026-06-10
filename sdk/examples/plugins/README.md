@@ -1,6 +1,6 @@
-# Cline Plugin Examples
+# Tarogo Plugin Examples
 
-A plugin is a single file (or directory) that extends any Cline agent — CLI, Kanban, VS Code, JetBrains, or anything built on the Core SDK. Drop one in, get new tools, hooks, providers, or message rewriters everywhere.
+A plugin is a single file (or directory) that extends any Tarogo agent — CLI, Kanban, VS Code, JetBrains, or anything built on the Core SDK. Drop one in, get new tools, hooks, providers, or message rewriters everywhere.
 
 What a plugin can do:
 
@@ -17,11 +17,11 @@ What a plugin can do:
 | [mac-notify.ts](./mac-notify.ts) | macOS Notification Center alert via `afterRun` | Sends a native macOS notification when a run completes successfully, using the final output text or iteration count as the notification body. Non-macOS hosts no-op. |
 | [custom-compaction.ts](./custom-compaction.ts) | Provider-message compaction via `registerMessageBuilder` | Rewrites oversized provider-bound message history by preserving the first user message and recent context, then replacing older middle history with a structured summary of roles, tools, files, and highlights. |
 | [background-terminal.ts](./background-terminal.ts) | Detached shell jobs with persisted logs and session steering | Registers `start_background_command`, `get_background_command`, and `delete_background_command` so agents can launch long-running shell commands, poll stdout/stderr tails, clean up job metadata, and receive completion summaries as steer messages. |
-| [automation-events.ts](./automation-events.ts) | Plugin-emitted automation events | Registers a normalized `local.plugin_event` automation event type and, when `CLINE_LOCAL_EVENT_INTERVAL_MS` is set, periodically emits demo events into Cline automation. |
+| [automation-events.ts](./automation-events.ts) | Plugin-emitted automation events | Registers a normalized `local.plugin_event` automation event type and, when `CLINE_LOCAL_EVENT_INTERVAL_MS` is set, periodically emits demo events into Tarogo automation. |
 | [gitignore-read-files-guard.ts](./gitignore-read-files-guard.ts) | Runtime hook policy for workspace `.gitignore` boundaries | Uses `beforeTool` to inspect `read_files`, `editor`, and `apply_patch` requests and skips them when target paths match workspace `.gitignore` rules, preventing ignored files from being read or modified. |
 | [env-blocker.ts](./env-blocker.ts) | Deterministic secret protection via `beforeTool` | Uses `beforeTool` to block `read_files` and `run_commands` (e.g. `cat .env`) calls that read `.env` secret files, while leaving `.env.example`/`.env.sample`/`.env.template` readable. A hard guarantee where an AGENTS.md rule is only a suggestion. |
 | [web-search.ts](./web-search.ts) | `web_search` tool backed by an Exa API key | Adds a `web_search` tool that queries Exa for current public web results, with optional result limits, domain filters, recency windows, and country localization. Requires `EXA_API_KEY`. |
-| [openrouter-provider.ts](./openrouter-provider.ts) | Custom model provider via `registerProvider` | Registers an OpenAI-compatible model provider (pointed at OpenRouter) plus its model catalog so the agent can run inference against it. Swap the base URL, API key env var, and models to add any OpenAI-compatible endpoint Cline does not bundle. Requires `OPENROUTER_API_KEY`. |
+| [openrouter-provider.ts](./openrouter-provider.ts) | Custom model provider via `registerProvider` | Registers an OpenAI-compatible model provider (pointed at OpenRouter) plus its model catalog so the agent can run inference against it. Swap the base URL, API key env var, and models to add any OpenAI-compatible endpoint Tarogo does not bundle. Requires `OPENROUTER_API_KEY`. |
 | [typescript-lsp/](./typescript-lsp/) | `goto_definition` tool powered by the TypeScript Language Service | Adds `goto_definition(file, line)` for TypeScript/JavaScript projects. It loads the target project’s own TypeScript version, finds identifiers on a line, and resolves definitions through imports, re-exports, aliases, and other language-service semantics. |
 | [agents-squad/](./agents-squad/) | Multi-agent team — spin up subagents with their own models and personalities | Adds tools for starting, messaging, polling, and coordinating background subagents. It includes bundled agent presets, skill discovery/loading, and a shared handoff store for passing notes between subagents in the same conversation. |
 
@@ -81,8 +81,8 @@ ANTHROPIC_API_KEY=sk-... bun run examples/plugins/weather-metrics.ts
 ## Anatomy of a plugin
 
 ```ts
-import type { AgentPlugin } from "@cline/core";
-import { createTool } from "@cline/core";
+import type { AgentPlugin } from "@tarogo/core";
+import { createTool } from "@tarogo/core";
 
 const myPlugin: AgentPlugin = {
   name: "my-plugin",
@@ -108,9 +108,9 @@ Pass it to the SDK:
 
 ```ts
 import plugin from "./my-plugin";
-import { ClineCore } from "@cline/core";
+import { TarogoCore } from "@tarogo/core";
 
-const host = await ClineCore.create({ backendMode: "local" });
+const host = await TarogoCore.create({ backendMode: "local" });
 await host.start({
   config: {
     providerId: "anthropic",
@@ -145,7 +145,7 @@ The setup `ctx` may include `session`, `client`, `user`, `workspaceInfo`, `autom
 
 ## Runtime hooks
 
-Hooks are typed, in-process callbacks on the same hook layer as `@cline/agents`. They run inside the agent loop with full type information.
+Hooks are typed, in-process callbacks on the same hook layer as `@tarogo/agents`. They run inside the agent loop with full type information.
 
 | Hook          | When it fires |
 | ------------- | ------------- |
@@ -196,7 +196,7 @@ Reach for `beforeModel` only when you need the runtime snapshot or want to mutat
 
 | Tool | Purpose |
 | ---- | ------- |
-| `start_background_command` | starts a detached shell command, returns a job id immediately, captures stdout/stderr under Cline's data directory |
+| `start_background_command` | starts a detached shell command, returns a job id immediately, captures stdout/stderr under Tarogo's data directory |
 | `get_background_command` | reads job status plus recent stdout/stderr tails |
 | `delete_background_command` | deletes saved job metadata, optionally deletes captured logs |
 

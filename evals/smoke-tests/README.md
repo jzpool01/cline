@@ -1,6 +1,6 @@
 # Smoke Tests
 
-Curated smoke tests that verify Cline works correctly with LLM providers.
+Curated smoke tests that verify Tarogo works correctly with LLM providers.
 
 ## Purpose
 
@@ -50,7 +50,7 @@ cline auth
 ### With API key (for automation)
 
 ```bash
-cline auth -p cline -k "$CLINE_API_KEY" -m anthropic/claude-sonnet-4.5
+cline auth -p cline -k "$TAROGO_API_KEY" -m anthropic/claude-sonnet-4.5
 ```
 
 ## Scenarios
@@ -95,7 +95,7 @@ Shows `pass@1` when trials < 3, `pass@3` otherwise.
    {
      "name": "Human-readable name",
      "description": "What this tests",
-     "prompt": "The task prompt for Cline",
+     "prompt": "The task prompt for Tarogo",
      "expectedFiles": ["file1.txt"],
      "expectedContent": [
        { "file": "file1.txt", "contains": "expected text" }
@@ -111,7 +111,7 @@ Smoke test CI is temporarily disabled while the build step is repointed at the S
 
 ### Required Secrets
 
-- `CLINE_API_KEY` - Cline API key, needed when CI is re-enabled
+- `TAROGO_API_KEY` - Tarogo API key, needed when CI is re-enabled
 
 ### Viewing Results
 

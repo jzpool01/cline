@@ -1,6 +1,6 @@
-# Cline Automation Examples
+# Tarogo Automation Examples
 
-This directory contains example automation specs for file-based and event-driven automation in Cline. Use these as templates to set up your own recurring or event-driven tasks.
+This directory contains example automation specs for file-based and event-driven automation in Tarogo. Use these as templates to set up your own recurring or event-driven tasks.
 
 ## 🚀 Quick Start: Pick Your Automation
 
@@ -22,7 +22,7 @@ This directory contains example automation specs for file-based and event-driven
 
 ## 📋 Overview
 
-Cline automation supports two types of specs:
+Tarogo automation supports two types of specs:
 
 1. **Recurring specs** (`.cron.md`) — Run on a schedule
 2. **Event-driven specs** (`.event.md`) — Run when an event occurs
@@ -177,7 +177,7 @@ cp examples/cron/events/local-manual-test.event.md ~/.cline/cron/events/
 # Start the hub with automation enabled
 # In another shell, ingest a test event
 node -e "
-  const { HubWebSocketClient } = require('@cline/core');
+  const { HubWebSocketClient } = require('@tarogo/core');
   const client = new HubWebSocketClient('ws://localhost:8000');
   client.send('cron.event.ingest', {
     eventType: 'local.manual_test',
@@ -264,7 +264,7 @@ new HubWebSocketServer({
 
 **In the SDK:**
 ```ts
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   automation: true,  // Enable automation
   // ... other options
 });
@@ -416,4 +416,4 @@ Summarize the changes, check for security risks, and recommend approval or chang
 
 - [Architecture automation overview](../../ARCHITECTURE.md#automation) — Runtime architecture and flow details
 - [`plugins/automation-events.ts`](../plugins/automation-events.ts) — Plugin event emission
-- [Cline SDK Examples](../) — Other integration examples
+- [Tarogo SDK Examples](../) — Other integration examples

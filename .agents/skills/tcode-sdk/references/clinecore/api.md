@@ -1,17 +1,17 @@
-# ClineCore API Reference
+# TarogoCore API Reference
 
-## Creating ClineCore
+## Creating TarogoCore
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { TarogoCore } from "@tarogo/sdk"
 
-const cline = await ClineCore.create(options: ClineCoreOptions)
+const cline = await TarogoCore.create(options: TarogoCoreOptions)
 ```
 
-### ClineCoreOptions
+### TarogoCoreOptions
 
 ```typescript
-interface ClineCoreOptions {
+interface TarogoCoreOptions {
   clientName: string                     // identifies your app
   distinctId?: string                    // user/instance identifier
   backendMode?: "auto" | "local" | "hub" | "remote"
@@ -19,7 +19,7 @@ interface ClineCoreOptions {
   remote?: RemoteOptions
   capabilities?: RuntimeCapabilities
   toolPolicies?: Record<string, ToolPolicy>
-  automation?: boolean | ClineCoreAutomationOptions
+  automation?: boolean | TarogoCoreAutomationOptions
   fetch?: typeof fetch
 }
 ```
@@ -38,7 +38,7 @@ interface RuntimeCapabilities {
 ### start(input)
 
 ```typescript
-const session = await cline.start(input: ClineCoreStartInput)
+const session = await cline.start(input: TarogoCoreStartInput)
 ```
 
 Returns a `StartSessionResult`:
@@ -53,10 +53,10 @@ interface StartSessionResult {
 }
 ```
 
-### ClineCoreStartInput
+### TarogoCoreStartInput
 
 ```typescript
-interface ClineCoreStartInput {
+interface TarogoCoreStartInput {
   prompt: string
   config: CoreSessionConfig
   source?: string
@@ -253,7 +253,7 @@ interface ToolPolicy {
 ## Interactive Approval
 
 ```typescript
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "my-app",
   capabilities: {
     requestToolApproval: async (request) => {
@@ -267,10 +267,10 @@ const cline = await ClineCore.create({
 
 ## Automation API
 
-When `automation` is enabled in `ClineCore.create()`:
+When `automation` is enabled in `TarogoCore.create()`:
 
 ```typescript
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "my-app",
   automation: true,
 })

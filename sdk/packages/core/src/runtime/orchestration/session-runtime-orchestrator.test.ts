@@ -351,7 +351,7 @@ describe("SessionRuntime.getExtensionRegistry", () => {
 				extensions: [extension],
 				extensionContext: {
 					session: { sessionId: "sess_plugin_context" },
-					client: { name: "cline-sdk", version: "1.2.3" },
+					client: { name: "tcode-sdk", version: "1.2.3" },
 					user: { distinctId: "user-1" },
 					workspace: { rootPath: "/tmp/workspace" },
 					automation: { ingestEvent },
@@ -366,7 +366,7 @@ describe("SessionRuntime.getExtensionRegistry", () => {
 
 		expect(observed?.session?.sessionId).toBe("sess_plugin_context");
 		expect(observed?.client).toEqual({
-			name: "cline-sdk",
+			name: "tcode-sdk",
 			version: "1.2.3",
 		});
 		expect(observed?.user?.distinctId).toBe("user-1");

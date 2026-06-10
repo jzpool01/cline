@@ -34,7 +34,7 @@ The extension and webview communicate via gRPC-like protocol over VS Code messag
 - `src/generated/nice-grpc/` - Promise-based clients
 - `src/generated/hosts/` - Generated handlers
 
-**Adding new enum values** (like a new `ClineSay` type) requires updating conversion mappings in `src/shared/proto-conversions/cline-message.ts`
+**Adding new enum values** (like a new `TarogoSay` type) requires updating conversion mappings in `src/shared/proto-conversions/cline-message.ts`
 
 **Adding new RPC methods** requires:
 - Handler in `src/core/controller/<domain>/`
@@ -42,8 +42,8 @@ The extension and webview communicate via gRPC-like protocol over VS Code messag
 
 **Example—the `explain-changes` feature touched:**
 - `proto/cline/task.proto` - Added `ExplainChangesRequest` message and `explainChanges` RPC
-- `proto/cline/ui.proto` - Added `GENERATE_EXPLANATION = 29` to `ClineSay` enum
-- `src/shared/ExtensionMessage.ts` - Added `ClineSayGenerateExplanation` type
+- `proto/cline/ui.proto` - Added `GENERATE_EXPLANATION = 29` to `TarogoSay` enum
+- `src/shared/ExtensionMessage.ts` - Added `TarogoSayGenerateExplanation` type
 - `src/shared/proto-conversions/cline-message.ts` - Added mapping for new say type
 - `src/core/controller/task/explainChanges.ts` - Handler implementation
 - `webview-ui/src/components/chat/ChatRow.tsx` - UI rendering
@@ -86,11 +86,11 @@ Providers using OpenAI's Responses API require native tool calling. XML tools do
 ## Adding Tools to System Prompt
 This is tricky—multiple prompt variants and configs. **Always search for existing similar tools first and follow their pattern.** Look at the full chain from prompt definition → variant configs → handler → UI before implementing.
 
-1. **Add to `ClineDefaultTool` enum** in `src/shared/tools.ts`
+1. **Add to `TarogoDefaultTool` enum** in `src/shared/tools.ts`
 2. **Tool definition** in `src/core/prompts/system-prompt/tools/` (create file like `generate_explanation.ts`)
    - Define variants for each `ModelFamily` (generic, next-gen, xs, etc.)
    - Export variants array (e.g., `export const my_tool_variants = [GENERIC, NATIVE_NEXT_GEN, XS]`)
-   - **Fallback behavior**: If a variant isn't defined for a model family, `ClineToolSet.getToolByNameWithFallback()` automatically falls back to GENERIC. So you only need to export `[GENERIC]` unless the tool needs model-specific behavior.
+   - **Fallback behavior**: If a variant isn't defined for a model family, `TarogoToolSet.getToolByNameWithFallback()` automatically falls back to GENERIC. So you only need to export `[GENERIC]` unless the tool needs model-specific behavior.
 3. **Register in `src/core/prompts/system-prompt/tools/init.ts`** - Import and spread into `allToolVariants`
 4. **Add to variant configs** - Each model family has its own config in `src/core/prompts/system-prompt/variants/*/config.ts`. Add your tool's enum to the `.tools()` list:
    - `generic/config.ts`, `next-gen/config.ts`, `gpt-5/config.ts`, `native-gpt-5/config.ts`, `native-gpt-5-1/config.ts`, `native-next-gen/config.ts`, `gemini-3/config.ts`, `glm/config.ts`, `hermes/config.ts`, `xs/config.ts`
@@ -98,7 +98,7 @@ This is tricky—multiple prompt variants and configs. **Always search for exist
 5. **Create handler** in `src/core/task/tools/handlers/`
 6. **Wire up in `ToolExecutor.ts`** if needed for execution flow
 7. **Add to tool parsing** in `src/core/assistant-message/index.ts` if needed
-8. **If tool has UI feedback**: add `ClineSay` enum in proto, update `src/shared/ExtensionMessage.ts`, update `src/shared/proto-conversions/cline-message.ts`, update `webview-ui/src/components/chat/ChatRow.tsx`
+8. **If tool has UI feedback**: add `TarogoSay` enum in proto, update `src/shared/ExtensionMessage.ts`, update `src/shared/proto-conversions/cline-message.ts`, update `webview-ui/src/components/chat/ChatRow.tsx`
 
 ## Modifying System Prompt
 **Read these first:** `src/core/prompts/system-prompt/README.md`, `tools/README.md`, `__tests__/README.md`

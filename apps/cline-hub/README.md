@@ -1,6 +1,6 @@
-# Cline Hub
+# Tarogo Hub
 
-A browser dashboard for the local Cline hub. Open it to see who's connected, what sessions are running, drive a session from a chat box, and restart the hub when you need a fresh daemon.
+A browser dashboard for the local Tarogo hub. Open it to see who's connected, what sessions are running, drive a session from a chat box, and restart the hub when you need a fresh daemon.
 
 ## Capabilities
 
@@ -12,7 +12,7 @@ A browser dashboard for the local Cline hub. Open it to see who's connected, wha
 - **Restart Hub** button: gracefully stops the local detached hub and respawns a fresh one
 - optional LAN/tunnel exposure gated by a shared `ROOM_SECRET`
 
-The dashboard registers two clients with the hub: a `cline-hub-server` (via `ClineCore`) for driving sessions and a `cline-hub-server` (via `HubUIClient`) for the admin view.
+The dashboard registers two clients with the hub: a `cline-hub-server` (via `TarogoCore`) for driving sessions and a `cline-hub-server` (via `HubUIClient`) for the admin view.
 
 ## Run
 
@@ -102,7 +102,7 @@ Share only the printed invite URL with trusted participants.
 
 Clicking **Restart Hub** in the sidebar:
 
-1. Detaches the dashboard's `ClineCore` and `HubUIClient` from the current hub.
+1. Detaches the dashboard's `TarogoCore` and `HubUIClient` from the current hub.
 2. Calls `stopLocalHubServerGracefully()` to shut the local detached hub down.
 3. Calls `ensureDetachedHubServer(workspaceRoot)` to spawn a fresh hub.
 4. Reconnects and broadcasts the new hub state to every open browser tab.

@@ -41,7 +41,7 @@ import {
 	slashCommandRegexGlobal,
 	validateSlashCommand,
 } from "@/utils/slash-commands"
-import ClineRulesToggleModal from "../cline-rules/ClineRulesToggleModal"
+import TcodeRulesToggleModal from "../tcode-rules/TcodeRulesToggleModal"
 import ServersToggleModal from "./ServersToggleModal"
 
 const { MAX_IMAGES_AND_FILES_PER_MESSAGE } = CHAT_CONSTANTS
@@ -1603,7 +1603,7 @@ const ChatTextArea = forwardRef<HTMLTextAreaElement, ChatTextAreaProps>(
 
 							<ServersToggleModal />
 
-							<ClineRulesToggleModal />
+							<TcodeRulesToggleModal />
 
 							<ModelContainer>
 								<ModelButtonWrapper>

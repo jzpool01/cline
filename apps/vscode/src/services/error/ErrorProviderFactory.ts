@@ -1,4 +1,3 @@
-import { ClineEndpoint } from "@/config"
 import { isPostHogConfigValid, PostHogClientConfig, posthogConfig } from "@/shared/services/config/posthog-config"
 import { Logger } from "@/shared/services/Logger"
 import { ClineError } from "./ClineError"

@@ -1,6 +1,6 @@
 # Scheduling and Automation
 
-The Cline SDK supports scheduled, one-off, and event-driven agent execution through the automation subsystem in `@cline/core`.
+The Tarogo SDK supports scheduled, one-off, and event-driven agent execution through the automation subsystem in `@tarogo/core`.
 
 ## Overview
 
@@ -136,7 +136,7 @@ interface CronEventSpec {
 ## Programmatic Automation API
 
 ```typescript
-const cline = await ClineCore.create({
+const cline = await TarogoCore.create({
   clientName: "my-app",
   automation: true,
 })
@@ -221,7 +221,7 @@ Each completed run writes a Markdown report to `.cline/cron/reports/<run-id>.md`
 
 ## See Also
 
-- `../clinecore/REFERENCE.md` - ClineCore runtime
+- `../clinecore/REFERENCE.md` - TarogoCore runtime
 - `../clinecore/api.md` - Automation API details
 - `../plugins/REFERENCE.md` - Plugin events
 - `../production/REFERENCE.md` - Production deployment

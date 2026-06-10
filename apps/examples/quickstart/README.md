@@ -1,6 +1,6 @@
 # Quickstart
 
-The simplest possible Cline SDK example. Creates one agent, sends a single prompt, and streams the response to stdout.
+The simplest possible Tarogo SDK example. Creates one agent, sends a single prompt, and streams the response to stdout.
 
 ## Getting started
 

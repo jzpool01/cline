@@ -25,7 +25,7 @@ import NewRuleRow from "./NewRuleRow"
 import RuleRow from "./RuleRow"
 import RulesToggleList from "./RulesToggleList"
 
-const ClineRulesToggleModal: React.FC = () => {
+const TcodeRulesToggleModal: React.FC = () => {
 	const {
 		globalClineRulesToggles = {},
 		localClineRulesToggles = {},
@@ -437,11 +437,11 @@ const ClineRulesToggleModal: React.FC = () => {
 		<div className="inline-flex min-w-0 max-w-full items-center" ref={modalRef}>
 			<div className="inline-flex w-full items-center" ref={buttonRef}>
 				<Tooltip>
-					{!isVisible && <TooltipContent>Manage Cline Rules & Workflows</TooltipContent>}
+					{!isVisible && <TooltipContent>Manage Tcode Rules & Workflows</TooltipContent>}
 					<TooltipTrigger>
 						<VSCodeButton
 							appearance="icon"
-							aria-label={isVisible ? "Hide Cline Rules & Workflows" : "Show Cline Rules & Workflows"}
+							aria-label={isVisible ? "Hide Tcode Rules & Workflows" : "Show Tcode Rules & Workflows"}
 							className="p-0 m-0 flex items-center"
 							onClick={() => setIsVisible(!isVisible)}>
 							<i className="codicon codicon-law" style={{ fontSize: "12.5px" }} />
@@ -886,4 +886,4 @@ export const TabButton = ({
 	</StyledTabButton>
 )
 
-export default ClineRulesToggleModal
+export default TcodeRulesToggleModal

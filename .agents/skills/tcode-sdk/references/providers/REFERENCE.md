@@ -1,6 +1,6 @@
 # Model Providers
 
-The Cline SDK supports every major LLM provider out of the box via `@cline/llms`.
+The Tarogo SDK supports every major LLM provider out of the box via `@tarogo/llms`.
 
 ## Supported Providers
 
@@ -19,7 +19,7 @@ The Cline SDK supports every major LLM provider out of the box via `@cline/llms`
 ### With Agent
 
 ```typescript
-import { Agent } from "@cline/sdk"
+import { Agent } from "@tarogo/sdk"
 
 const agent = new Agent({
   providerId: "anthropic",
@@ -30,12 +30,12 @@ const agent = new Agent({
 })
 ```
 
-### With ClineCore
+### With TarogoCore
 
 ```typescript
-import { ClineCore } from "@cline/sdk"
+import { TarogoCore } from "@tarogo/sdk"
 
-const cline = await ClineCore.create({ clientName: "my-app" })
+const cline = await TarogoCore.create({ clientName: "my-app" })
 
 await cline.start({
   prompt: "Hello",
@@ -158,7 +158,7 @@ Pass additional headers to API requests:
 For advanced multi-provider setups, use the Gateway directly:
 
 ```typescript
-import { createGateway, DefaultGateway } from "@cline/llms"
+import { createGateway, DefaultGateway } from "@tarogo/llms"
 
 const gateway = createGateway({
   providerConfigs: [
@@ -201,7 +201,7 @@ import {
   registerProvider,
   registerModel,
   createHandler,
-} from "@cline/llms"
+} from "@tarogo/llms"
 
 // List all registered providers
 const providers = getAllProviders()
@@ -222,7 +222,7 @@ registerProvider({
 Access model info (context window, pricing, capabilities):
 
 ```typescript
-import { getModelsForProvider } from "@cline/llms"
+import { getModelsForProvider } from "@tarogo/llms"
 
 const models = getModelsForProvider("anthropic")
 for (const model of models) {
@@ -246,12 +246,12 @@ agent.subscribe((event) => {
 const result = await agent.run("...")
 console.log(`Total cost: $${result.usage.totalCost?.toFixed(4)}`)
 
-// Via ClineCore accumulated usage
+// Via TarogoCore accumulated usage
 const usage = await cline.getAccumulatedUsage(sessionId)
 ```
 
 ## See Also
 
 - `../agent/REFERENCE.md` - Using providers with Agent
-- `../clinecore/REFERENCE.md` - Using providers with ClineCore
+- `../clinecore/REFERENCE.md` - Using providers with TarogoCore
 - `../production/REFERENCE.md` - Cost control in production

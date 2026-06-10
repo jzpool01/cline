@@ -74,8 +74,8 @@ Prepend a section to `apps/cli/CHANGELOG.md` for the approved version using the 
 Run focused checks first:
 
 ```sh
-bun -F @cline/cli typecheck
-bun -F @cline/cli test:unit
+bun -F @tarogo/cli typecheck
+bun -F @tarogo/cli test:unit
 ```
 
 For higher confidence, run:
